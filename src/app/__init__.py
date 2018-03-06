@@ -18,6 +18,7 @@ from app.main import main as main_bp
 from app.cart import cart as cart_bp
 from app.catalog import catalog as catalog_bp
 from app.order import order as order_bp
+from app.admin import admin as admin_bp
 
 Config = eval(os.environ['FLASK_APP_CONFIG'])
 
@@ -42,9 +43,10 @@ def register_extensions(app):
 def register_blueprints(app):
     app.register_blueprint(main_bp)
     app.register_blueprint(account_bp, url_prefix='/account')
-    app.register_blueprint(account_bp, url_prefix='/cart')
-    app.register_blueprint(account_bp, url_prefix='/catalog')
-    app.register_blueprint(account_bp, url_prefix='/order')
+    app.register_blueprint(admin_bp, url_prefix='/admin')
+    app.register_blueprint(cart_bp, url_prefix='/cart')
+    app.register_blueprint(catalog_bp, url_prefix='/catalog')
+    app.register_blueprint(order_bp, url_prefix='/order')
     return None
 
 def register_errorhandlers(app):
