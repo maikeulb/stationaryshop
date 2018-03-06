@@ -11,9 +11,9 @@ class CatalogItem.Model:
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Integer)
-    description = db.Column(db.Integer)
-    imageUrl = db.Column(db.Integer)
-    category_Id  = db.Column(db.Integer)
+    description = db.Column(db.String(140))
+    imageUrl = db.Column(db.String(140))
+    category_Id  = db.Column(db.Integer, db.ForeignKey('categories.id'))
 
     cart_item = db.relationship(
         'CartItem',

@@ -9,7 +9,7 @@ from app.models.message import Message
 class Cart.Model:
     __tablename__ = 'carts'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String, primary_key=True)
 
     cart_items = db.relationship(
         'CartItem'

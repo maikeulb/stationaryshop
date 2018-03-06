@@ -10,8 +10,8 @@ class Category.Model:
     __tablename__ = 'categories'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Integer)
-    description = db.Column(db.Integer)
+    name = db.Column(db.String(50))
+    description = db.Column(db.String(140))
 
     cart_items = db.relationship(
         'CartItem',

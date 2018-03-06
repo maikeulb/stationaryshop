@@ -10,8 +10,8 @@ class Order.Model:
     __tablename__ = 'orders'
 
     id = db.Column(db.Integer, primary_key=True)
-    order_total = db.Column(db.Integer)
-    order_placed = db.Column(db.Integer)
+    order_total = db.Column(db.Numeric)
+    order_placed = db.Column(db.DateTime, default = datetime.utcnow)
 
     order_lines = db.relationship(
         'OrderDetail',

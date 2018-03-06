@@ -11,7 +11,7 @@ class CartItem.Model:
 
     id = db.Column(db.Integer, primary_key=True)
     amount = db.Column(db.Integer)
-    cart_id = db.Column(db.Integer, db.ForeignKey('carts.id'))
+    cart_id = db.Column(db.String, db.ForeignKey('carts.id'))
 
     catalog_item = db.relationship(
         'CatalogItem'
