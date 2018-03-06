@@ -17,18 +17,20 @@ from app.models import (
 )
 
 
-@catalog.route('/index')
+@catalog.route('/index/<id>')
 def index(category):
-    if category:
-        catalog_items=CatalogItem.query.order_by(id)
+    if category is null:
+        catalog_items=CatalogItem.query \
+            .order_by(id)
         current_category = 'All Items';
-    catalog_items = CatalogItem \
-            .filter(category=category) \
-            .order_by(id);
-    current_category = Category \
-            .filter(category=category) \
-            .categoryname \
-            .first_or_default();
+    else:
+        catalog_items = CatalogItem \
+                .filter(category=category) \
+                .order_by(id)
+        current_category = Category \
+                .filter(category=category) \
+                .first_or_default().name
+
     return render_template('catalog/index.html,'
                             catalog_items=catalog_items,
                             current_category=current_category)
@@ -36,6 +38,8 @@ def index(category):
 
 @catalog.route('/details/<id>')
 def index(id):
-    catalog_item = CatalogItem.get_by_id(id) \
+    catalog_item = CatalogItem.query \
+        .filter_by(id=id) \
+        .first_or_404()
     return render_template('catalog/details.html,'
                             catalog_item=catalog_item)
