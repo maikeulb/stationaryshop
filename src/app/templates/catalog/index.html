@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+  <main>
+
+<div id="catalog_items">
+
+</main>
+{% endblock %}
+
+    <script>
+
+        $(document).ready(function () {
+            LoadMoreCataloItems();
+        });
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                LoadMoreCatalogItems();
+            }
+        });
+
+        function LoadMoreCatalogItems() {
+
+            $.ajax({
+                type: 'GET',
+                url: '/api/catalog',
+                dataType: 'json',
+                success: function (jsonData) {
+                    if (jsonData == null) {
+                        alert('no data returned');
+                        return;
+                    }
+
+                    $.each(jsonData, function (index, catalog_item) {
+
+                        var catalog_item_string = '<div class="col-sm-4 col-lg-4 col-md-4"> ' +
+                                              '  <div class="thumbnail">' +
+                                              '     <img src="' + catalog_item.image_url + '" alt="">' +
+                                              '      <div class="caption">' +
+                                              '         <h3 class="pull-right">' + catalog_item.price + '</h3>' +
+                                              '         <h3>' +
+                                              '             <a href=/catalog_item/details/' + catalog_item.id + '>' + catalog_item.name + '</a>' +
+                                              '         </h3>' +
+                                              '         <p>' + catalog_item.description + '</p>' +
+                                              '    </div>' +
+                                              '    <div class="add-to-cart">' +
+                                              '        <p class="button">' +
+                                              '             <a class="btn btn-primary" href=/cart/add?catalog_item_id=' + catalog_item.catalog_item_id + '>Add to cart</a>' +
+                                              '         </p>' +
+                                              '     </div>' +
+                                              '  </div>' +
+                                              '</div>';
+
+                        $('#catalog_items').append(catalog_item_string);
+                    });
+                },
+                error: function (ex) {
+                    alert(ex);
+                }
+            });
+            return false;
+        }
+    </script>
+}
