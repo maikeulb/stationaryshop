@@ -29,16 +29,41 @@ def index(category):
     else:
        session['cart_id'] = random(int)
 
-    Cart.filter(cart_id == cart_id)
+    cart_items_from_session = Cart.query
+        .filter_by(cart_id == cart_id)
+        .all()
 
+    cart = Cart(cart_items=cart_items)
+    cart_total = Cart.where(cart_id == cart_id)
+        .func.sum(catalog_item.price * catalog_item.amount)
+    db.session.add(cart_items)
+    db.session.commit()
     return render_template('cart/index.html,'
-                            cart_items=cart_items)
+                            cart=cart,
+                            cart_total=cart_total)
 
 
 @cart.route('/add/<id>')
-def index(id):
-    selected_catalog_item = CatalogItem.first_or_404(id)
+def add_to_cart(id):
+    data = request.data
+    dataDict = json.loads(data)
 
-    Cart.add(selected_item, 1)
+    if 'cart_id' in session:
+        g.cart_id = session['cart_id']
+    else:
+        session['cart_id'] = random(int)
 
-    return render_template('cart/index.html,')
+    selected_catalog_item = CartItem.query \
+        .filter_by(dataDict['id'] and cart_id)
+
+    if selected_catalog_item != null:
+        if cart_item==null:
+            cart_item = Cart(cart_id = cart_id,
+                         catalog_item=dataDict.catalog_item,
+                         amount=1)
+            db.session.add(cart_item)
+        else:
+            cart_item.amount += 1
+        db.session.commit()
+
+    return redirect(url_for('cart.index'))
