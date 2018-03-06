@@ -22,9 +22,17 @@ from app.models import (
 
 @order.route('/index')
 def index(order):
+
+    if 'cart_id' in session:
+        g.cart_id = session['cart_id']
+    else:
+        session['cart_id'] = random(int)
+
     if form.validate_on_submit():
-        cart_items = Cart.get_cart_items()
-        cart_items = form.cart_items.data
+        cart_items = Cart \
+            .filter_by(cart_id == cart_id) \
+            .all()
+        Cartcart_items = form.cart_items.data
         Order.create_order()
         Cart.clear_cart()
     return redirect(url_for('order.complete'))
