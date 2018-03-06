@@ -27,23 +27,19 @@ def index():
 
     ## movies to before_request
     if 'cart_id' in session:
-       g.cart_id = session['cart_id'] # just call it cart_id
+       g.cart_id = session['cart_id']
     else:
-       session['cart_id'] = random(int) # how to generate new session id
+       session['cart_id'] = uuid.uuid4()
     ####
 
     cart_items_from_session = Cart.query
-        .filter_by(cart_id == cart_id)
+        .filter_by(cart_id=cart_id)
         .all()
 
     cart = Cart(cart_items=cart_items)
 
     zipped_cart_items = zip(cart_items.price, cart_items.amount)
     cart_total = [sum(cart_item) for cart_item in zipped_cart_items]
-
-
-    # cart_total = Cart.filter(cart_id == cart_id)
-        # .func.sum(catalog_item.price * catalog_item.amount) # this is wrong
 
     db.session.add(cart)
     db.session.commit()
@@ -95,7 +91,6 @@ def remove_from_cart(id):
     cart_item = CartItem.query \
         .filter_by(catalog_it=dataDict['catalog_id'], cart_id=cart_id) \
         .single_or_404()
-
 
     if cart_item:
         if cart_item.amount > 1:
