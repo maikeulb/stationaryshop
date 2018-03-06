@@ -9,7 +9,7 @@ from flask import (
     current_app
 )
 from flask_login import current_user, login_required
-from app.extensions import db, images
+from app.extensions import db
 from app.catalog import catalog
 from app.models import (
     CatalogItem,
