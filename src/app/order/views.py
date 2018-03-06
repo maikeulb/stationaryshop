@@ -1,23 +1,36 @@
+import sys
+from datetime import datetime
+from flask import (
+    render_template,
+    flash,
+    redirect,
+    url_for,
+    request,
+    current_app
+)
+from flask_login import current_user, login_required
+from app.extensions import db, images
+from app.posts import posts
+from app.posts.forms import (
+    CommentForm,
+    UploadForm
+)
+from app.models import (
+    Post,
+    Comment,
+)
 
-@lenses.route('/checkout', methods=['GET', 'POST'])
-def checkout(order):
 
-    cart_items = Cart.
-            .all()
-    focal_lengths = FocalLength.query \
-            .all()
-    form = LensForm()
-    form.mount_id.choices = [(f.id, f.name) for f in mounts]
-    form.focal_length_id.choices = [(f.id, f.name) for f in focal_lengths]
+@order.route('/index')
+def index(order):
     if form.validate_on_submit():
-        lens = Lens()
-        form.populate_obj(lens)
-        try:
-            db.session.add(lens)
-            db.session.commit()
-            flash('Lens added!', 'success')
-            return redirect(url_for('lenses.index'))
-        except:
-            db.session.rollback()
-            flash('Error editing lens.', 'danger')
+        cart_items = ShoppingCart.get_cart_items()
+        cart_items = form.cart_items.data
+        Order.create_order()
+        ShoppingCart.ClearCart()
+    return redirect(url_for('order.complete'))
 
+
+@order.route('/complete')
+def index():
+    return render_template('order/complete.html')

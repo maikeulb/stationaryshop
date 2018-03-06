@@ -21,7 +21,7 @@ from app.models import (
 )
 
 
-@lenses.route('/index')
+@catalog.route('/index')
 def index(category):
     if category:
         catalog_items=CatalogItem.query.order_by(id)
@@ -38,7 +38,7 @@ def index(category):
                             current_category=current_category)
 
 
-@lenses.route('/details/<id>')
+@catalog.route('/details/<id>')
 def index(id):
     catalog_item = CatalogItem.get_by_id(id) \
     return render_template('catalog/details.html,'
