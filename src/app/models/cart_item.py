@@ -7,12 +7,13 @@ from app.models.message import Message
 
 
 class Cart.Model:
-    __tablename__ = 'carts'
+    __tablename__ = 'cart_items'
 
     id = db.Column(db.Integer, primary_key=True)
+    amount = db.Column(db.Integer)
+    catalog_item = db.Column(db.Integer)
 
-    cart_items = db.relationship(
-        'Tag',
-        secondary=tags,
+    cart_item = db.relationship(
+        'CartItem',
         backref='author',
     )
