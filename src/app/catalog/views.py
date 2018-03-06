@@ -10,14 +10,10 @@ from flask import (
 )
 from flask_login import current_user, login_required
 from app.extensions import db, images
-from app.posts import posts
-from app.posts.forms import (
-    CommentForm,
-    UploadForm
-)
+from app.catalog import catalog
 from app.models import (
-    Post,
-    Comment,
+    CatalogItem,
+    Category,
 )
 
 
@@ -25,7 +21,7 @@ from app.models import (
 def index(category):
     if category:
         catalog_items=CatalogItem.query.order_by(id)
-        current_category = 'All Pies';
+        current_category = 'All Items';
     catalog_items = CatalogItem \
             .filter(category=category) \
             .order_by(id);
