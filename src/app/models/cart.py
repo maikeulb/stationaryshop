@@ -12,7 +12,5 @@ class Cart.Model:
     id = db.Column(db.Integer, primary_key=True)
 
     cart_items = db.relationship(
-        'Tag',
-        secondary=tags,
-        backref='author',
+        'CartItem'
     )
