@@ -1,0 +1,58 @@
+# Everything needed in production
+
+# Flask
+Flask==0.12.2
+MarkupSafe==1.0
+Werkzeug==0.13
+Jinja2==2.9.6
+itsdangerous==0.24
+click==6.7
+
+# Database
+Flask-SQLAlchemy==2.3.2
+psycopg2==2.7.3.2
+SQLAlchemy==1.2.0
+
+# Migrations
+Flask-Migrate==2.1.1
+
+# Forms
+Flask-WTF==0.14.2
+WTForms==2.1
+
+# Flask-Misc
+Flask-Babel==0.11.2
+Flask-Mail==0.9.1
+Flask-Moment==0.5.2
+
+# Deployment
+gunicorn>=19.1.1
+
+# Auth
+Flask-Login==0.4.1
+Flask-Bcrypt==0.7.1
+
+# Caching
+Flask-Caching>=1.0.0
+
+# Debug toolbar
+Flask-DebugToolbar==0.10.1
+
+alembic==0.9.6
+Babel==2.5.1
+blinker==1.4
+certifi==2017.7.27.1
+chardet==3.0.4
+dominate==2.3.1
+guess-language-spirit==0.5.3
+idna==2.6
+Mako==1.0.7
+PyJWT==1.5.3
+python-dateutil==2.6.1
+python-dotenv==0.7.1
+python-editor==1.0.3
+pytz==2017.2
+requests==2.18.4
+six==1.11.0
+urllib3==1.22
+visitor==0.1.3
