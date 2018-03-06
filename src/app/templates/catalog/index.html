@@ -11,16 +11,16 @@
     <script>
 
         $(document).ready(function () {
-            LoadMoreCataloItems();
+            catalogItems();
         });
 
         $(window).scroll(function () {
             if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-                LoadMoreCatalogItems();
+                catalogItems();
             }
         });
 
-        function LoadMoreCatalogItems() {
+        function catalogItems() {
 
             $.ajax({
                 type: 'GET',
