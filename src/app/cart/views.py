@@ -54,16 +54,39 @@ def add_to_cart(id):
         session['cart_id'] = random(int)
 
     selected_catalog_item = CartItem.query \
-        .filter_by(dataDict['id'] and cart_id)
+        .filter_by(dataDict['id'] and cart_id) \
+        .single_or_404()
 
     if selected_catalog_item != null:
         if cart_item==null:
             cart_item = Cart(cart_id = cart_id,
-                         catalog_item=dataDict.catalog_item,
+                        catalog_item=selected_catalog_item,
                          amount=1)
             db.session.add(cart_item)
         else:
             cart_item.amount += 1
         db.session.commit()
+
+    return redirect(url_for('cart.index'))
+
+@cart.route('/remove/')
+def remove_from_cart(id):
+    data = request.data
+    dataDict = json.loads(data)
+
+    if 'cart_id' in session:
+        g.cart_id = session['cart_id']
+    else:
+        session['cart_id'] = random(int)
+
+    catalog_item = CartItem.query \
+        .filter_by(dataDict['id'] and cart_id) \
+        .first_or_404()
+
+    if catalog_item.amount is 1:
+        db.session.remove(cart_item)
+    else:
+        cart_item.amount -= 1
+    db.session.commit()
 
     return redirect(url_for('cart.index'))
