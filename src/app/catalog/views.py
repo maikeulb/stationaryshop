@@ -17,7 +17,7 @@ from app.models import (
 )
 
 
-@catalog.route('/index/<id>')
+@catalog.route('/index/<name>')
 def index(category):
     if category is null:
         catalog_items=CatalogItem.query \
@@ -25,10 +25,10 @@ def index(category):
         current_category = 'All Items';
     else:
         catalog_items = CatalogItem \
-                .filter(category=category) \
-                .order_by(id)
+                .filter_by(category=category) \
+                .order_by(name)
         current_category = Category \
-                .filter(category=category) \
+                .filter_by(category=category) \
                 .first_or_default().name
 
     return render_template('catalog/index.html,'
