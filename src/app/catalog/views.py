@@ -24,10 +24,10 @@ def index(category):
             .order_by(id)
         current_category = 'All Items';
     else:
-        catalog_items = CatalogItem \
+        catalog_items = CatalogItem.query \
                 .filter_by(category=category) \
                 .order_by(name)
-        current_category = Category \
+        current_category = Category.query \
                 .filter_by(category=category) \
                 .first_or_default().name
 

@@ -31,7 +31,7 @@ def index():
     ##
 
     if form.validate_on_submit():
-        cart = Cart \
+        cart = Cart.query \
             .filter_by(cart_id=cart_id) \
             .all()
         cart.cart_items = form.cart_items.data
