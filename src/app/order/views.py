@@ -21,21 +21,26 @@ from app.models import (
 
 
 @order.route('/index')
-def index(order):
-
+def index():
+    form = OrderForm()
+    ##
     if 'cart_id' in session:
         g.cart_id = session['cart_id']
     else:
         session['cart_id'] = random(int)
+    ##
 
     if form.validate_on_submit():
-        cart_items = Cart \
-            .filter_by(cart_id == cart_id) \
+        cart = Cart \
+            .filter_by(cart_id=cart_id) \
             .all()
-        Cartcart_items = form.cart_items.data
-        Order.create_order()
-        Cart.clear_cart()
-    return redirect(url_for('order.complete'))
+        cart.cart_items = form.cart_items.data
+        order = Order(order_lines=form.order_lines.data)
+        cart.cart_items.remove(cart_items)
+        db.session.commit()
+        return redirect(url_for('order.complete'))
+    return render_template('order/index.html',
+                           form=form)
 
 
 @order.route('/complete')
