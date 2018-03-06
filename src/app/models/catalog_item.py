@@ -13,7 +13,8 @@ class CatalogItem.Model:
     name = db.Column(db.Integer)
     description = db.Column(db.String(140))
     imageUrl = db.Column(db.String(140))
-    category_Id  = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    price  = db.Column(db.Numeric)
+    is_sale_item  = db.Column(db.Bool)
 
     cart_item = db.relationship(
         'CartItem',

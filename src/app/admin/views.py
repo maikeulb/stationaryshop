@@ -26,7 +26,9 @@ def create():
     if form.validate_on_submit():
         catalog_item = CatalogItem(name=form.name.data,
                                    description=form.description.data,
-                                   image_url= form.imageUrl,data
+                                   image_url= form.image_url,data
+                                   price= form.price,data
+                                   is_sale_item= form.is_sale_item,data
                                    categgry_id = form.category_id.data)
         db.session.add(catalog_item)
 
