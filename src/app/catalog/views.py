@@ -23,7 +23,7 @@ from app.models import (
 
 @lenses.route('/index')
 def index(category):
-    if catalog:
+    if category:
         catalog_items=CatalogItem.query.order_by(id)
         current_category = 'All Pies';
     catalog_items = CatalogItem \
@@ -34,12 +34,12 @@ def index(category):
             .categoryname \
             .first_or_default();
     return render_template('catalog/index.html,'
-                            catalog_items=catalog_items, 
+                            catalog_items=catalog_items,
                             current_category=current_category)
 
 
 @lenses.route('/details/<id>')
 def index(id):
-    catalog_item = CatalogItem.Get(id) \
+    catalog_item = CatalogItem.get_by_id(id) \
     return render_template('catalog/details.html,'
                             catalog_item=catalog_item)
