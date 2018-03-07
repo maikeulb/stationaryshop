@@ -1,10 +1,6 @@
-{% extends "base.html" %}
-
-{% block app_content %}
-  <main>
-
 <div class="thumbnail">
-  <img alt="{{ catalog_item.name }} " src="{{ catalog_item.image_url }}">
+  <img alt="{{ catalog_item.name }} " src="{{ catalog_item.image_url }}"
+            style="max-height:100px;" />
     <div class="caption-full">
       <h3 class="pull-right">{{ catalog_item.price }}</h3>
         <h3>
@@ -22,5 +18,22 @@
     </div>
 </div>
 
-</main>
-{% endblock %}
+
+    {% for category in categories %}
+      <table class = "ui celled padded table">
+        <thead>
+          <tr>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+          <td>
+            <span> {{ category.name }}</span>
+             <br><br>
+           </span>
+          </td>
+          </tr>
+        </tbody>
+      </table>
+    {% endfor %}
+
