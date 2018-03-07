@@ -6,7 +6,6 @@ from flask import(
     render_template,
     request,
     current_app)
-from app import commands, models
 from app.account import account as account_bp
 from app.extensions import(
     bcrypt,

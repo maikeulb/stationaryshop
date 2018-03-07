@@ -2,11 +2,10 @@ from app.extensions import db
 from datetime import datetime
 from time import time
 from flask import current_app
-from app.search import add_to_index, remove_from_index, query_index
-from app.models.message import Message
+from app.models.category import Category
 
 
-class CatalogItem.Model:
+class CatalogItem(db.Model):
     __tablename__ = 'CatalogItem'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -14,7 +13,7 @@ class CatalogItem.Model:
     description = db.Column(db.String(140))
     imageUrl = db.Column(db.String(140))
     price  = db.Column(db.Numeric)
-    is_sale_item  = db.Column(db.Bool)
+    is_sale_item  = db.Column(db.Boolean)
 
     cart_item = db.relationship(
         'CartItem',
