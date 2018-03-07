@@ -6,7 +6,7 @@ from app.models.category import Category
 
 
 class CatalogItem(db.Model):
-    __tablename__ = 'CatalogItem'
+    __tablename__ = 'catalog_items'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Integer)
@@ -14,11 +14,6 @@ class CatalogItem(db.Model):
     imageUrl = db.Column(db.String(140))
     price  = db.Column(db.Numeric)
     is_sale_item  = db.Column(db.Boolean)
-
-    cart_item = db.relationship(
-        'CartItem',
-    )
-
-    category = db.relationship(
-        'Category',
-    )
+    cart_item_id = db.Column(db.Integer,db.ForeignKey('cart_items.id'))
+    order_detail_id = db.Column(db.Integer,db.ForeignKey('order_details.id'))
+    categories_id = db.Column(db.Integer,db.ForeignKey('categories.id'))

@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a href="{{ url_for('main.index') }}" class="navbar-brand">Stationary Shop</a>
+  <a href="{{ url_for('cart.index') }}" class="navbar-brand">Stationary Shop</a>
    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
    </button>
@@ -7,13 +7,10 @@
     <ul class="navbar-nav mr-auto">
 
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('order.index') }}">Index</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('cart.index') }}">Cart</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('catalog.index') }}">Catalog</a>
       </li>
     </ul>
 

@@ -10,6 +10,6 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
 
-    cart_items = db.relationship(
-        'CartItem',
+    catalog_items = db.relationship(
+        'CatalogItem'
     )

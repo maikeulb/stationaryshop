@@ -12,13 +12,7 @@ class OrderDetail(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     amount = db.Column(db.Integer)
     price = db.Column(db.Numeric)
-    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))
-    catalog_item_id = db.Column(db.Integer, db.ForeignKey('catalog_items.id'))
 
-    cart_item = db.relationship(
-        'CartItem',
-    )
-
-    order = db.relationship(
-        'Order',
+    catalog_item = db.relationship(
+        'CatalogItem',
     )

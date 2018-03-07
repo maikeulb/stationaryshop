@@ -10,6 +10,7 @@ class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     order_total = db.Column(db.Numeric)
     order_placed = db.Column(db.DateTime, default = datetime.utcnow)
+    order_detail_id = db.Column(db.Integer, db.ForeignKey('order_details.id'))
 
     order_lines = db.relationship(
         'OrderDetail',

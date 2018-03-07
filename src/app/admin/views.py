@@ -34,7 +34,7 @@ def create_catalog_item():
 
     catalog_items = CatalogItem.query.all()
 
-    return render_template('admin/catalog_item.html',
+    return render_template('admin/catalog.html',
                             form=form,
                             catalog_items=catalog_items)
 
