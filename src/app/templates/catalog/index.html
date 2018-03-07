@@ -5,6 +5,11 @@
 
 <div id="catalog_items">
 
+    {% for catalog_item in catalog_items %}
+      {% include 'main/_catalog_item.html' %}
+    {% endfor %}
+
+
 </main>
 {% endblock %}
 
