@@ -14,6 +14,5 @@ class CatalogItem(db.Model):
     image_url = db.Column(db.String(140))
     price  = db.Column(db.Numeric)
     is_sale_item  = db.Column(db.Boolean)
-    cart_item_id = db.Column(db.Integer,db.ForeignKey('cart_items.id'))
     order_detail_id = db.Column(db.Integer,db.ForeignKey('order_details.id'))
     category_id = db.Column(db.Integer,db.ForeignKey('categories.id'))
