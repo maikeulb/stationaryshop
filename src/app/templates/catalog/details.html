@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+  <main>
+
+<div class="thumbnail">
+  <img alt="{{ catalog_item.name }} " src="{{ catalog_item.image_url }}">
+    <div class="caption-full">
+      <h3 class="pull-right">{{ catalog_item.price }}</h3>
+        <h3>
+          <a href="#">{{ catalog_item.name }}</a>
+        </h3>
+        <h4>{{ catalog_item.description }} </h4>
+        <p class="button">
+            <a href="{{ url_for('cart.add_to_cart', price=catalog_item.price) }}" class="btn
+              btn-primary">Add To Cart</a>
+        </p>
+    </div>
+</div>
+
+</main>
+{% endblock %}
