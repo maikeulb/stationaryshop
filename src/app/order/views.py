@@ -4,6 +4,8 @@ from flask import (
     render_template,
     flash,
     redirect,
+    g,
+    session,
     url_for,
     request,
     current_app
@@ -13,30 +15,35 @@ from app.extensions import db
 from app.order import order
 from app.models import (
     Cart,
+    Category,
+    CartItem,
+    CatalogItem,
     Order,
 )
+import uuid
 
 
-@order.route('/index')
-def index():
-    ##
+@order.before_app_request
+def before_request():
     if 'cart_id' in session:
         g.cart_id = session['cart_id']
     else:
-        session['cart_id'] = random(int)
-    ##
+        g.cart_id = str(uuid.uuid4())
+        session['cart_id'] = g.cart_id
+    g.cart = Cart.query \
+        .filter_by(id=g.cart_id) \
+        .first()
+    if g.cart is None:
+        g.cart = Cart(id=g.cart_id)
+        db.session.add(g.cart)
 
-    # if form.validate_on_submit():
-        # cart = Cart.query \
-            # .filter_by(cart_id=cart_id) \
-            # .all()
-        # cart.cart_items = form.cart_items.data
-        # order = Order(order_lines=form.order_lines.data)
-        # cart.cart_items.remove(cart_items)
-        # db.session.commit()
-        # return redirect(url_for('order.complete'))
-    return render_template('order/index.html')
 
+@order.route('/checkout/')
+def checkout():
+    g.cart.cart_items = []
+    db.session.commit()
+
+    return redirect(url_for('order.complete'))
 
 @order.route('/complete')
 def complete():

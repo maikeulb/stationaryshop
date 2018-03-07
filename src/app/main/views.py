@@ -3,6 +3,8 @@ from datetime import datetime
 from flask import (
     render_template,
     flash,
+    g,
+    session,
     redirect,
     url_for,
     request,
@@ -12,9 +14,27 @@ from flask_login import current_user, login_required
 from app.extensions import db
 from app.main import main
 from app.models import (
-    CatalogItem,
+    Cart,
     Category,
+    CartItem,
+    CatalogItem,
 )
+import uuid
+
+
+@main.before_app_request
+def before_request():
+    if 'cart_id' in session:
+        g.cart_id = session['cart_id']
+    else:
+        g.cart_id = str(uuid.uuid4())
+        session['cart_id'] = g.cart_id
+    g.cart = Cart.query \
+        .filter_by(id=g.cart_id) \
+        .first()
+    if g.cart is None:
+        g.cart = Cart(id=g.cart_id)
+        db.session.add(g.cart)
 
 
 @main.route('/', defaults={'category': None})

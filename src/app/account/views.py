@@ -1,6 +1,8 @@
 from flask import (
     render_template,
     flash,
+    g,
+    session,
     redirect,
     url_for,
     request
@@ -18,13 +20,23 @@ from app.account.forms import (
     LoginForm,
     RegistrationForm,
 )
-from app.models import User
+from app.models import User, Cart
 from app.extensions import login, db
 
 
 @account.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
+
+        if 'cart_id' in session:
+            g.cart_id = current_user.username
+            session['cart_id'] = g.cart_id
+        else:
+            g.cart_id = current_user.username
+        if g.cart is None:
+            g.cart = Cart(id=g.cart_id)
+            db.session.add(g.cart)
+
         return redirect(url_for('main.index'))
     form = LoginForm(request.form)
     if form.validate_on_submit():
