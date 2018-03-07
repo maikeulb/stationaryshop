@@ -3,7 +3,6 @@ from datetime import datetime
 from time import time
 from flask import current_app
 
-
 class Cart(db.Model):
     __tablename__ = 'carts'
 

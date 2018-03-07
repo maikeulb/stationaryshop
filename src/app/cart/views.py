@@ -1,6 +1,5 @@
 import sys
 from datetime import datetime
-from sqlalchemy import and_
 from flask import (
     render_template,
     flash,
@@ -21,7 +20,7 @@ from app.models import (
     CatalogItem,
 )
 import json
-import random
+import uuid
 
 
 @cart.route('/index')
@@ -30,7 +29,7 @@ def index():
     if 'cart_id' in session:
         cart_id = session['cart_id']
     else:
-        cart_id = random.choice("abcdefghijkl")
+        cart_id = str(uuid.uuid4())
         session['cart_id'] = cart_id
 
     cart = Cart.query \
@@ -72,14 +71,14 @@ def add_to_cart(catalog_item_id):
         if 'cart_id' in session:
             cart_id = session['cart_id']
         else:
-            cart_id = random.choice("abcdefghijkl")
+            cart_id = str(uuid.uuid4())
             session['cart_id'] = cart_id
 
         cart = Cart.query \
             .filter_by(id=cart_id) \
             .first()
         if cart is None:
-            cart = Cart(cart_id=cart_id)
+            cart = Cart(id=cart_id)
             db.session.add(cart)
 
         cart_item = CartItem.query \
@@ -110,7 +109,7 @@ def remove_from_cart(catalog_item_id):
         if 'cart_id' in session:
             cart_id = session['cart_id']
         else:
-            cart_id = random.choice("abcdefghijkl")
+            cart_id = str(uuid.uuid4())
             session['cart_id'] = cart_id
 
         cart_item = CartItem.query \

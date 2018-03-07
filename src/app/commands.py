@@ -6,6 +6,8 @@ import click
 from flask import current_app
 from flask.cli import with_appcontext
 from werkzeug.exceptions import MethodNotAllowed, NotFound
+from app.extensions import db
+from app.models import Category
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 PROJECT_ROOT = os.path.join(HERE, os.pardir)
@@ -112,3 +114,9 @@ def urls(url, order):
 
     for row in rows:
         click.echo(str_template.format(*row[:column_length]))
+
+@click.command()
+def seed():
+    category = Category(name="Alarm Clocks")
+    db.session.add(category)
+    db.session.commit()

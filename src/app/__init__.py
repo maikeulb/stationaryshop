@@ -6,6 +6,7 @@ from flask import(
     render_template,
     request,
     current_app)
+from app import commands
 from app.account import account as account_bp
 from app.extensions import(
     bcrypt,
@@ -18,7 +19,6 @@ from app.cart import cart as cart_bp
 from app.catalog import catalog as catalog_bp
 from app.order import order as order_bp
 from app.admin import admin as admin_bp
-from app import commands
 Config = eval(os.environ['FLASK_APP_CONFIG'])
 
 def create_app(config_class=Config):
@@ -62,3 +62,4 @@ def register_commands(app):
     app.cli.add_command(commands.lint)
     app.cli.add_command(commands.clean)
     app.cli.add_command(commands.urls)
+    app.cli.add_command(commands.seed)
