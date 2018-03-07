@@ -20,7 +20,7 @@ from app.models import (
 )
 
 
-@admin.route('/catalog/')
+@admin.route('/catalog/', methods=['GET', 'POST'])
 def create_catalog_item():
     form = CatalogItemForm()
     if form.validate_on_submit():
@@ -31,6 +31,7 @@ def create_catalog_item():
                                    is_sale_item= form.is_sale_item.data,
                                    categgry_id = form.category_id.data)
         db.session.add(catalog_item)
+        db.session.commit()
 
     catalog_items = CatalogItem.query.all()
 
@@ -38,12 +39,13 @@ def create_catalog_item():
                             form=form,
                             catalog_items=catalog_items)
 
-@admin.route('/category/')
+@admin.route('/category/', methods=['GET', 'POST'])
 def create_category():
     form = CategoryForm()
     if form.validate_on_submit():
         category = Category(name=form.name.data)
         db.session.add(category)
+        db.session.commit()
 
     categories = Category.query.all()
 
