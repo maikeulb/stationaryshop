@@ -29,7 +29,7 @@ def create_catalog_item():
                                    image_url= form.image_url.data,
                                    price= form.price.data,
                                    is_sale_item= form.is_sale_item.data,
-                                   categgry_id = form.category_id.data)
+                                   category_id = form.category_id.data)
         db.session.add(catalog_item)
         db.session.commit()
 

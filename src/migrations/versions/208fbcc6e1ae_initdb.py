@@ -1,8 +1,8 @@
-"""fixforeignkeys
+"""InitDB
 
-Revision ID: 8892010cef19
+Revision ID: 208fbcc6e1ae
 Revises: 
-Create Date: 2018-03-06 21:06:49.412870
+Create Date: 2018-03-06 21:57:03.533765
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '8892010cef19'
+revision = '208fbcc6e1ae'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -59,16 +59,16 @@ def upgrade():
     )
     op.create_table('catalog_items',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.Integer(), nullable=True),
+    sa.Column('name', sa.String(length=50), nullable=True),
     sa.Column('description', sa.String(length=140), nullable=True),
-    sa.Column('imageUrl', sa.String(length=140), nullable=True),
+    sa.Column('image_url', sa.String(length=140), nullable=True),
     sa.Column('price', sa.Numeric(), nullable=True),
     sa.Column('is_sale_item', sa.Boolean(), nullable=True),
     sa.Column('cart_item_id', sa.Integer(), nullable=True),
     sa.Column('order_detail_id', sa.Integer(), nullable=True),
-    sa.Column('categories_id', sa.Integer(), nullable=True),
+    sa.Column('category_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['cart_item_id'], ['cart_items.id'], ),
-    sa.ForeignKeyConstraint(['categories_id'], ['categories.id'], ),
+    sa.ForeignKeyConstraint(['category_id'], ['categories.id'], ),
     sa.ForeignKeyConstraint(['order_detail_id'], ['order_details.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
