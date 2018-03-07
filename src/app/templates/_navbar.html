@@ -6,11 +6,16 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav mr-auto">
 
-      <li class="nav-item">
+      <li class="nav-item"> 
+        <a href="{{ url_for('account.login') }}" class="nav-link">Login</a>
       </li>
+      {% include '_category_menu_component.html' %}
       <li class="nav-item">
+        <a href="{{ url_for('account.login') }}" class="nav-link">Login</a>
       </li>
+      {% include '_shopping_cart_component.html' %}
       <li class="nav-item">
+        <a href="{{ url_for('account.login') }}" class="nav-link">Login</a>
       </li>
     </ul>
 

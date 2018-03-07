@@ -7,7 +7,7 @@
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>Selected amount</th>
+            <th>Quantity</th>
             <th>Cart</th>
             <th class="text-right">Price</th>
             <th class="text-right">Subtotal</th>
@@ -16,7 +16,7 @@
     <tbody>
         {% for line in cart.cart_items %}
             <tr>
-              <td class="text-center"> {{ line.Amount }}</td>
+              <td class="text-center"> {{ line.amount }}</td>
               <td class="text-left">{{ line.catalog_item.name }}</td>
               <td class="text-right">{{ line.catalog_item.price }}</td>
                 <td class="text-right">
@@ -34,6 +34,10 @@
         </tr>
     </tfoot>
 </table>
+
+<a href="{{ url_for('order.checkout') }}" class="btn btn-primary m-2">
+CHECKOUT
+</a>
 
 </main>
 {% endblock %}

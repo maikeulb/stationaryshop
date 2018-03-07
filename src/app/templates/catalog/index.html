@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-  <main>
-
+  <main class="site-content">
     <div class="container">
       <div class="row">
         {% for catalog_item in catalog_items %}
@@ -10,7 +9,5 @@
         {% endfor %}
       </div>
     </div>
-
-
 </main>
 {% endblock %}
