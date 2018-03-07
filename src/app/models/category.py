@@ -11,5 +11,6 @@ class Category(db.Model):
     name = db.Column(db.String(50))
 
     catalog_items = db.relationship(
-        'CatalogItem'
+        'CatalogItem',
+        backref='category'
     )
