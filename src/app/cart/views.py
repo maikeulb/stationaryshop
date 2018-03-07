@@ -12,9 +12,6 @@ from flask import (
 from flask_login import current_user, login_required
 from app.extensions import db
 from app.cart import cart
-from app.cart.forms import (
-    CartForm,
-)
 from app.models import (
     Cart,
     Category,
@@ -32,8 +29,8 @@ def index():
        session['cart_id'] = uuid.uuid4()
     ####
 
-    cart_items_from_session = Cart.query
-        .filter_by(cart_id=cart_id)
+    cart_items_from_session = Cart.query \
+        .filter_by(cart_id=cart_id) \
         .all()
 
     cart = Cart(cart_items=cart_items)
@@ -44,7 +41,7 @@ def index():
     db.session.add(cart)
     db.session.commit()
 
-    return render_template('cart/index.html,'
+    return render_template('cart/index.html',
                             cart=cart,
                             cart_total=cart_total)
 
@@ -96,7 +93,7 @@ def remove_from_cart(id):
         if cart_item.amount > 1:
             cart_item.amount -=1
         else:
-        db.session.delete(cart_item)
-        db.session.commit()
+            db.session.delete(cart_item)
+            db.session.commit()
 
     return redirect(url_for('cart.index'))

@@ -31,15 +31,15 @@ def index(category):
                 .filter_by(category=category) \
                 .first_or_default().name
 
-    return render_template('catalog/index.html,'
+    return render_template('catalog/index.html',
                             catalog_items=catalog_items,
                             current_category=current_category)
 
 
 @catalog.route('/details/<id>')
-def index(id):
+def details(id):
     catalog_item = CatalogItem.query \
         .filter_by(id=id) \
         .first_or_404()
-    return render_template('catalog/details.html,'
+    return render_template('catalog/details.html',
                             catalog_item=catalog_item)

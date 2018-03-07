@@ -10,14 +10,13 @@ from flask import (
 )
 from flask_login import current_user, login_required
 from app.extensions import db
-from app.catalog import catalog
+from app.main import main
 from app.models import (
     CatalogItem,
     Category,
 )
 
 
-@main.route('/')
 @main.route('/index')
 def index(category):
     if category is null:
@@ -32,6 +31,6 @@ def index(category):
                 .filter_by(category=category) \
                 .first_or_default().name
 
-    return render_template('catalog/index.html,'
+    return render_template('catalog/index.html',
                             catalog_items=catalog_items,
                             current_category=current_category)

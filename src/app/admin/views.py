@@ -11,9 +11,9 @@ from flask import (
 from flask_login import current_user, login_required
 from app.extensions import db
 from app.admin import admin
-from app.catalog.forms import (
+from app.admin.forms import (
     CatalogItemForm,
-    CategoryForm,
+    CategoryForm)
 from app.models import (
     CatalogItem,
     Category,
@@ -21,14 +21,14 @@ from app.models import (
 
 
 @admin.route('/catalog/')
-def create():
+def create_catalog_item():
     form = CatalogItemForm()
     if form.validate_on_submit():
         catalog_item = CatalogItem(name=form.name.data,
                                    description=form.description.data,
-                                   image_url= form.image_url,data
-                                   price= form.price,data
-                                   is_sale_item= form.is_sale_item,data
+                                   image_url= form.image_url.data,
+                                   price= form.price.data,
+                                   is_sale_item= form.is_sale_item.data,
                                    categgry_id = form.category_id.data)
         db.session.add(catalog_item)
 
@@ -39,7 +39,7 @@ def create():
                             catalog_items=catalog_items)
 
 @admin.route('/category/')
-def create():
+def create_category():
     form = CategoryForm()
     if form.validate_on_submit():
         category = Category(name=form.name.data)
