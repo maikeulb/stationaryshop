@@ -33,9 +33,11 @@ def index(id):
         current_category = Category.query \
                 .filter_by(id=id) \
                 .first_or_404().name
-
+    categories = Category.query \
+        .order_by(Category.name.desc())
     return render_template('catalog/index.html',
                             catalog_items=catalog_items,
+                            categories=categoreis,
                             current_category=current_category)
 
 
@@ -44,5 +46,8 @@ def details(id):
     catalog_item = CatalogItem.query \
         .filter_by(id=id) \
         .first_or_404()
+    categories = Category.query \
+        .order_by(Category.name.desc())
     return render_template('catalog/details.html',
+                            categories=categoreis,
                             catalog_item=catalog_item)
