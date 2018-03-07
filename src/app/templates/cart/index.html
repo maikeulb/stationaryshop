@@ -2,27 +2,39 @@
 
 {% block app_content %}
   <main>
-    <div class="jumbotron">
-      <h1>Leica Rentals</h1>
-      <p class="lead">Leica Rentals is a flask web application for managing lens
-        rentals.</p>
-      <p><a href="{{ url_for('account.register') }}" class="btn
-        btn-primary">Register</a></p>
-      <p><a href="{{ url_for('account.login') }}" class="btn
-        btn-secondary">Login</a></p>
-    </div>
 
-  <div class="row">
-    <div class="col-md-4">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    </div>
-    <div class="col-md-4">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    </div>
-    <div class="col-md-4">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    </div>
-  </div>
+<h2>Your shopping cart</h2>
+<h4>Here are the delicious pies in your shopping cart.</h4>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Selected amount</th>
+            <th>Cart</th>
+            <th class="text-right">Price</th>
+            <th class="text-right">Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for line in cart.cart_items %}
+            <tr>
+              <td class="text-center"> {{ line.Amount }}</td>
+              <td class="text-left">{{ line.catalog_item.name }}</td>
+              <td class="text-right">{{ line.catalog_item.price }}</td>
+                <td class="text-right">
+                    {{ line.amount * line.catalog_item.price }}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">Total:</td>
+            <td class="text-right">
+            <span> {{ cart_total }}</span>
+            </td>
+        </tr>
+    </tfoot>
+</table>
 
 </main>
 {% endblock %}
