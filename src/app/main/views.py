@@ -17,21 +17,22 @@ from app.models import (
 )
 
 
+@main.route('/', defaults={'category': None})
 @main.route('/index', defaults={'category': None})
-def index():
+def index(category):
     category = None
     if category is None:
-        catalog_items=CatalogItem.query \
-            .order_by(id)
-        current_category = 'All Items';
+        catalog_items = CatalogItem.query \
+            .all()
+        current_category = 'All Items'
     else:
         catalog_items = CatalogItem.query \
                 .filter_by(category=category) \
-                .order_by(category)
+                .all()
         current_category = Category.query \
                 .filter_by(category=category) \
                 .first_or_default().name
 
-    return render_template('catalog/index.html',
+    return render_template('main/index.html',
                             catalog_items=catalog_items,
                             current_category=current_category)

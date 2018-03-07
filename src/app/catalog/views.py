@@ -17,23 +17,25 @@ from app.models import (
 )
 
 
-# @catalog.route('/index/<category>', defaults={'category': None})
-# def index(category):
-#     if category is None:
-#         catalog_items=CatalogItem.query \
-#             .order_by(id)
-#         current_category = 'All Items';
-#     else:
-#         catalog_items = CatalogItem.query \
-#                 .filter_by(category=category) \
-#                 .order_by(category)
-#         current_category = Category.query \
-#                 .filter_by(category=category) \
-#                 .first_or_default().name
+@catalog.route('/<category>', defaults={'category': None})
+@catalog.route('/index/<category>', defaults={'category': None})
+def index(category):
+    category='pen'
+    if category is None:
+        catalog_items = CatalogItem.query \
+            .all()
+        current_category = 'All Items'
+    else:
+        catalog_items = CatalogItem.query \
+                .filter_by(category=category) \
+                .all()
+        current_category = Category.query \
+                .filter_by(category=category) \
+                .first_or_default().name
 
-    # return render_template('catalog/index.html',
-    #                         catalog_items=catalog_items,
-    #                         current_category=current_category)
+    return render_template('catalog/index.html',
+                            catalog_items=catalog_items,
+                            current_category=current_category)
 
 
 @catalog.route('/details/<id>')
