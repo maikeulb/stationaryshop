@@ -20,22 +20,37 @@ from app.account.forms import (
     LoginForm,
     RegistrationForm,
 )
-from app.models import User, Cart
+from app.models import User, Cart, Category
 from app.extensions import login, db
+import uuid
+
+@account.before_app_request
+def before_request():
+    if 'cart_id' in session:
+        g.cart_id = session['cart_id']
+    else:
+        g.cart_id = str(uuid.uuid4())
+        session['cart_id'] = g.cart_id
+    g.cart = Cart.query \
+        .filter_by(id=g.cart_id) \
+        .first()
+    if g.cart is None:
+        g.cart = Cart(id=g.cart_id)
+        db.session.add(g.cart)
 
 
 @account.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
 
-        if 'cart_id' in session:
-            g.cart_id = current_user.username
-            session['cart_id'] = g.cart_id
-        else:
-            g.cart_id = current_user.username
-        if g.cart is None:
-            g.cart = Cart(id=g.cart_id)
-            db.session.add(g.cart)
+        # if 'cart_id' in session:
+        #     g.cart_id = current_user.username
+        #     session['cart_id'] = g.cart_id
+        # else:
+        #     g.cart_id = current_user.username
+        # if g.cart is None:
+        #     g.cart = Cart(id=g.cart_id)
+        #     db.session.add(g.cart)
 
         return redirect(url_for('main.index'))
     form = LoginForm(request.form)
@@ -50,7 +65,14 @@ def login():
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('main.index')
         return redirect(next_page)
+
+    categories = Category.query \
+        .order_by(Category.name.desc())
+    cart_items=g.cart.cart_items
+
     return render_template('account/login.html',
+                           categories=categories,
+                           cart_items=cart_items,
                            title='Sign In',
                            form=form)
 
@@ -74,6 +96,12 @@ def register():
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('account.login'))
+    categories = Category.query \
+        .order_by(Category.name.desc())
+    cart_items=g.cart.cart_items
+
     return render_template('account/register.html',
+                           categories=categories,
+                           cart_items=cart_items,
                            title='Register',
                            form=form)

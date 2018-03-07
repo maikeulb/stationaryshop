@@ -52,9 +52,9 @@ def index(category):
         current_category = Category.query \
                 .filter_by(category=category) \
                 .first_or_default().name
+
     categories = Category.query \
         .order_by(Category.name.desc())
-
     cart_items=g.cart.cart_items
 
     return render_template('main/index.html',
