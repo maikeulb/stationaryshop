@@ -22,28 +22,31 @@ from app.models import (
 import json
 import uuid
 
+@cart.before_app_request
+def before_request():
+    if 'cart_id' in session:
+        g.cart_id = session['cart_id']
+    else:
+        g.cart_id = str(uuid.uuid4())
+        session['cart_id'] = g.cart_id
+    g.cart = Cart.query \
+        .filter_by(id=g.cart_id) \
+        .first()
+    if g.cart is None:
+        g.cart = Cart(id=g.cart_id)
+        db.session.add(g.cart)
+
+
+
 
 @cart.route('/index')
 def index():
 
-    if 'cart_id' in session:
-        cart_id = session['cart_id']
-    else:
-        cart_id = str(uuid.uuid4())
-        session['cart_id'] = cart_id
-
-    cart = Cart.query \
-        .filter_by(id=cart_id) \
-        .first()
-    if cart is None:
-        cart = Cart(cart_id=cart_id)
-        db.session.add(cart)
-
     cart_items = CartItem.query \
-        .filter_by(cart_id=cart_id) \
+        .filter_by(cart_id=g.cart_id) \
         .all()
 
-    cart.cart_items = cart_items
+    g.cart.cart_items = cart_items
 
     cart_item_prices = [cart_item.catalog_item.price for cart_item in cart_items]
     cart_item_amounts = [cart_item.amount for cart_item in cart_items]
@@ -53,11 +56,11 @@ def index():
 
     print(cart_total, sys.stdout)
 
-    db.session.add(cart)
+    db.session.add(g.cart)
     db.session.commit()
 
     return render_template('cart/index.html',
-                            cart=cart,
+                            cart=g.cart,
                             cart_total=cart_total)
 
 
@@ -67,26 +70,14 @@ def add_to_cart(catalog_item_id):
         .filter_by(id=catalog_item_id) \
         .first_or_404()
 
-    if selected_catalog_item:
-        if 'cart_id' in session:
-            cart_id = session['cart_id']
-        else:
-            cart_id = str(uuid.uuid4())
-            session['cart_id'] = cart_id
-
-        cart = Cart.query \
-            .filter_by(id=cart_id) \
-            .first()
-        if cart is None:
-            cart = Cart(id=cart_id)
-            db.session.add(cart)
+    if selected_catalog_item is not None:
 
         cart_item = CartItem.query \
-            .filter_by(catalog_item_id=catalog_item_id, cart_id=cart_id) \
-            .first()
+        .filter_by(catalog_item_id=catalog_item_id, cart_id=g.cart_id) \
+        .first()
 
         if cart_item is None:
-            cart_item = CartItem(cart_id=cart_id,
+            cart_item = CartItem(cart_id=g.cart_id,
                                 catalog_item=selected_catalog_item,
                                 amount=1)
             db.session.add(cart_item)
@@ -106,14 +97,8 @@ def remove_from_cart(catalog_item_id):
 
     if selected_catalog_item is not None:
 
-        if 'cart_id' in session:
-            cart_id = session['cart_id']
-        else:
-            cart_id = str(uuid.uuid4())
-            session['cart_id'] = cart_id
-
         cart_item = CartItem.query \
-            .filter_by(catalog_item_id=catalog_item_id, cart_id=cart_id)\
+            .filter_by(catalog_item_id=catalog_item_id, cart_id=g.cart_id)\
             .first_or_404()
 
         if cart_item:
