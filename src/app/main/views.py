@@ -52,7 +52,11 @@ def index(category):
         current_category = Category.query \
                 .filter_by(category=category) \
                 .first_or_default().name
+    categories = Category.query \
+        .order_by(Category.name.desc())
 
     return render_template('main/index.html',
                             catalog_items=catalog_items,
+                            categories=categories,
+                            cart=g.cart,
                             current_category=current_category)

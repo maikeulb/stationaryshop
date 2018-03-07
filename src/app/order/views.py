@@ -47,4 +47,8 @@ def checkout():
 
 @order.route('/complete')
 def complete():
-    return render_template('order/complete.html')
+    categories = Category.query \
+        .order_by(Category.name.desc())
+    return render_template('order/complete.html',
+                            cart=g.cart,
+                            categories=categories)

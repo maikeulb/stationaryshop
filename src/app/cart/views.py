@@ -58,10 +58,13 @@ def index():
     db.session.add(g.cart)
     db.session.commit()
 
+    categories = Category.query \
+        .order_by(Category.name.desc())
+
     return render_template('cart/index.html',
                             cart=g.cart,
+                            categories=categories,
                             cart_total=cart_total)
-
 
 @cart.route('/add/<int:catalog_item_id>')
 def add_to_cart(catalog_item_id):
