@@ -1,5 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a href="{{ url_for('cart.index') }}" class="navbar-brand">Stationary Shop</a>
+<nav class="px-5 navbar navbar-expand-lg navbar-light bg-light"
+  style="background-color:#fff; color:#fff;">
+  <a href="{{ url_for('main.index') }}" class="navbar-brand">Stationary Shop</a>
    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
    </button>
@@ -7,16 +8,10 @@
     <ul class="navbar-nav mr-auto">
 
       <li class="nav-item"> 
-        <a href="{{ url_for('account.login') }}" class="nav-link">Login</a>
+        <a href="{{ url_for('main.index') }}" class="nav-link">Home</a>
       </li>
-      {% include '_category_menu_component.html' %}
-      <li class="nav-item">
-        <a href="{{ url_for('account.login') }}" class="nav-link">Login</a>
-      </li>
-      {% include '_shopping_cart_component.html' %}
-      <li class="nav-item">
-        <a href="{{ url_for('account.login') }}" class="nav-link">Login</a>
-      </li>
+
+      {% include '_category_menu.html' %}
     </ul>
 
     <ul class = "navbar-nav">
@@ -27,7 +22,6 @@
       <li class="nav-item">
         <a href="{{ url_for('account.register') }}" class="nav-link">Register</a>
       </li>
-      </div>
       {% else %}
       <li class="nav-item">
         <span><a href="#" class="nav-link">Hello {{ current_user.username }}</a></span>
@@ -35,9 +29,8 @@
       <li class="nav-item">
         <a href="{{ url_for('account.logout') }}" class="nav-link">Logout</a>
       </li>
-        </div>
-      </div>
       {% endif %}
+      {% include '_cart_component.html' %}
     </ul>
   </div>
 </nav>

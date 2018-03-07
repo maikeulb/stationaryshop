@@ -55,8 +55,10 @@ def index(category):
     categories = Category.query \
         .order_by(Category.name.desc())
 
+    cart_items=g.cart.cart_items
+
     return render_template('main/index.html',
                             catalog_items=catalog_items,
                             categories=categories,
-                            cart=g.cart,
+                            cart_items=cart_items,
                             current_category=current_category)

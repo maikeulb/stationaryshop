@@ -14,7 +14,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for line in cart.cart_items %}
+        {% for line in cart_items %}
             <tr>
               <td class="text-center"> {{ line.amount }}</td>
               <td class="text-left">{{ line.catalog_item.name }}</td>

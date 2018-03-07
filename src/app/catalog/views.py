@@ -36,7 +36,6 @@ def before_request():
         db.session.add(g.cart)
 
 
-
 @catalog.route('/', defaults={'id': None})
 @catalog.route('/<int:id>')
 @catalog.route('/index/', defaults={'id': None})
@@ -55,8 +54,9 @@ def index(id):
                 .first_or_404().name
     categories = Category.query \
         .order_by(Category.name.desc())
+    cart_items=g.cart.cart_items
     return render_template('catalog/index.html',
-                            cart=g.cart,
+                            cart_items=cart_items,
                             catalog_items=catalog_items,
                             categories=categories,
                             current_category=current_category)

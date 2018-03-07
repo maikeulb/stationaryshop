@@ -60,9 +60,10 @@ def index():
 
     categories = Category.query \
         .order_by(Category.name.desc())
+    cart_items=g.cart.cart_items,
 
     return render_template('cart/index.html',
-                            cart=g.cart,
+                            cart_items=cart_items,
                             categories=categories,
                             cart_total=cart_total)
 
