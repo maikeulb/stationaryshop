@@ -39,15 +39,3 @@ def index(id):
                             catalog_items=catalog_items,
                             categories=categories,
                             current_category=current_category)
-
-
-@catalog.route('/details/<id>')
-def details(id):
-    catalog_item = CatalogItem.query \
-        .filter_by(id=id) \
-        .first_or_404()
-    categories = Category.query \
-        .order_by(Category.name.desc())
-    return render_template('catalog/details.html',
-                            categories=categories,
-                            catalog_item=catalog_item)
