@@ -37,7 +37,7 @@ def index(id):
         .order_by(Category.name.desc())
     return render_template('catalog/index.html',
                             catalog_items=catalog_items,
-                            categories=categoreis,
+                            categories=categories,
                             current_category=current_category)
 
 
@@ -49,5 +49,5 @@ def details(id):
     categories = Category.query \
         .order_by(Category.name.desc())
     return render_template('catalog/details.html',
-                            categories=categoreis,
+                            categories=categories,
                             catalog_item=catalog_item)

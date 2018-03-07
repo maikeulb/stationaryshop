@@ -1,5 +1,6 @@
 import config
 import os
+from flask_kvsession import KVSessionExtension
 
 from flask import(
     Flask,
@@ -13,6 +14,7 @@ from app.extensions import(
     csrf_protect,
     db,
     login,
+    store,
     migrate)
 from app.main import main as main_bp
 from app.cart import cart as cart_bp
@@ -37,6 +39,7 @@ def register_extensions(app):
     csrf_protect.init_app(app)
     login.init_app(app)
     migrate.init_app(app, db)
+    KVSessionExtension(store, app)
     return None
 
 

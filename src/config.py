@@ -1,4 +1,5 @@
 import os
+import redis
 from dotenv import load_dotenv
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
@@ -14,6 +15,9 @@ class Config(object):
     ELASTICSEARCH_URL=os.environ.get('ELASTIC_URI') or \
       'http://172.17.0.5:9200'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SESSION_TYPE = 'redis'
+    SESSION_REDIS = redis.from_url('localhost:6379')
+
     LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
 
     ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
@@ -39,6 +43,6 @@ class ProductionConfig(Config):
 class TestingConfig(Config):
     DEBUG = True
     TESTING = True
-    BCRYPT_LOG_ROUNDS = 4  
+    BCRYPT_LOG_ROUNDS = 4
     CSRF_ENABLED = False
-    WTF_CSRF_ENABLED = False  
+    WTF_CSRF_ENABLED = False

@@ -19,10 +19,11 @@ from app.models import (
 )
 import json
 
-@api.route('/catalogitems/', methods=['post'])
+
+@api.route('/catalog/', methods=['post'])
 def add_to_cart():
     catalog_items = CatalogItem.query \
-        .order_by(id)
+        .order_by()
 
     return jsonify(catalog_items)
 

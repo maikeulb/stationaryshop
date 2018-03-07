@@ -37,8 +37,6 @@ def before_request():
         db.session.add(g.cart)
 
 
-
-
 @cart.route('/index')
 def index():
 
