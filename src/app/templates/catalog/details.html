@@ -15,6 +15,10 @@
             <a href="{{ url_for('cart.add_to_cart', catalog_item_id=catalog_item.id) }}" class="btn
               btn-primary">Add To Cart</a>
         </p>
+        <p class="button">
+            <a href="{{ url_for('cart.remove_from_cart', catalog_item_id=catalog_item.id) }}" class="btn
+              btn-primary">Remove FROM  Cart</a>
+        </p>
     </div>
 </div>
 
