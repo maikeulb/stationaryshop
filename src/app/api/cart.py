@@ -41,14 +41,9 @@ def before_request():
 
 @api.route('/cart/<int:id>', methods=['POST'])
 def add_to_cart(id):
-    print(id, sys.stdout)
-    print('******', sys.stdout)
-    print('******', sys.stdout)
-    print('******', sys.stdout)
-    print('******', sys.stdout)
     selected_catalog_item = CatalogItem.query \
         .filter_by(id=id) \
-        .first_or_404()
+        .first()
 
     if selected_catalog_item is not None:
 
@@ -65,28 +60,31 @@ def add_to_cart(id):
             cart_item.amount += 1
 
         db.session.commit()
+        return jsonify({'result': id})
 
-    return jsonify({'result': id})
+    return jsonify({'result': 0})
 
 
-@api.route('/cart/<int:catalog_item_id>', methods=['DELETE'])
-def remove_from_cart(catalog_item_id):
+@api.route('/cart/<int:id>', methods=['DELETE'])
+def remove_from_cart(id):
     selected_catalog_item = CatalogItem.query \
-        .filter_by(id=catalog_item_id) \
-        .first_or_404()
+        .filter_by(id=id) \
+        .first()
 
     if selected_catalog_item is not None:
 
         cart_item = CartItem.query \
-            .filter_by(catalog_item_id=catalog_item_id, cart_id=g.cart_id)\
-            .first_or_404()
+            .filter_by(catalog_item_id=id, cart_id=g.cart_id)\
+            .first()
 
         if cart_item:
             if cart_item.amount > 1:
                 cart_item.amount -= 1
             else:
                 db.session.delete(cart_item)
+            db.session.commit()
+            return jsonify({'result': id})
 
-        db.session.commit()
+        return jsonify({'result': 0})
 
-    return jsonify({'result': cart_item})
+    return jsonify({'result': 0})

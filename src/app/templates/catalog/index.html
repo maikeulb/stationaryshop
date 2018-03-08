@@ -3,10 +3,12 @@
 {% block app_content %}
   <main class="site-content">
     <div class="container">
-      <div class="row" id ="products">
+      <div id ="products">
+      <div class="row">
         {% for catalog_item in catalog_items %}
           {% include '/catalog/_product.html' %}
         {% endfor %}
+        </div>
       </div>
     </div>
 </main>
@@ -32,21 +34,58 @@
     $('#products').on("click", '.js-add-to-cart', addToCart);
     function addToCart (e) {
       var button = $(e.target)
+      console.log(button)
       var productId = button.data("product-id");
-      alert(productId)
+      console.log(productId)
       addToCartService(productId, done, fail)
     };
      function done(data) {
-       alert('done')
+       if (data.result != 0) {
+          new Noty({
+            theme: 'rellax',
+            type: 'info',
+            text: 'Item added to cart!'
+          }).setTimeout(1500).show();
+       }
     };
      function fail() {
        alert("Something failed");
     };
     function addToCartService(productId, done, fail) {
-      alert(productId)
       $.ajax({
          url: "/api/cart/" + productId,
          method: "POST",
+       })
+         .done(done)
+         .fail(fail);
+    };
+  });
+</script>
+
+<script>
+  $(document).ready(function () {
+    $('#products').on("click", '.js-remove-from-cart', removeFromCart);
+    function removeFromCart (e) {
+      var button = $(e.target)
+      var productId = button.data("product-id");
+      removeFromCartService(productId, done, fail)
+    };
+     function done(data) {
+       if (data.result != 0) {
+          new Noty({
+            theme: 'rellax',
+            type: 'info',
+            text: 'Item removed from cart!'
+          }).setTimeout(1500).show();
+       }
+    };
+     function fail() {
+       alert("Something failed");
+    };
+    function removeFromCartService(productId, done, fail) {
+      $.ajax({
+         url: "/api/cart/" + productId,
+         method: "DELETE",
        })
          .done(done)
          .fail(fail);
