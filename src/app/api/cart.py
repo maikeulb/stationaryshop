@@ -3,10 +3,12 @@ from datetime import datetime
 from flask import (
     render_template,
     flash,
+    g,
+    jsonify,
+    session,
     redirect,
     url_for,
     request,
-    jsonify,
     current_app
 )
 from flask_login import current_user, login_required
@@ -14,59 +16,77 @@ from app.extensions import db
 from app.api import api
 from app.models import (
     Cart,
+    Category,
     CartItem,
-    Catalog,
+    CatalogItem,
 )
 import json
+import uuid
 
-@api.route('/add/', methods=['post'])
-def add_to_cart():
-    data = request.data
-    dataDict = json.loads(data)
 
-    ## movies to before_request
+@api.before_app_request
+def before_request():
     if 'cart_id' in session:
         g.cart_id = session['cart_id']
     else:
-        session['cart_id'] = random(int)
-    ####
+        g.cart_id = str(uuid.uuid4())
+        session['cart_id'] = g.cart_id
+    g.cart = Cart.query \
+        .filter_by(id=g.cart_id) \
+        .first()
+    if g.cart is None:
+        g.cart = Cart(id=g.cart_id)
+        db.session.add(g.cart)
 
-    selected_catalog_item = Cart.query \
-        .filter_by(catalog_it=dataDict['catalog_id'], cart_id=cart_id)\
-        .single_or_404()
 
-    if cart_item is null:
-        cart = Cart(cart_id = cart_id,
-                     catalog_item=selected_catalog_item,
-                     amount=1)
-        db.session.add(cart)
-    else:
-        cart.cart_item.amount += 1
-    db.session.commit()
+@api.route('/cart/<int:id>', methods=['POST'])
+def add_to_cart(id):
+    print(id, sys.stdout)
+    print('******', sys.stdout)
+    print('******', sys.stdout)
+    print('******', sys.stdout)
+    print('******', sys.stdout)
+    selected_catalog_item = CatalogItem.query \
+        .filter_by(id=id) \
+        .first_or_404()
 
-    return redirect(url_for('cart.index'))
+    if selected_catalog_item is not None:
 
-@api.route('/remove/', methods=['post'])
-def remove_from_cart(id):
-    data = request.data
-    dataDict = json.loads(data)
+        cart_item = CartItem.query \
+        .filter_by(catalog_item_id=id, cart_id=g.cart_id) \
+        .first()
 
-    ####
-    if 'cart_id' in session:
-        g.cart_id = session['cart_id']
-    else:
-        session['cart_id'] = random(int)
-    ####
-
-    cart_item = CartItem.query \
-        .filter_by(catalog_it=dataDict['catalog_id'], cart_id=cart_id) \
-        .single_or_404()
-
-    if cart_item:
-        if cart_item.amount > 1:
-            cart_item.amount -=1
+        if cart_item is None:
+            cart_item = CartItem(cart_id=g.cart_id,
+                                catalog_item=selected_catalog_item,
+                                amount=1)
+            db.session.add(cart_item)
         else:
-        db.session.delete(cart_item)
+            cart_item.amount += 1
+
         db.session.commit()
 
-    return redirect(url_for('cart.index'))
+    return jsonify({'result': id})
+
+
+@api.route('/cart/<int:catalog_item_id>', methods=['DELETE'])
+def remove_from_cart(catalog_item_id):
+    selected_catalog_item = CatalogItem.query \
+        .filter_by(id=catalog_item_id) \
+        .first_or_404()
+
+    if selected_catalog_item is not None:
+
+        cart_item = CartItem.query \
+            .filter_by(catalog_item_id=catalog_item_id, cart_id=g.cart_id)\
+            .first_or_404()
+
+        if cart_item:
+            if cart_item.amount > 1:
+                cart_item.amount -= 1
+            else:
+                db.session.delete(cart_item)
+
+        db.session.commit()
+
+    return jsonify({'result': cart_item})

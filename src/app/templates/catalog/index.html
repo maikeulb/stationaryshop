@@ -3,11 +3,54 @@
 {% block app_content %}
   <main class="site-content">
     <div class="container">
-      <div class="row">
+      <div class="row" id ="products">
         {% for catalog_item in catalog_items %}
           {% include '/catalog/_product.html' %}
         {% endfor %}
       </div>
     </div>
 </main>
+{% endblock %}
+
+{% block js %}
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    var csrf_token = "{{ csrf_token() }}";
+    $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+        if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader("X-CSRFToken", csrf_token);
+        }
+      }
+    });
+  });
+</script>
+
+<script>
+  $(document).ready(function () {
+    $('#products').on("click", '.js-add-to-cart', addToCart);
+    function addToCart (e) {
+      var button = $(e.target)
+      var productId = button.data("product-id");
+      alert(productId)
+      addToCartService(productId, done, fail)
+    };
+     function done(data) {
+       alert('done')
+    };
+     function fail() {
+       alert("Something failed");
+    };
+    function addToCartService(productId, done, fail) {
+      alert(productId)
+      $.ajax({
+         url: "/api/cart/" + productId,
+         method: "POST",
+       })
+         .done(done)
+         .fail(fail);
+    };
+  });
+</script>
 {% endblock %}

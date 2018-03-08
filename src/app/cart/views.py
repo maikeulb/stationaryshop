@@ -64,6 +64,7 @@ def index():
 
     return render_template('cart/index.html',
                             cart_items=cart_items,
+                            cart=g.cart,
                             categories=categories,
                             cart_total=cart_total)
 

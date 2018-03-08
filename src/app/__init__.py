@@ -16,6 +16,7 @@ from app.extensions import(
     login,
     store,
     migrate)
+from app.api import api as api_bp
 from app.main import main as main_bp
 from app.cart import cart as cart_bp
 from app.catalog import catalog as catalog_bp
@@ -45,6 +46,7 @@ def register_extensions(app):
 
 def register_blueprints(app):
     app.register_blueprint(main_bp)
+    app.register_blueprint(api_bp, url_prefix='/api')
     app.register_blueprint(account_bp, url_prefix='/account')
     app.register_blueprint(admin_bp, url_prefix='/admin')
     app.register_blueprint(cart_bp, url_prefix='/cart')
