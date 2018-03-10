@@ -1,10 +1,9 @@
-{% if cart_items %}
+{% if cart_quantity %}
     <li class="nav-item">
       <a href="{{ url_for('cart.index') }}"> 
             <i class="fas fa-shopping-cart fa-2x"></i>
             <span id="cart-status">
-              {{ cart_items | length }} 
-              {{ cart_items }} 
+              {{ cart_quantity }} 
             </span>
         </a>
     </li>

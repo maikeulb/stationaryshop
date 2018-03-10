@@ -68,11 +68,13 @@ def login():
 
     categories = Category.query \
         .order_by(Category.name.desc())
+
     cart_items=g.cart.cart_items
+    cart_quantity =  sum([item.amount for item in cart_items])
 
     return render_template('account/login.html',
                            categories=categories,
-                           cart_items=cart_items,
+                           cart_quantity=cart_quantity,
                            title='Sign In',
                            form=form)
 
@@ -99,9 +101,11 @@ def register():
     categories = Category.query \
         .order_by(Category.name.desc())
     cart_items=g.cart.cart_items
+    cart_quantity =  sum([item.amount for item in cart_items])
+
 
     return render_template('account/register.html',
                            categories=categories,
-                           cart_items=cart_items,
+                           cart_quantity=cart_quantity,
                            title='Register',
                            form=form)

@@ -48,9 +48,11 @@ def checkout():
 def complete():
     categories = Category.query \
         .order_by(Category.name.desc())
-    cart_items = g.cart.cart_items
+    cart_items=g.cart.cart_items
+    cart_quantity =  sum([item.amount for item in cart_items])
+
     return render_template('order/complete.html',
-                           cart_items=cart_items,
+                           cart_quantity=cart_quantity,
                            categories=categories)
 
 

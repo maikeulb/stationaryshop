@@ -16,9 +16,9 @@
       <tr>
         <td class="text-center"> {{ line.amount }}</td>
         <td class="text-left">{{ line.catalog_item.name }}</td>
-        <td class="text-right">{{ line.catalog_item.price }}</td>
+        <td class="text-right">{{ "${:,.2f}".format(line.catalog_item.price) }}</td>
         <td class="text-right">
-          {{ line.amount * line.catalog_item.price }}
+          {{ "${:,.2f}".format(line.amount * line.catalog_item.price) }}
         </td>
       </tr>
       {% endfor %}
@@ -27,7 +27,7 @@
       <tr>
         <td colspan="3" class="text-right">Total:</td>
         <td class="text-right">
-          <span> {{ cart_total }}</span>
+          <span> {{ "${:,.2f}".format(cart_total) }}</span>
         </td>
       </tr>
     </tfoot>
@@ -39,7 +39,7 @@
       data-key="{{ key }}" 
       data-locale="auto"
       data-description="Stationary Shop" 
-      data-amount="{{ cart_total }}" >
+      data-amount="{{ cart_total * 100 }}" >
       document.getElementsByClassName("stripe-button-el")[0].style.display = 'none' !important;
     </script>
 

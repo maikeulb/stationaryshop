@@ -47,18 +47,19 @@ def index(category):
         current_category = 'All Items'
     else:
         catalog_items = CatalogItem.query \
-                .filter_by(category=category) \
-                .all()
+            .filter_by(category=category) \
+            .all()
         current_category = Category.query \
-                .filter_by(category=category) \
-                .first_or_default().name
-
+            .filter_by(category=category) \
+            .first_or_default().name
     categories = Category.query \
         .order_by(Category.name.desc())
-    cart_items=g.cart.cart_items
+
+    cart_items = g.cart.cart_items
+    cart_quantity = sum([item.amount for item in cart_items])
 
     return render_template('main/index.html',
-                            catalog_items=catalog_items,
-                            categories=categories,
-                            cart_items=cart_items,
-                            current_category=current_category)
+                           catalog_items=catalog_items,
+                           categories=categories,
+                           cart_quantity=cart_quantity,
+                           current_category=current_category)
