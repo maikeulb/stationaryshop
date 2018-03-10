@@ -47,8 +47,7 @@
                 for (var i=0; i<messages.length; i++) {
 
                   new Noty({
-                    theme: 'rellax',
-                    type: 'info',
+                    theme: 'metroui',
                     text: messages[i]
                   }).setTimeout(1500).show();
 
@@ -102,7 +101,6 @@
   $(document).ready(function () {
     var button;
     $('#product_items').on("click", '.js-add-to-cart', addToCart);
-
     function addToCart (e) {
       e.preventDefault();
       button = $(e.currentTarget)
@@ -111,25 +109,35 @@
       console.log(productId)
       addToCartService(productId, done, fail)
     };
-
+    function updateCartCall() {
+      $.ajax({
+         url: "/api/cartcomponent/",
+         method: "GET",
+         success: function (data) {
+          console.log(data);
+          $('#cart-status').text(data.quantity);
+         },
+      });
+    }
      function done(data) {
        if (data.result != 0) {
           new Noty({
-            theme: 'rellax',
-            type: 'info',
+            theme: 'metroui',
             text: 'Item added to cart!'
           }).setTimeout(1500).show();
        }
     };
 
-     function fail() {
+    function fail() {
        alert("Something failed");
     };
+
     function addToCartService(productId, done, fail) {
       $.ajax({
          url: "/api/cart/" + productId,
          method: "POST",
-       })
+      })
+        .then(updateCartCall())
          .done(done)
          .fail(fail);
     };
@@ -146,11 +154,20 @@
       var productId = button.data("product-id");
       removeFromCartService(productId, done, fail)
     };
+    function updateCartCall() {
+      $.ajax({
+         url: "/api/cartcomponent/",
+         method: "GET",
+         success: function (data) {
+          console.log(data);
+          $('#cart-status').text(data.quantity);
+         },
+      });
+    }
      function done(data) {
        if (data.result != 0) {
           new Noty({
-            theme: 'rellax',
-            type: 'info',
+            theme: 'metroui',
             text: 'Item removed from cart!'
           }).setTimeout(1500).show();
        }
@@ -163,6 +180,7 @@
          url: "/api/cart/" + productId,
          method: "DELETE",
        })
+        .then(updateCartCall())
          .done(done)
          .fail(fail);
     };
