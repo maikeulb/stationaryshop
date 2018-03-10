@@ -1,41 +1,56 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block app_content %}
+<main>
 
-{% block app_content %}
-  <main>
-
-<h2>Your shopping cart</h2>
-<table class="table table-bordered table-striped">
+  <h2>Your shopping cart</h2>
+  <table class="table table-bordered table-striped">
     <thead>
-        <tr>
-            <th>Quantity</th>
-            <th>Cart</th>
-            <th class="text-right">Price</th>
-            <th class="text-right">Subtotal</th>
-        </tr>
+      <tr>
+        <th>Quantity</th>
+        <th>Cart</th>
+        <th class="text-right">Price</th>
+        <th class="text-right">Subtotal</th>
+      </tr>
     </thead>
     <tbody>
-        {% for line in cart.cart_items %}
-            <tr>
-              <td class="text-center"> {{ line.amount }}</td>
-              <td class="text-left">{{ line.catalog_item.name }}</td>
-              <td class="text-right">{{ line.catalog_item.price }}</td>
-                <td class="text-right">
-                    {{ line.amount * line.catalog_item.price }}
-                </td>
-            </tr>
-        {% endfor %}
+      {% for line in cart.cart_items %}
+      <tr>
+        <td class="text-center"> {{ line.amount }}</td>
+        <td class="text-left">{{ line.catalog_item.name }}</td>
+        <td class="text-right">{{ line.catalog_item.price }}</td>
+        <td class="text-right">
+          {{ line.amount * line.catalog_item.price }}
+        </td>
+      </tr>
+      {% endfor %}
     </tbody>
     <tfoot>
-        <tr>
-            <td colspan="3" class="text-right">Total:</td>
-            <td class="text-right">
-            <span> {{ cart_total }}</span>
-            </td>
-        </tr>
+      <tr>
+        <td colspan="3" class="text-right">Total:</td>
+        <td class="text-right">
+          <span> {{ cart_total }}</span>
+        </td>
+      </tr>
     </tfoot>
-</table>
+  </table>
 
-<a href="{{ url_for('order.checkout') }}" class="btn btn-primary m-2">
+  <form action="/charge" method="post">
+    <script src="//checkout.stripe.com/v2/checkout.js"
+      class="stripe-button"
+      data-key="{{ key }}" 
+      data-locale="auto"
+      data-description="Stationary Shop" 
+      data-amount="{{ cart_total }}" >
+      document.getElementsByClassName("stripe-button-el")[0].style.display = 'none' !important;
+    </script>
+
+    <button type="submit" 
+      class="btn btn-primary">
+      PAY WITH CARD
+    </button>
+
+  </form>
+
+  <a href="{{ url_for('order.checkout') }}" class="btn btn-primary m-2">
 CHECKOUT
 </a>
 

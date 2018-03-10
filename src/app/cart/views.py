@@ -11,7 +11,7 @@ from flask import (
     current_app
 )
 from flask_login import current_user, login_required
-from app.extensions import db
+from app.extensions import db, stripe_keys
 from app.cart import cart
 from app.models import (
     Cart,
@@ -21,6 +21,8 @@ from app.models import (
 )
 import json
 import uuid
+import stripe
+
 
 @cart.before_app_request
 def before_request():
@@ -47,7 +49,8 @@ def index():
 
     g.cart.cart_items = cart_items
 
-    cart_item_prices = [cart_item.catalog_item.price for cart_item in cart_items]
+    cart_item_prices = [
+        cart_item.catalog_item.price for cart_item in cart_items]
     cart_item_amounts = [cart_item.amount for cart_item in cart_items]
 
     cart_total = sum((a * p for a, p in zip(cart_item_prices,
@@ -60,13 +63,15 @@ def index():
 
     categories = Category.query \
         .order_by(Category.name.desc())
-    cart_items=g.cart.cart_items,
+    cart_items = g.cart.cart_items,
 
     return render_template('cart/index.html',
-                            cart_items=cart_items,
-                            cart=g.cart,
-                            categories=categories,
-                            cart_total=cart_total)
+                           cart_items=cart_items,
+                           cart=g.cart,
+                           categories=categories,
+                           cart_total=cart_total,
+                           key=stripe_keys['publishable_key'])
+
 
 @cart.route('/add/<int:catalog_item_id>')
 def add_to_cart(catalog_item_id):
@@ -77,13 +82,13 @@ def add_to_cart(catalog_item_id):
     if selected_catalog_item is not None:
 
         cart_item = CartItem.query \
-        .filter_by(catalog_item_id=catalog_item_id, cart_id=g.cart_id) \
-        .first()
+            .filter_by(catalog_item_id=catalog_item_id, cart_id=g.cart_id) \
+            .first()
 
         if cart_item is None:
             cart_item = CartItem(cart_id=g.cart_id,
-                                catalog_item=selected_catalog_item,
-                                amount=1)
+                                 catalog_item=selected_catalog_item,
+                                 amount=1)
             db.session.add(cart_item)
         else:
             cart_item.amount += 1

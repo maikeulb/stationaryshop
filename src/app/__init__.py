@@ -21,7 +21,9 @@ from app.cart import cart as cart_bp
 from app.catalog import catalog as catalog_bp
 from app.order import order as order_bp
 from app.admin import admin as admin_bp
+import stripe
 Config = eval(os.environ['FLASK_APP_CONFIG'])
+
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -29,6 +31,7 @@ def create_app(config_class=Config):
     register_blueprints(app)
     register_extensions(app)
     register_errorhandlers(app)
+
     return app
 
 
@@ -51,6 +54,7 @@ def register_blueprints(app):
     app.register_blueprint(catalog_bp, url_prefix='/catalog')
     app.register_blueprint(order_bp, url_prefix='/order')
     return None
+
 
 def register_errorhandlers(app):
     def render_error(error):

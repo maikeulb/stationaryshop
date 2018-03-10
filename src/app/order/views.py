@@ -2,9 +2,8 @@ import sys
 from datetime import datetime
 from flask import (
     render_template,
-    flash,
-    redirect,
     g,
+    redirect,
     session,
     url_for,
     request,
@@ -16,7 +15,6 @@ from app.order import order
 from app.models import (
     Cart,
     Category,
-    CartItem,
     CatalogItem,
     Order,
 )
@@ -45,11 +43,32 @@ def checkout():
 
     return redirect(url_for('order.complete'))
 
+
 @order.route('/complete')
 def complete():
     categories = Category.query \
         .order_by(Category.name.desc())
     cart_items = g.cart.cart_items
     return render_template('order/complete.html',
-                            cart_items=cart_items,
-                            categories=categories)
+                           cart_items=cart_items,
+                           categories=categories)
+
+
+@order.route('/charge', methods=['POST'])
+def charge():
+    # Amount in cents
+    amount = 500
+
+    customer = stripe.Customer.create(
+        email='customer@example.com',
+        source=request.form['stripeToken']
+    )
+
+    charge = stripe.Charge.create(
+        customer=customer.id,
+        amount=amount,
+        currency='usd',
+        description='Flask Charge'
+    )
+
+    return render_template('charge.html', amount=amount)
