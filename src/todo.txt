@@ -1,4 +1,3 @@
 add localization
 add user permissions
 add admin
-add payments
