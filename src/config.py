@@ -9,6 +9,9 @@ load_dotenv(dotenv_path)
 
 class Config(object):
 
+    ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD') or 'P@ssw0rd!'
+    ADMIN_EMAIL = 'mb@ymail.com'
+
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'S3cr3t'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') or \
       'postgresql://postgres:P@ssw0rd!@172.17.0.2/stationaryshop'
