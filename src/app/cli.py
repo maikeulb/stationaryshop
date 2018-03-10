@@ -21,7 +21,6 @@ def register(app):
         rv = pytest.main([TEST_PATH, '--verbose'])
         exit(rv)
 
-
     @click.command()
     @click.option('-f', '--fix-imports', default=False, is_flag=True,
                   help='Fix imports using isort, before linting')
@@ -45,7 +44,6 @@ def register(app):
             execute_tool('Fixing import order', 'isort', '-rc')
         execute_tool('Checking code style', 'flake8')
 
-
     @click.command()
     def clean():
         for dirpath, dirnames, filenames in os.walk('.'):
@@ -54,7 +52,6 @@ def register(app):
                     full_pathname = os.path.join(dirpath, filename)
                     click.echo('Removing {}'.format(full_pathname))
                     os.remove(full_pathname)
-
 
     @click.command()
     @click.option('--url', default=None,

@@ -13,7 +13,6 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.css">
       <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 
-
     {% if config.DEVELOPMENT %}
       <!-- Webpack Dev Mode -->
       <link rel="stylesheet" href="http://localhost:8080/static/css/app.css">
@@ -47,7 +46,8 @@
                 for (var i=0; i<messages.length; i++) {
 
                   new Noty({
-                    theme: 'metroui',
+                    theme: 'rellax',
+                    type: 'info',
                     text: messages[i]
                   }).setTimeout(1500).show();
 
@@ -101,6 +101,7 @@
   $(document).ready(function () {
     var button;
     $('#product_items').on("click", '.js-add-to-cart', addToCart);
+
     function addToCart (e) {
       e.preventDefault();
       button = $(e.currentTarget)
@@ -122,12 +123,12 @@
      function done(data) {
        if (data.result != 0) {
           new Noty({
-            theme: 'metroui',
+            theme: 'rellax',
+            type: 'info',
             text: 'Item added to cart!'
           }).setTimeout(1500).show();
        }
     };
-
     function fail() {
        alert("Something failed");
     };
@@ -167,7 +168,8 @@
      function done(data) {
        if (data.result != 0) {
           new Noty({
-            theme: 'metroui',
+            theme: 'rellax',
+            type: 'info',
             text: 'Item removed from cart!'
           }).setTimeout(1500).show();
        }
