@@ -35,7 +35,7 @@ def index():
 
 @catalog_manager.route('/new', methods=['GET', 'POST'])
 def new():
-    categoreis = Category.query \
+    categories = Category.query \
         .all()
     form = CatalogItemForm()
     form.category.choices = [(c.id, c.name) for c in categories]
@@ -65,8 +65,8 @@ def edit(id):
     categories = Category.query \
         .all()
     form = CatalogItemForm(obj=catalog_item)
-    form.categories_id.choices = [
-        (m.id, m.name) for m in cateogires]
+    form.category_id.choices = [
+        (m.id, m.name) for m in categories]
     if form.validate_on_submit():
         form.populate_obj(catalog_item)
         try:
@@ -79,7 +79,7 @@ def edit(id):
             db.session.rollback()
             flash('Error editing catalog item.', 'danger')
 
-    cateogires = Categories.query.all()
+    cateogires = Category.query.all()
     return render_template('catalog_manager/edit.html',
                            cateogires=cateogires,
                            form=form,

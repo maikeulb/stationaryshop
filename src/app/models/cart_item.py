@@ -11,8 +11,9 @@ class CartItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     amount = db.Column(db.Integer)
     cart_id = db.Column(db.String, db.ForeignKey('carts.id'))
-    catalog_item_id = db.Column(db.Integer, db.ForeignKey('catalog_items.id'))
+    catalog_item_id = db.Column(db.Integer, db.ForeignKey('catalog_items.id',
+                                                          ondelete='CASCADE'))
 
-    catalog_item = db.relationship( ##correct
+    catalog_item = db.relationship(  # correct
         'CatalogItem'
     )

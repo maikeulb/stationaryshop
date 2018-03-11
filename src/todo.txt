@@ -1,5 +1,4 @@
 add localization
-add user permissions
+add roles
 add admin
 add admin, datatables, seed, login
-add search, maybe

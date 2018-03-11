@@ -1,5 +1,6 @@
 import sys
 from datetime import datetime
+from sqlalchemy import func
 from flask import (
     render_template,
     flash,

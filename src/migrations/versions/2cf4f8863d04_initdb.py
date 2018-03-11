@@ -1,8 +1,8 @@
 """initdb
 
-Revision ID: fb28bd5b9b11
+Revision ID: 2cf4f8863d04
 Revises: 
-Create Date: 2018-03-07 13:59:39.458322
+Create Date: 2018-03-10 19:11:54.068447
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'fb28bd5b9b11'
+revision = '2cf4f8863d04'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -38,6 +38,7 @@ def upgrade():
     sa.Column('username', sa.String(length=64), nullable=False),
     sa.Column('email', sa.String(length=120), nullable=False),
     sa.Column('password', sa.Binary(), nullable=True),
+    sa.Column('role_id', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_users_email'), 'users', ['email'], unique=True)
@@ -69,7 +70,7 @@ def upgrade():
     sa.Column('cart_id', sa.String(), nullable=True),
     sa.Column('catalog_item_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['cart_id'], ['carts.id'], ),
-    sa.ForeignKeyConstraint(['catalog_item_id'], ['catalog_items.id'], ),
+    sa.ForeignKeyConstraint(['catalog_item_id'], ['catalog_items.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
