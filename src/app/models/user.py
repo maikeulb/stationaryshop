@@ -10,30 +10,54 @@ import jwt
 import sys
 import json
 
+
 class Permission:
     GENERAL = 0
-    ADMINISTER = 1
+    DEMO_ADMINISTER = 1
+    ADMINISTER = 2
+
+
+class Role(db.Model):
+    __tablename__ = 'roles'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True)
+    index = db.Column(db.String(64))
+    default = db.Column(db.Boolean, default=False, index=True)
+    permissions = db.Column(db.Integer)
+    users = db.relationship('User', backref='role', lazy='dynamic')
+
+    @staticmethod
+    def insert_roles():
+        roles = {
+            'User': (Permission.GENERAL, 'main', True),
+            'Administrator': (Permission.ADMINISTER, 'admin', False),
+            'DemoAdministrator': (Permission.DEMO_ADMINISTER, 'demo_admin', False)
+        }
+        for r in roles:
+            role = Role.query.filter_by(name=r).first()
+            if role is None:
+                role = Role(name=r)
+            role.permissions = roles[r][0]
+            role.index = roles[r][1]
+            role.default = roles[r][2]
+            db.session.add(role)
+        db.session.commit()
+
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), index=True, unique=True, nullable=False)
+    username = db.Column(db.String(64), index=True,
+                         unique=True, nullable=False)
     email = db.Column(db.String(120), index=True, unique=True, nullable=False)
     password = db.Column(db.Binary(128), nullable=True)
-    role_id = db.Column(db.Integer)
-
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
 
     def __init__(self, username, email, password=None, **kwargs):
         super(User, self).__init__(**kwargs)
-        print('hiii', sys.stdout)
-        print(email, sys.stdout)
-        print(current_app.config['ADMIN_EMAIL'], sys.stdout)
-        print(self.role_id, sys.stdout)
-        if self.role_id is None:
-            if email == current_app.config['ADMIN_EMAIL']:
-                self.role_id = 1
-                print(self.role_id, sys.stdout)
+
         db.Model.__init__(self, username=username, email=email, **kwargs)
         if password:
             self.set_password(password)
@@ -47,11 +71,15 @@ class User(UserMixin, db.Model):
         return bcrypt.check_password_hash(self.password, value)
 
     def can(self, permissions):
-            return self.role_id is not None and \
-                (self.role_id.permissions & permissions) == permissions
+        return self.role is not None and \
+            self.role.permissions >= permissions
 
     def is_admin(self):
         return self.can(Permission.ADMINISTER)
+
+    def is_demo_admin(self):
+        return self.can(Permission.DEMO_ADMINISTER)
+
 
 class AnonymousUser(AnonymousUserMixin):
     def can(self, _):
@@ -59,6 +87,7 @@ class AnonymousUser(AnonymousUserMixin):
 
     def is_admin(self):
         return False
+
 
 @login.user_loader
 def load_user(id):

@@ -10,7 +10,7 @@ from flask import (
 )
 from flask_login import current_user, login_required
 from app.extensions import db
-from app.decorators import admin_required
+from app.decorators import admin_required, demo_admin_required
 from app.admin import admin
 from app.admin.forms import (
     CatalogItemForm,
@@ -22,14 +22,9 @@ from app.models import (
 )
 
 
-@admin.route('/')
-@login_required
-@admin_required
-def index():
-    return render_template('admin/index.html')
-
-
 @admin.route('/catalog/', methods=['GET', 'POST'])
+@login_required
+@demo_admin_required
 def create_catalog_item():
     form = CatalogItemForm()
     if form.validate_on_submit():
@@ -49,6 +44,8 @@ def create_catalog_item():
 
 
 @admin.route('/category/', methods=['GET', 'POST'])
+@login_required
+@demo_admin_required
 def create_category():
     form = CategoryForm()
     if form.validate_on_submit():

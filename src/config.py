@@ -6,10 +6,17 @@ dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(dotenv_path)
 
+
 class Config(object):
 
-    ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD') or 'P@ssw0rd!'
-    ADMIN_EMAIL = 'mb@ymail.com'
+    ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
+    ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL')
+
+    DEMO_PASSWORD = os.environ.get('DEMO_PASSWORD') or 'P@ssw0rd!'
+    DEMO_EMAIL = 'demo@email.com'
+
+    DEMO_ADMIN_PASSWORD = os.environ.get('DEMO_ADMIN_PASSWORD') or 'P@ssw0rd!'
+    DEMO_ADMIN_EMAIL = 'demo_admin@mail.com'
 
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'S3cr3t'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') or \

@@ -10,6 +10,7 @@ from flask import (
 from flask_login import current_user, login_required
 from app.catalog_manager.forms import CatalogItemForm
 from app.extensions import login, db
+from app.decorators import admin_required, demo_admin_required
 from app.catalog_manager import catalog_manager
 from app.models import (
     CatalogItem,
@@ -19,13 +20,13 @@ from app.models import (
 
 @catalog_manager.before_request
 @login_required
+@demo_admin_required
 def require_login():
     pass
 
 
 @catalog_manager.route('/')
 @catalog_manager.route('/index')
-@login_required
 def index():
     catalog_items = CatalogItem.query.all()
     return render_template('catalog_manager/index.html',

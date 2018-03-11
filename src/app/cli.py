@@ -7,7 +7,8 @@ from flask import current_app
 from flask.cli import with_appcontext
 from werkzeug.exceptions import MethodNotAllowed, NotFound
 from app.extensions import db
-from app.models import Category
+from app.models import Category, Role, User
+from config import Config
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 PROJECT_ROOT = os.path.join(HERE, os.pardir)
@@ -20,6 +21,35 @@ def register(app):
         import pytest
         rv = pytest.main([TEST_PATH, '--verbose'])
         exit(rv)
+
+    @app.cli.command('init-admin')
+    @click.command()
+    def setup_general():
+        Role.insert_roles()
+
+        demo = User(
+            username='demo',
+            password=Config.DEMO_PASSWORD,
+            email=Config.DEMO_EMAIL,
+            role_id=1)
+        db.session.add(demo)
+
+        admin = User(
+            username='admin',
+            password=Config.ADMIN_PASSWORD,
+            email=Config.ADMIN_EMAIL,
+            role_id=2)
+        db.session.add(admin)
+
+        demo_admin = User(
+            username='demo_admin',
+            password=Config.DEMO_ADMIN_PASSWORD,
+            email=Config.DEMO_ADMIN_EMAIL,
+            role_id=3)
+        db.session.add(demo_admin)
+
+        db.session.commit()
+        print('Added administrators ')
 
     @click.command()
     @click.option('-f', '--fix-imports', default=False, is_flag=True,
