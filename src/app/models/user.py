@@ -31,8 +31,8 @@ class Role(db.Model):
     def insert_roles():
         roles = {
             'User': (Permission.GENERAL, 'main', True),
-            'Administrator': (Permission.ADMINISTER, 'admin', False),
-            'DemoAdministrator': (Permission.DEMO_ADMINISTER, 'demo_admin', False)
+            'DemoAdministrator': (Permission.DEMO_ADMINISTER, 'demo_admin', False),
+            'Administrator': (Permission.ADMINISTER, 'admin', False)
         }
         for r in roles:
             role = Role.query.filter_by(name=r).first()
@@ -55,9 +55,10 @@ class User(UserMixin, db.Model):
     password = db.Column(db.Binary(128), nullable=True)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
 
-    def __init__(self, username, email, password=None, **kwargs):
+    def __init__(self, username, email, role, password=None, **kwargs):
         super(User, self).__init__(**kwargs)
-
+        if role:
+            self.role = role
         db.Model.__init__(self, username=username, email=email, **kwargs)
         if password:
             self.set_password(password)
@@ -71,14 +72,13 @@ class User(UserMixin, db.Model):
         return bcrypt.check_password_hash(self.password, value)
 
     def can(self, permissions):
-        return self.role is not None and \
-            self.role.permissions >= permissions
-
-    def is_admin(self):
-        return self.can(Permission.ADMINISTER)
+        return self.role.permissions >= permissions
 
     def is_demo_admin(self):
         return self.can(Permission.DEMO_ADMINISTER)
+
+    def is_admin(self):
+        return self.can(Permission.ADMINISTER)
 
 
 class AnonymousUser(AnonymousUserMixin):
@@ -86,6 +86,9 @@ class AnonymousUser(AnonymousUserMixin):
         return False
 
     def is_admin(self):
+        return False
+
+    def is_demo_admin(self):
         return False
 
 

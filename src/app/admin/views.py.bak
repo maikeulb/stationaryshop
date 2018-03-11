@@ -24,7 +24,6 @@ from app.models import (
 
 @admin.route('/catalog/', methods=['GET', 'POST'])
 @login_required
-@demo_admin_required
 def create_catalog_item():
     form = CatalogItemForm()
     if form.validate_on_submit():
@@ -45,7 +44,6 @@ def create_catalog_item():
 
 @admin.route('/category/', methods=['GET', 'POST'])
 @login_required
-@demo_admin_required
 def create_category():
     form = CategoryForm()
     if form.validate_on_submit():

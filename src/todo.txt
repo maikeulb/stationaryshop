@@ -1,4 +1,1 @@
 add localization
-add roles
-add admin
-add admin, datatables, seed, login

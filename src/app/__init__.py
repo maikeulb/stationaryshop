@@ -20,7 +20,6 @@ from app.main import main as main_bp
 from app.cart import cart as cart_bp
 from app.catalog import catalog as catalog_bp
 from app.order import order as order_bp
-from app.admin import admin as admin_bp
 from app.catalog_manager import catalog_manager as catalog_manager_bp
 import stripe
 Config = eval(os.environ['FLASK_APP_CONFIG'])
@@ -50,7 +49,6 @@ def register_blueprints(app):
     app.register_blueprint(main_bp)
     app.register_blueprint(api_bp, url_prefix='/api')
     app.register_blueprint(account_bp, url_prefix='/account')
-    app.register_blueprint(admin_bp, url_prefix='/admin')
     app.register_blueprint(cart_bp, url_prefix='/cart')
     app.register_blueprint(catalog_bp, url_prefix='/catalog')
     app.register_blueprint(order_bp, url_prefix='/order')

@@ -3,13 +3,13 @@
 {% block app_content %}
   <main class="site-content">
     <div class="container">
-      <div class="row">
-      <div id ="product_items">
+    <div id = "product_items" class="row">
         {% for catalog_item in catalog_items %}
+          <div class="col-md-4 col-sm-6 col-xs-12">
           {% include '/catalog/_product.html' %}
+          </div>
         {% endfor %}
-        </div>
       </div>
-    </div>
+  </div>
 </main>
 {% endblock %}

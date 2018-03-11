@@ -4,7 +4,7 @@
   </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
     {% for category in categories %}
-        <a href="{{ url_for('catalog.index', category_id=category.id) }}"
+        <a href="{{ url_for('catalog.index', id=category.id) }}"
           class="dropdown-item">
           {{ category.name }}</a>
       {% endfor %}

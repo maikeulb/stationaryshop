@@ -11,25 +11,33 @@
         <a href="{{ url_for('main.index') }}" class="nav-link">Home</a>
       </li>
 
+      {% if current_user.role and current_user.is_demo_admin() %}
+      <li class="nav-item"> 
+        <a href="{{ url_for('catalog_manager.index') }}"
+          class="nav-link">Manage Catalog</a>
+      </li>
+      {% endif %}
       {% include '_category_menu.html' %}
     </ul>
 
     <ul class = "navbar-nav">
+
       {% if current_user.is_anonymous %}
-      <li class="nav-item">
-        <a href="{{ url_for('account.login') }}" class="nav-link">Login</a>
-      </li>
-      <li class="nav-item">
-        <a href="{{ url_for('account.register') }}" class="nav-link">Register</a>
-      </li>
+        <li class="nav-item">
+          <a href="{{ url_for('account.login') }}" class="nav-link">Login</a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url_for('account.register') }}" class="nav-link">Register</a>
+        </li>
       {% else %}
-      <li class="nav-item">
-        <span><a href="#" class="nav-link">Hello {{ current_user.username }}</a></span>
-      </li>
-      <li class="nav-item">
-        <a href="{{ url_for('account.logout') }}" class="nav-link">Logout</a>
-      </li>
+        <li class="nav-item">
+          <span><a href="#" class="nav-link">Hello {{ current_user.username }}</a></span>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url_for('account.logout') }}" class="nav-link">Logout</a>
+        </li>
       {% endif %}
+
       {% include '_cart_component.html' %}
     </ul>
   </div>

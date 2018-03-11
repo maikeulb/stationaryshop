@@ -21,6 +21,7 @@ from app.models import (
 )
 import uuid
 
+
 @catalog.before_app_request
 def before_request():
     if 'cart_id' in session:
@@ -47,11 +48,11 @@ def index(id):
         current_category = 'All Items'
     else:
         catalog_items = CatalogItem.query \
-                .filter_by(category_id=id) \
-                .all()
+            .filter_by(category_id=id) \
+            .all()
         current_category = Category.query \
-                .filter_by(id=id) \
-                .first_or_404().name
+            .filter_by(id=id) \
+            .first_or_404().name
     categories = Category.query \
         .order_by(Category.name.desc())
 
@@ -59,7 +60,7 @@ def index(id):
     cart_quantity = sum([item.amount for item in cart_items])
     print(cart_quantity, sys.stdout)
     return render_template('catalog/index.html',
-                            cart_quantity=cart_quantity,
-                            catalog_items=catalog_items,
-                            categories=categories,
-                            current_category=current_category)
+                           cart_quantity=cart_quantity,
+                           catalog_items=catalog_items,
+                           categories=categories,
+                           current_category=current_category)

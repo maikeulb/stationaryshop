@@ -72,17 +72,24 @@
 <script>
   $("#catalog_items").on("click", ".js-delete", function () {
     var button = $(this);
-    bootbox.confirm("Are you sure you want to delete this catalog item?", function (result) {
-      if (result) {
-        $.ajax({
-          url: "/api/catalogitems/" + button.attr("data-catalog-item-id"),
-          method: "DELETE",
-          success: function () {
-            table.row(button.parents("tr")).remove().draw();
-          }
-        });
-      }
+
+    {% if current_user.is_admin() %}
+      bootbox.confirm("Are you sure you want to delete this catalog item?", function (result) {
+        if (result) {
+          $.ajax({
+            url: "/api/catalogitems/" + button.attr("data-catalog-item-id"),
+            method: "DELETE",
+            success: function () {
+              table.row(button.parents("tr")).remove().draw();
+            }
+          });
+        }
+      });
+    {% else %}
+      bootbox.confirm("Sorry, only for admin users", function(result){
     });
+    {% endif %}
+
   });
 </script>
 {% endblock %}

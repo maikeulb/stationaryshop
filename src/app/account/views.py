@@ -1,8 +1,10 @@
+import sys
 from flask import (
     render_template,
     flash,
     g,
     session,
+    jsonify,
     redirect,
     url_for,
     request
@@ -24,6 +26,7 @@ from app.models import User, Cart, Category
 from app.extensions import login, db
 import uuid
 
+
 @account.before_app_request
 def before_request():
     if 'cart_id' in session:
@@ -41,19 +44,12 @@ def before_request():
 
 @account.route('/login', methods=['GET', 'POST'])
 def login():
+
     if current_user.is_authenticated:
-
-        # if 'cart_id' in session:
-        #     g.cart_id = current_user.username
-        #     session['cart_id'] = g.cart_id
-        # else:
-        #     g.cart_id = current_user.username
-        # if g.cart is None:
-        #     g.cart = Cart(id=g.cart_id)
-        #     db.session.add(g.cart)
-
         return redirect(url_for('main.index'))
+
     form = LoginForm(request.form)
+
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         remember_me = form.remember_me.data
@@ -66,11 +62,10 @@ def login():
             next_page = url_for('main.index')
         return redirect(next_page)
 
-    categories = Category.query \
-        .order_by(Category.name.desc())
+    categories = Category.query.order_by(Category.name.desc())
 
-    cart_items=g.cart.cart_items
-    cart_quantity =  sum([item.amount for item in cart_items])
+    cart_items = g.cart.cart_items
+    cart_quantity = sum([item.amount for item in cart_items])
 
     return render_template('account/login.html',
                            categories=categories,
@@ -98,11 +93,9 @@ def register():
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('account.login'))
-    categories = Category.query \
-        .order_by(Category.name.desc())
-    cart_items=g.cart.cart_items
-    cart_quantity =  sum([item.amount for item in cart_items])
-
+    categories = Category.query.order_by(Category.name.desc())
+    cart_items = g.cart.cart_items
+    cart_quantity = sum([item.amount for item in cart_items])
 
     return render_template('account/register.html',
                            categories=categories,

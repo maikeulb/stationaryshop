@@ -1,24 +1,20 @@
-<div class="col-lg-3 col-sm-6 col-xs-12">
   <div class="card">
     <img alt="{{ catalog_item.name }} " src="{{ catalog_item.image_url }}"
     class="img-thumbnail">
-  <div class="card-body">
-    <h5 class="card-title"> {{ catalog_item.name }} </h5>
-    <h6 class="card-subtitle mb-2 text-muted"> {{ catalog_item.description
-      }}</h6>
-    <p class="card-subtitle"> Price: {{ "${:,.2f}".format(catalog_item.price) }}</p>
-    <div class="d-flex justify-content-center">
-
-      <button class="btn btn-primary m-2 js-add-to-cart" type="button"
-        data-product-id="{{ catalog_item.id }}">
-        <i class="fas fa-plus"></i>
-      </button>
-
-      <button class="btn btn-primary m-2 js-remove-from-cart" type="button"
-        data-product-id="{{ catalog_item.id }}">
-        <i class="fas fa-minus"></i>
-      </button>
+    <div class="card-body">
+      <h5 class="card-title"> {{ catalog_item.name }} </h5>
+      <h6 class="card-subtitle mb-2 text-muted"> {{ catalog_item.description
+        }}</h6>
+      <p class="card-subtitle"> Price: {{ "${:,.2f}".format(catalog_item.price) }}</p>
+      <div class="d-flex justify-content-center">
+        <button class="btn btn-outline-dark m-2 js-add-to-cart" type="button"
+          data-product-id="{{ catalog_item.id }}">
+          <i class="fas fa-plus"></i>
+        </button>
+        <button class="btn btn-outline-dark m-2 js-remove-from-cart" type="button"
+          data-product-id="{{ catalog_item.id }}">
+          <i class="fas fa-minus"></i>
+        </button>
+      </div>
     </div>
   </div>
-</div>
-</div>

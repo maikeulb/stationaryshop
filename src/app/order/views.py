@@ -19,6 +19,7 @@ from app.models import (
     Order,
 )
 import uuid
+import stripe
 
 
 @order.before_app_request
@@ -37,6 +38,7 @@ def before_request():
 
 
 @order.route('/checkout/')
+@login_required
 def checkout():
     g.cart.cart_items = []
     db.session.commit()
@@ -45,11 +47,12 @@ def checkout():
 
 
 @order.route('/complete')
+@login_required
 def complete():
     categories = Category.query \
         .order_by(Category.name.desc())
-    cart_items=g.cart.cart_items
-    cart_quantity =  sum([item.amount for item in cart_items])
+    cart_items = g.cart.cart_items
+    cart_quantity = sum([item.amount for item in cart_items])
 
     return render_template('order/complete.html',
                            cart_quantity=cart_quantity,
@@ -57,8 +60,8 @@ def complete():
 
 
 @order.route('/charge', methods=['POST'])
+@login_required
 def charge():
-    # Amount in cents
     amount = 500
 
     customer = stripe.Customer.create(

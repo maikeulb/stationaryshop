@@ -46,7 +46,12 @@
           {% endfor %}
         </div>
 
-        {{ form.submit(class="btn btn-primary") }}
+        {% if current_user.is_admin() %}
+          {{ form.submit(class="btn btn-primary") }}
+        {% else %}
+          {{ form.submit(class="btn btn-primary", disabled=True) }}
+        {% endif %}
+
       </div>
     </form>
   </main>
