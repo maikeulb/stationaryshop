@@ -2,14 +2,16 @@
 
 {% block app_content %}
 
-<select class="price-sorting type-regular" name="price-sorting">
-    <option selected disabled>Default</option>
-    <option value="asc">Low to high</option>
-    <option value="desc">High to low</option>
-</select>
+<main class="site-content mt-4">
+  <h2 class="pb-2">{{ current_category }}</h2>
+  <div class="text-left" style="max-width:160px">
+    <select class="price-sorting form-control" name="price-sorting">
+      <option value="asc">Low to high</option>
+      <option value="desc">High to low</option>
+    </select>
+  </div>
 
-<main class="site-content">
-  <div class="container">
+  <div class="container mt-2">
     <div id = "product_items" class="row">
       {% for catalog_item in catalog_items %}
         {% include '/catalog/_product.html' %}

@@ -3,6 +3,7 @@
 {% block page_title %}Page Not Found{% endblock %}
 
 {% block content %}
+<main class="container mt-4">
 <div class="jumbotron">
   <div class="text-center">
     <h1>404</h1>
@@ -10,4 +11,5 @@
     <p>Want to <a href="{{ url_for('main.index') }}">go home</a> instead?</p>
   </div>
 </div>
+</main>
 {% endblock %}

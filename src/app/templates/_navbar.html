@@ -7,10 +7,6 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav mr-auto">
 
-      <li class="nav-item"> 
-        <a href="{{ url_for('main.index') }}" class="nav-link">Home</a>
-      </li>
-
       {% if current_user.role and current_user.is_demo_admin() %}
       <li class="nav-item"> 
         <a href="{{ url_for('catalog_manager.index') }}"
