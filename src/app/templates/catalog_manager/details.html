@@ -8,7 +8,7 @@
       <div class="col-lg-6 col-sm-12 push-sm-12 px-4">
         <ul class="list-group">
           <li class="list-group-item">Price: {{ "${:,.2f}".format(catalog_item.price) }}</li>
-          <li class="list-group-item">Category: {{ catalog_item.category.name }} </li>
+          <li class="list-group-item">Category: {{ catalog_item.category.name | capitalize}} </li>
           <li class="list-group-item">Description: {{ catalog_item.description }} </li>
         </ul>
         </br>

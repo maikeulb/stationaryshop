@@ -6,7 +6,7 @@
     {% for category in categories %}
         <a href="{{ url_for('catalog.index', id=category.id) }}"
           class="dropdown-item">
-          {{ category.name }}</a>
+          {{ category.name | capitalize }}</a>
       {% endfor %}
       <div class="dropdown-divider"></div>
         <a href="{{ url_for('catalog.index') }}" class="dropdown-item"> ALL </a>

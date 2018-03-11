@@ -60,15 +60,15 @@ def register(app):
         Role.insert_roles()
 
         notebooks = Category(
-            name='Notebooks')
+            name='notebooks')
         pens = Category(
-            name='Pens/Pencils')
-        binders = Category(
-            name='Binders')
+            name='pens and pencils')
+        desk = Category(
+            name='desk accessories')
 
         db.session.add(notebooks)
         db.session.add(pens)
-        db.session.add(binders)
+        db.session.add(desk)
 
     def seed_catalog():
         print('Adding catalog')

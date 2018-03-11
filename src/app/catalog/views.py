@@ -13,6 +13,7 @@ from flask import (
 from flask_login import current_user, login_required
 from app.extensions import db
 from app.catalog import catalog
+from app.catalog.forms import SearchForm
 from app.models import (
     Cart,
     Category,
@@ -20,6 +21,7 @@ from app.models import (
     CatalogItem,
 )
 import uuid
+from sqlalchemy import func
 
 
 @catalog.before_app_request
@@ -35,6 +37,7 @@ def before_request():
     if g.cart is None:
         g.cart = Cart(id=g.cart_id)
         db.session.add(g.cart)
+    g.search_form = SearchForm()
 
 
 @catalog.route('/', defaults={'id': None})
@@ -43,22 +46,26 @@ def before_request():
 @catalog.route('/index/<int:id>')
 def index(id):
     if id is None:
-        catalog_items = CatalogItem.query \
-            .all()
+        catalog_items_query = CatalogItem.query
         current_category = 'All Items'
     else:
-        catalog_items = CatalogItem.query \
-            .filter_by(category_id=id) \
-            .all()
+        catalog_items_query = CatalogItem.query \
+            .filter_by(category_id=id)
         current_category = Category.query \
             .filter_by(id=id) \
             .first_or_404().name
-    categories = Category.query \
-        .order_by(Category.name.desc())
 
+    if g.search_form.validate():
+        q = g.search_form.q.data,
+        catalog_items_query = \
+            CatalogItem.query.filter(func.lower(CatalogItem.name).contains(func.lower(q)) |
+                                     func.lower(CatalogItem.description).contains(func.lower(q)) |
+                                     CatalogItem.category.has(name=(func.lower(q))))
+
+    catalog_items = catalog_items_query.order_by(CatalogItem.name.desc())
+    categories = Category.query.order_by(Category.name.desc())
     cart_items = g.cart.cart_items
     cart_quantity = sum([item.amount for item in cart_items])
-    print(cart_quantity, sys.stdout)
     return render_template('catalog/index.html',
                            cart_quantity=cart_quantity,
                            catalog_items=catalog_items,
