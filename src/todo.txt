@@ -1,1 +1,4 @@
 add localization
+add flask searchable
+add celery
+add logging

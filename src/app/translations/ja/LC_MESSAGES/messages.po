@@ -1,0 +1,74 @@
+
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2018-03-11 13:12-0400\n"
+"PO-Revision-Date: 2017-09-29 23:25-0700\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: es\n"
+"Language-Team: es <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.1\n"
+
+#: app/templates/_category_menu.html:3
+msgid "Categories"
+msgstr "カテゴリ"
+
+#: app/templates/_navbar.html:4 app/templates/main/index.html:6
+msgid "StationaryShop"
+msgstr "固定ショップ"
+
+#: app/templates/_navbar.html:14
+msgid "Manage Catalog"
+msgstr "カタログを管理する"
+
+#: app/templates/_navbar.html:25 app/templates/main/index.html:12
+msgid "Login"
+msgstr "ログイン"
+
+#: app/templates/_navbar.html:29 app/templates/main/index.html:9
+msgid "Register"
+msgstr "登録"
+
+#: app/templates/_navbar.html:37
+msgid "Logout"
+msgstr "ログアウト"
+
+#: app/templates/base.html:7
+msgid "Welcome to StationaryShop"
+msgstr "固定ショップへようこそ"
+
+#: app/templates/main/index.html:24
+msgid ""
+"This is a prototype E-Commerce application powered by Flask,\n"
+"        PostgreSQL, and Redis. Users can browse a catalog, add catalog "
+"items to\n"
+"        their shopping cart, and make orders."
+msgstr "これは、Flask、PostgreSQL、Redisを搭載したプロトタイプEコマースアプリケーションです。ユーザーはカタログをブラウズし、ショッピングカートにカタログアイテムを追加して注文することができます。"
+
+#: app/templates/main/index.html:28
+msgid ""
+"Application features include: custom admin feature,\n"
+"        authentication & authorization, full-text search, sessions, "
+"logging,\n"
+"        stripe integration, and localization (crude translations provided"
+" by\n"
+"        Google Translate)."
+msgstr "アプリケーションの機能には、カスタム管理機能、認証と承認、フルテキスト検索、セッション、ロギング、ストライプ統合、ローカリゼーション（Google翻訳で提供される原文翻訳）などがあります。"
+
+#: app/templates/main/index.html:33
+msgid ""
+"This application is modeled after Muji, the Japanese retail\n"
+"        company. Muji distinguishes themselves by their design "
+"minimalism,\n"
+"        emphasis on recycling, avoidance of waste in production and "
+"packing,\n"
+"        and no-logo or no-brand policy. All of the catalog items shown "
+"were\n"
+"        taken from the website."
+msgstr "このアプリケーションは、日本の小売企業であるMujiをモデルにしています。ムジは、デザインのミニマリズム、リサイクルの重視、生産と梱包における無駄の回避、ロゴなし、またはブランドなしの方針で自分を識別します。表示されているすべてのカタログ項目は、Webサイトから取得したものです。"
+

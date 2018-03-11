@@ -26,6 +26,7 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SESSION_TYPE = 'redis'
     SESSION_REDIS = redis.from_url('localhost:6379')
+    LANGUAGES = ['en', 'ja']
 
     LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
 

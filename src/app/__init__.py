@@ -22,6 +22,7 @@ from app.catalog import catalog as catalog_bp
 from app.order import order as order_bp
 from app.catalog_manager import catalog_manager as catalog_manager_bp
 import stripe
+from flask_babel import Babel, lazy_gettext as _l
 Config = eval(os.environ['FLASK_APP_CONFIG'])
 
 
@@ -41,6 +42,11 @@ def register_extensions(app):
     login.init_app(app)
     migrate.init_app(app, db)
     KVSessionExtension(store, app)
+    babel = Babel(app)
+
+    @babel.localeselector
+    def get_locale():
+        return 'ja'
     return None
 
 
