@@ -46,14 +46,6 @@
           {% endfor %}
         </div>
 
-        <div class="form-group">
-          {{ form.is_sale_item.label }}
-          {{ form.is_sale_item(class_="form-control") }}
-          {% for error in form.is_sale_item.errors %}
-            <span class="text-primary">{{ error }}</span>
-          {% endfor %}
-        </div>
-
         {{ form.submit(class="btn btn-primary") }}
       </div>
     </form>

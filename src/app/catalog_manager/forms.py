@@ -9,5 +9,4 @@ class CatalogItemForm(FlaskForm):
     image_url = StringField('Image Upload', validators=[DataRequired()])
     price = DecimalField('Price', validators=[DataRequired()])
     category_id = IntegerField('Category Id', validators=[DataRequired()])
-    is_sale_item = BooleanField('Is Sale Item', validators=[DataRequired()])
     submit = SubmitField('Save')
