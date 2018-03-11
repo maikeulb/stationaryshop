@@ -41,42 +41,37 @@ def get_catalog_items(query):
     return response
 
 
-@api.route('/catalogitems/<int:id>')
-def get_catalogitems(id):
-    catalog_item = CatalogItem.query.get_or_404(id)
+# @api.route('/catalogitems/<int:id>')
+# def get_catalog_item(id):
+#     catalog_item = CatalogItem.query.get_or_404(id)
 
-    response = jsonify(catalog_item.to_dict())
-    return response
-
-
-@api.route('/catalogitems/<int:id>')
-def get_catalogitem(id):
-    catalog_item = CatalogItem.query.get_or_404(id)
+    # response = jsonify(catalog_item.to_dict())
+    # return response
 
 
-@api.route('/catalogitems/', methods=['POST'])
-def create_catalog_item():
-    data = request.get_json() or {}
-
-    catalog_item = CatalogItem()
-    catalog_item.from_dict(data)
-
-    db.session.add(catalog_item)
-    db.session.commit()
-
-    response = jsonify(catalog_item.to_dict())
-    return response
+# @api.route('/catalogitems/<int:id>')
+# def get_catalogitem(id):
+#     catalog_item = CatalogItem.query.get_or_404(id)
 
 
-@api.route('/catalogitems/<int:id>', methods=['PUT'])
-def update_catalog_item(id):
-    catalog_item = CatalogItem.query.filter_by(id=id).first_or_404()
-    catalog_item.from_dict(request.get_json() or {})
+# @api.route('/catalogitems/', methods=['POST'])
+# def create_catalog_item():
+#     data = request.get_json() or {}
+#     catalog_item = CatalogItem()
+#     catalog_item.from_dict(data)
+#     db.session.add(catalog_item)
+#     db.session.commit()
+#     response = jsonify(catalog_item.to_dict())
+#     return response
 
-    db.session.commit()
 
-    response = jsonify(catalog_item.to_dict())
-    return response
+# @api.route('/catalogitems/<int:id>', methods=['PUT'])
+# def update_catalog_item(id):
+#     catalog_item = CatalogItem.query.filter_by(id=id).first_or_404()
+#     catalog_item.from_dict(request.get_json() or {})
+#     db.session.commit()
+#     response = jsonify(catalog_item.to_dict())
+#     return response
 
 
 @api.route('/catalogitems/<int:id>', methods=['DELETE'])

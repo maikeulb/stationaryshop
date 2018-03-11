@@ -1,24 +1,9 @@
-from flask import (
-    render_template,
-    flash,
-    g,
-    session,
-    jsonify,
-    redirect,
-    url_for,
-    request
-)
-from werkzeug.urls import url_parse
-from flask_login import (
-    login_user,
-    logout_user,
-    current_user,
-    login_required
-)
 from app.api import api
-from app.models import User, Cart, Category
-from app.extensions import login, db
-import uuid
+from app.models import User
+
+from flask import jsonify, request
+
+from flask_login import login_user
 
 
 @api.route('/account', methods=['POST'])

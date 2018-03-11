@@ -99,16 +99,16 @@ def details(id):
                            title='Catalog Items')
 
 
-@catalog_manager.route('/delete/<id>', methods=['POST'])
-def delete(id):
-    catalog_item = CatalogItem.query \
-        .filter_by(id=id).first_or_404()
-    try:
-        db.session.delete(catalog_item)
-        db.session.commit()
-        flash('Delete successfully.', 'success')
-    except:
-        db.session.rollback()
-        flash('Error delete  catalog item.', 'danger')
+# @catalog_manager.route('/delete/<id>', methods=['POST'])
+# def delete(id):
+#     catalog_item = CatalogItem.query \
+#         .filter_by(id=id).first_or_404()
+#     try:
+#         db.session.delete(catalog_item)
+#         db.session.commit()
+#         flash('Delete successfully.', 'success')
+#     except:
+#         db.session.rollback()
+#         flash('Error delete  catalog item.', 'danger')
 
-    return redirect(url_for('catalog_manager.index'))
+#     return redirect(url_for('catalog_manager.index'))
