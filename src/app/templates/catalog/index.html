@@ -1,15 +1,59 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-  <main class="site-content">
-    <div class="container">
+
+<select class="price-sorting type-regular" name="price-sorting">
+    <option selected disabled>Default</option>
+    <option value="asc">Low to high</option>
+    <option value="desc">High to low</option>
+</select>
+
+<main class="site-content">
+  <div class="container">
     <div id = "product_items" class="row">
-        {% for catalog_item in catalog_items %}
-          <div class="col-md-4 col-sm-6 col-xs-12">
-          {% include '/catalog/_product.html' %}
-          </div>
-        {% endfor %}
-      </div>
+      {% for catalog_item in catalog_items %}
+        {% include '/catalog/_product.html' %}
+      {% endfor %}
+    </div>
   </div>
 </main>
+{% endblock %}
+
+{% block js%}
+<script>
+$(document).on("change", ".price-sorting", function() {
+
+    var sortingMethod = $(this).val();
+    if(sortingMethod == 'asc')
+    {
+        sortProductsPriceAscending();
+    }
+    else if(sortingMethod == 'desc')
+    {
+        sortProductsPriceDescending();
+    }
+
+  function sortProductsPriceAscending()
+  {
+      var products = $('.product');
+      products.sort(function(a, b){ 
+        return $(a)
+          .data("price")-$(b).data("price")
+      });
+      $("#product_items").html(products);
+  }
+
+  function sortProductsPriceDescending()
+  {
+      var products = $('.product');
+      products.sort(function(a, b){ 
+        return $(b)
+          .data("price") - $(a).data("price")
+      });
+      $("#product_items").html(products);
+  }
+
+});
+
+</script>
 {% endblock %}

@@ -59,59 +59,101 @@ def register(app):
         print('Adding categories')
         Role.insert_roles()
 
-        light = Category(
-            name='light')
-        medium = Category(
-            name='medium')
-        dark = Category(
-            name='dark')
+        notebooks = Category(
+            name='Notebooks')
+        pens = Category(
+            name='Pens/Pencils')
+        binders = Category(
+            name='Binders')
 
-        db.session.add(light)
-        db.session.add(medium)
-        db.session.add(dark)
+        db.session.add(notebooks)
+        db.session.add(pens)
+        db.session.add(binders)
 
     def seed_catalog():
         print('Adding catalog')
-        espresso_roast = CatalogItem(
-            name='Expresso Roast',
-            description="Smoothe",
-            image_url="https://qph.fs.quoracdn.net/main-qimg-26af24cca0015cdfd309f496aee6ce4e.webp",
+        paper_note = CatalogItem(
+            name='Paper Note',
+            description="120 sheets",
+            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/9/4934761910017.jpg",
             price=20,
             category_id=1)
 
-        bali_blue_moon = CatalogItem(
-            name='Bali Blue Moon',
-            description="Bitter",
-            image_url="https://qph.fs.quoracdn.net/main-qimg-26af24cca0015cdfd309f496aee6ce4e.webp",
-            price=20,
+        double_ring = CatalogItem(
+            name='Plantation Double Ring Note',
+            description="80 sheets",
+            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/5/4547315264971.jpg",
+            price=2.5,
+            category_id=1)
+
+        paper_note_set = CatalogItem(
+            name='Planation Paper Note 5PCS/Set',
+            description="30 sheets/book",
+            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/5/4548076316145_400_2.jpg",
+            price=3.5,
+            category_id=1)
+
+        recyle_paper = CatalogItem(
+            name='Recycle Paper Double Ring Note',
+            description="80 sheets",
+            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/5/4548718218905_1260_1.jpg",
+            price=3,
+            category_id=1)
+
+        db.session.add(paper_note)
+        db.session.add(double_ring)
+        db.session.add(paper_note_set)
+        db.session.add(recyle_paper)
+
+        colored_pencils = CatalogItem(
+            name='12 Colored Pencils',
+            description="Material: Cedar",
+            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/9/4934761512570_1260.jpg",
+            price=5,
             category_id=2)
 
-        sumatra_mandheling = CatalogItem(
-            name='Sumatra Mandheling',
-            description="Sweet",
-            image_url="https://qph.fs.quoracdn.net/main-qimg-26af24cca0015cdfd309f496aee6ce4e.webp",
-            price=20,
+        ballpoint_pens = CatalogItem(
+            name='Gel-Ink BallPoint Pen 6PCS/SET',
+            description="Pen Nib: 0.38mm",
+            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/5/4548718963027.jpg",
+            price=8,
             category_id=2)
 
-        guatamala_antigua = CatalogItem(
-            name='Guatamala Antigua',
-            description="Decaf",
-            image_url="https://qph.fs.quoracdn.net/main-qimg-26af24cca0015cdfd309f496aee6ce4e.webp",
-            price=20,
+        hexa_pen = CatalogItem(
+            name='10 Colors Hexa Pen Set Minia',
+            description="Material: Polyproplene",
+            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/5/4548718963027.jpg",
+            price=5,
+            category_id=2)
+
+        db.session.add(colored_pencils)
+        db.session.add(ballpoint_pens)
+        db.session.add(hexa_pen)
+
+        calculator = CatalogItem(
+            name='Calculator',
+            description="Color: Black",
+            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/5/4548076151616_400.jpg",
+            price=25,
             category_id=3)
 
-        mocha_java = CatalogItem(
-            name='Mocha Java',
-            description="Nice",
-            image_url="https://qph.fs.quoracdn.net/main-qimg-26af24cca0015cdfd309f496aee6ce4e.webp",
-            price=20,
+        correction_tape = CatalogItem(
+            name='Correction Tape',
+            description="Dimensions: 5mmx10cm",
+            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/9/4934761155067_400.jpg",
+            price=8,
             category_id=3)
 
-        db.session.add(espresso_roast)
-        db.session.add(bali_blue_moon)
-        db.session.add(sumatra_mandheling)
-        db.session.add(guatamala_antigua)
-        db.session.add(mocha_java)
+        hole_puncher = CatalogItem(
+            name='2 Hole Puncher',
+            description="Maximum Capacity:10c",
+            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/5/4549337355521.jpg",
+            price=5.5,
+            category_id=3)
+
+        db.session.add(calculator)
+        db.session.add(correction_tape)
+        db.session.add(hole_puncher)
 
     @click.command()
     @click.option('-f', '--fix-imports', default=False, is_flag=True,
