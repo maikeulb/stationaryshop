@@ -1,7 +1,7 @@
 import config
 import os
 from flask_kvsession import KVSessionExtension
-
+from logging.handlers import RotatingFileHandler
 from flask import(
     Flask,
     render_template,
@@ -46,7 +46,9 @@ def register_extensions(app):
 
     @babel.localeselector
     def get_locale():
-        return 'ja'
+        # return 'ja'
+        return request.accept_languages \
+            .best_match(current_app.config['LANGUAGES'])
     return None
 
 

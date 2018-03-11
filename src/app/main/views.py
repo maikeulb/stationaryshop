@@ -64,5 +64,6 @@ def index():
     cart_quantity = sum([item.amount for item in cart_items])
 
     return render_template('main/index.html',
+                           title='Main',
                            categories=categories,
                            cart_quantity=cart_quantity)

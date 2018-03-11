@@ -55,6 +55,7 @@ def complete():
     cart_quantity = sum([item.amount for item in cart_items])
 
     return render_template('order/complete.html',
+                           title='Order Complete',
                            cart_quantity=cart_quantity,
                            categories=categories)
 

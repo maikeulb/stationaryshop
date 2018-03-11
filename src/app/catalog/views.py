@@ -67,6 +67,7 @@ def index(id):
     cart_items = g.cart.cart_items
     cart_quantity = sum([item.amount for item in cart_items])
     return render_template('catalog/index.html',
+                           title="Catalog",
                            cart_quantity=cart_quantity,
                            catalog_items=catalog_items,
                            categories=categories,
