@@ -31,7 +31,6 @@ def create_app(config_class=Config):
     register_blueprints(app)
     register_extensions(app)
     register_errorhandlers(app)
-
     return app
 
 
