@@ -1,5 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, DecimalField, SubmitField, IntegerField
+from wtforms import (
+    StringField,
+    BooleanField,
+    DecimalField,
+    SubmitField,
+    IntegerField,
+    SelectField
+)
 from wtforms.validators import DataRequired
 
 
@@ -8,5 +15,5 @@ class CatalogItemForm(FlaskForm):
     description = StringField('Description', validators=[DataRequired()])
     image_url = StringField('Image Upload', validators=[DataRequired()])
     price = DecimalField('Price', validators=[DataRequired()])
-    category_id = IntegerField('Category Id', validators=[DataRequired()])
+    category_id = SelectField('Category', validators=[DataRequired()])
     submit = SubmitField('Save')

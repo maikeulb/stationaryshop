@@ -6,9 +6,9 @@
   <div class="col-lg-6 col-sm-12">
     <h2>{{ catalog_item.name }}</h2>
     <ul class="list-group">
-      <li class="list-group-item">Price: {{ catalog_item.price }}</li>
-      <li class="list-group-item">Category: {{ catalog_item.category.name }}</li>
-      <li class="list-group-item">Description: {{ catalog_item.description }}_</li>
+      <li class="list-group-item">Price: {{ "${:,.2f}".format(catalog_item.price) }}</li>
+      <li class="list-group-item">Category: {{ catalog_item.category.name }} </li>
+      <li class="list-group-item">Description: {{ catalog_item.description }} </li>
     </ul>
   </div>
 </main>

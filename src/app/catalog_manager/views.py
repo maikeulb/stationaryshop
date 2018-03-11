@@ -39,7 +39,7 @@ def new():
     categories = Category.query \
         .all()
     form = CatalogItemForm()
-    form.category.choices = [(c.id, c.name) for c in categories]
+    form.category_id.choices = [(c.id, c.name) for c in categories]
     if form.validate_on_submit():
         catalog_item = CatalogItem()
         form.populate_obj(catalog_item)
@@ -53,7 +53,7 @@ def new():
             db.session.rollback()
             flash('Error adding catalog item.', 'danger')
 
-    return render_template('catalog_items/new.html',
+    return render_template('catalog_manager/new.html',
                            form=form,
                            title='Catalog Items')
 
@@ -82,7 +82,8 @@ def edit(id):
 
     cateogires = Category.query.all()
     return render_template('catalog_manager/edit.html',
-                           cateogires=cateogires,
+                           categories=categories,
+                           catalog_item=catalog_item,
                            form=form,
                            title='Catalog Items')
 
