@@ -115,7 +115,7 @@ def register(app):
         ballpoint_pens = CatalogItem(
             name='Gel-Ink BallPoint Pen 6PCS/SET',
             description="Pen Nib: 0.38mm",
-            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/5/4548718963027.jpg",
+            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/e9c3970ab036de70892d86c6d221abfe/4/5/4548718990009_400.jpg",
             price=8,
             category_id=2)
 
