@@ -10,7 +10,7 @@ from flask import (
     current_app
 )
 from flask_login import current_user, login_required
-from app.extensions import db
+from app.extensions import db, mail
 from app.order import order
 from app.models import (
     Cart,
@@ -18,6 +18,7 @@ from app.models import (
     CatalogItem,
     Order,
 )
+from flask_mail import Message
 import uuid
 import stripe
 
@@ -53,6 +54,13 @@ def complete():
         .order_by(Category.name.desc())
     cart_items = g.cart.cart_items
     cart_quantity = sum([item.amount for item in cart_items])
+
+    msg = Message("StationaryShop Confirmation",
+                  recipients=["maikeulbgithub@gmail.com"])
+    msg.html = render_template(
+        'email/order_confirmation.html', user=current_user)
+    mail.send(msg)
+    print(current_user.email, sys.stdout)
 
     return render_template('order/complete.html',
                            title='Order Complete',

@@ -14,19 +14,18 @@ from app.extensions import(
     db,
     login,
     store,
+    mail,
     migrate)
 from app.api import api as api_bp
 from app.main import main as main_bp
 from app.cart import cart as cart_bp
 from app.catalog import catalog as catalog_bp
-from app.order import order as order_bp
 from app.catalog_manager import catalog_manager as catalog_manager_bp
-import stripe
+from app.order import order as order_bp
 from flask_babel import Babel, lazy_gettext as _l
-Config = eval(os.environ['FLASK_APP_CONFIG'])
 
 
-def create_app(config_class=Config):
+def create_app(config_class):
     app = Flask(__name__)
     app.config.from_object(config_class)
     register_blueprints(app)
@@ -43,6 +42,7 @@ def register_extensions(app):
     migrate.init_app(app, db)
     KVSessionExtension(store, app)
     babel = Babel(app)
+    mail.init_app(app)
 
     @babel.localeselector
     def get_locale():

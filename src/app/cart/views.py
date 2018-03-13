@@ -42,28 +42,23 @@ def before_request():
 @cart.route('/')
 @cart.route('/index')
 def index():
-
     cart_items = CartItem.query \
         .filter_by(cart_id=g.cart_id) \
         .all()
-
     g.cart.cart_items = cart_items
 
     cart_item_prices = [
         cart_item.catalog_item.price for cart_item in cart_items]
     cart_item_amounts = [cart_item.amount for cart_item in cart_items]
-
     cart_total = sum((a * p for a, p in zip(cart_item_prices,
                                             cart_item_amounts)))
-
-    print(cart_total, sys.stdout)
 
     db.session.add(g.cart)
     db.session.commit()
 
     categories = Category.query \
         .order_by(Category.name.desc())
-    cart_items = g.cart.cart_items,
+    cart_items = g.cart.cart_items
 
     return render_template('cart/index.html',
                            cart_items=cart_items,
@@ -80,7 +75,6 @@ def add_to_cart(catalog_item_id):
         .first_or_404()
 
     if selected_catalog_item is not None:
-
         cart_item = CartItem.query \
             .filter_by(catalog_item_id=catalog_item_id, cart_id=g.cart_id) \
             .first()
@@ -105,7 +99,6 @@ def remove_from_cart(catalog_item_id):
         .first_or_404()
 
     if selected_catalog_item is not None:
-
         cart_item = CartItem.query \
             .filter_by(catalog_item_id=catalog_item_id, cart_id=g.cart_id)\
             .first_or_404()

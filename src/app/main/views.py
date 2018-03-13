@@ -37,24 +37,6 @@ def before_request():
         db.session.add(g.cart)
 
 
-# @main.route('/', defaults={'category': None})
-# @main.route('/index', defaults={'category': None})
-# def index(category):
-#     category = None
-#     if category is None:
-#         catalog_items = CatalogItem.query \
-#             .all()
-#         current_category = 'All Items'
-#     else:
-#         catalog_items = CatalogItem.query \
-#             .filter_by(category=category) \
-#             .all()
-#         current_category = Category.query \
-#             .filter_by(category=category) \
-#             .first_or_default().name
-#     categories = Category.query \
-#         .order_by(Category.name.desc())
-
 @main.route('/')
 @main.route('/index')
 def index():
