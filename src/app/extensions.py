@@ -18,7 +18,7 @@ db = SQLAlchemy()
 migrate = Migrate()
 store = RedisStore(redis.StrictRedis())
 stripe_keys = {
-    'secret_key': os.environ['SECRET_KEY'],
-    'publishable_key': os.environ['PUBLISHABLE_KEY']
+    'secret_key': os.environ['STRIPE_SECRET_KEY'],
+    'publishable_key': os.environ['STRIPE_PUBLISHABLE_KEY']
 }
 mail = Mail()

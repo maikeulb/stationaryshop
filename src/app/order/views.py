@@ -56,11 +56,10 @@ def complete():
     cart_quantity = sum([item.amount for item in cart_items])
 
     msg = Message("StationaryShop Confirmation",
-                  recipients=["maikeulbgithub@gmail.com"])
+                  recipients=[current_user.email])
     msg.html = render_template(
         'email/order_confirmation.html', user=current_user)
     mail.send(msg)
-    print(current_user.email, sys.stdout)
 
     return render_template('order/complete.html',
                            title='Order Complete',

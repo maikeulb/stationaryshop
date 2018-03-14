@@ -3,7 +3,6 @@ import redis
 
 
 class Config(object):
-
     MAIL_SERVER = os.environ.get('MAIL_SERVER')
     MAIL_DEFAULT_SENDER = os.environ.get('MAIL_DEFAULT_SENDER')
     MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
@@ -11,8 +10,8 @@ class Config(object):
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
 
-    ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
-    ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL')
+    ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD') or 'P@ssw0rd!'
+    ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL') or 'admin@email.com'
 
     DEMO_PASSWORD = os.environ.get('DEMO_PASSWORD') or 'P@ssw0rd!'
     DEMO_EMAIL = 'demo@email.com'
@@ -21,13 +20,16 @@ class Config(object):
     DEMO_ADMIN_EMAIL = 'demo_admin@mail.com'
 
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'S3cr3t'
+
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') or \
         'postgresql://postgres:P@ssw0rd!@172.17.0.2/stationaryshop'
-    ELASTICSEARCH_URL = os.environ.get('ELASTIC_URI') or \
-        'http://172.17.0.5:9200'
+    REDIS_URI = os.environ.get('REDIS_URI') or 'http://172.17.0.3:6379'
+
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
     SESSION_TYPE = 'redis'
-    SESSION_REDIS = redis.from_url('localhost:6379')
+    SESSION_REDIS = redis.from_url(REDIS_URI)
+
     LANGUAGES = ['en', 'ja']
 
     LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
@@ -41,19 +43,15 @@ class Config(object):
     DEBUG = False
     TESTING = False
 
-    SECRET_KEY = os.environ.get('SECRET_KEY')
-    PUBLISHABLE_KEY = os.environ.get('PUBLISHABLE_KEY')
-
+    STRIPE_SECRET_KEY = os.environ.get('SECRET_KEY')
+    STRIPE_PUBLISHABLE_KEY = os.environ.get('PUBLISHABLE_KEY')
 
 class DevelopmentConfig(Config):
     DEBUG = True
     DEVELOPMENT = True
-    DEBUG_TB_ENABLED = True
-    # CACHE_TYPE = 'simple'
 
 
 class ProductionConfig(Config):
-    DATABASE_URI = ''
     PRODUCTION = True
 
 
