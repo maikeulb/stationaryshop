@@ -10,8 +10,8 @@ services:
       - redis
     env_file: .env
     environment:
-      DATABASE_URI: "postgresql://postgres:P@ssw0rd!@postgres/stationaryshop"
-      REDIS_URI: "http://redis"
+      DATABASE_URI: "postgresql://postgres:P@ssw0rd!@db/postgres"
+      REDIS_URI: "http://localhost:6379"
 
   db:
     image: postgres

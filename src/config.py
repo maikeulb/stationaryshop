@@ -23,12 +23,14 @@ class Config(object):
 
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') or \
         'postgresql://postgres:P@ssw0rd!@172.17.0.2/stationaryshop'
-    REDIS_URI = os.environ.get('REDIS_URI') or 'http://172.17.0.3:6379'
+
+    REDIS_HOST = os.getenv('REDIS_HOST', '172.17.0.3')
+    REDIS_PORT = os.getenv('REDIS_PORT', 6379)
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     SESSION_TYPE = 'redis'
-    SESSION_REDIS = redis.from_url(REDIS_URI)
+    # SESSION_REDIS = redis.from_url(REDIS_URI)
 
     LANGUAGES = ['en', 'ja']
 
@@ -43,8 +45,9 @@ class Config(object):
     DEBUG = False
     TESTING = False
 
-    STRIPE_SECRET_KEY = os.environ.get('SECRET_KEY')
-    STRIPE_PUBLISHABLE_KEY = os.environ.get('PUBLISHABLE_KEY')
+    STRIPE_SECRET_KEY = os.environ.get('SECRET_KEY') or ''
+    STRIPE_PUBLISHABLE_KEY = os.environ.get('PUBLISHABLE_KEY') or ''
+
 
 class DevelopmentConfig(Config):
     DEBUG = True

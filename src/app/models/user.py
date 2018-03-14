@@ -55,7 +55,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.Binary(128), nullable=True)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
 
-    def __init__(self, username, email, role, password=None, **kwargs):
+    def __init__(self, username, email, role=None, password=None, **kwargs):
         super(User, self).__init__(**kwargs)
         if role:
             self.role = role
