@@ -9,6 +9,9 @@ services:
       - db
       - redis
     env_file: .env
+    environment:
+      DATABASE_URI: "postgresql://postgres:P@ssw0rd!@postgres/stationaryshop"
+      REDIS_URI: "http://redis"
 
   db:
     image: postgres

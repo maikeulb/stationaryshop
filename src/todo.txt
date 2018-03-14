@@ -1,3 +1,4 @@
 add celery - async emails
 add docker config
 add gunicorn logging
+fix roles
