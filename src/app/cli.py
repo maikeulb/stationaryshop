@@ -16,7 +16,6 @@ TEST_PATH = os.path.join(PROJECT_ROOT, 'tests')
 
 
 def register(app):
-
     @app.cli.command('seed-db')
     @click.command()
     def seed():
@@ -28,8 +27,7 @@ def register(app):
         seed_categories()
         seed_catalog()
         db.session.commit()
-
-        print('Complete DB seed')
+        print('DB seed complete')
 
     def seed_users():
         print('Adding roles, demo-user, demo-admin, and admin')
