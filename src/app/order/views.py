@@ -21,6 +21,7 @@ from app.models import (
 from flask_mail import Message
 import uuid
 import stripe
+from app.tasks import send_email
 
 
 @order.before_app_request
@@ -54,12 +55,13 @@ def complete():
         .order_by(Category.name.desc())
     cart_items = g.cart.cart_items
     cart_quantity = sum([item.amount for item in cart_items])
-
-    msg = Message("StationaryShop Confirmation",
-                  recipients=[current_user.email])
-    msg.html = render_template(
+    body = render_template(
         'email/order_confirmation.html', user=current_user)
-    mail.send(msg)
+    app = current_app._get_current_object()
+    send_email(app,
+               "StationaryShop Confirmation",
+               [current_user.email],
+               body)
 
     return render_template('order/complete.html',
                            title='Order Complete',
