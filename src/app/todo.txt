@@ -1,0 +1,23 @@
+from flaskbog
+
+    def search(self, keywords):
+        criteria = []
+        for keyword in keywords.split():
+            keyword = '%' + keyword + '%'
+            criteria.append(db.or_(Post.post_title.ilike(keyword),
+                                   Post.post_content.ilike(keyword),
+                                   Post.tags_name.ilike(keyword)))
+
+        q = reduce(db.and_, criteria)
+
+        return self.filter(q).distinct()
+
+    def search_tag(self, keywords):
+        criteria = []
+        for keyword in keywords.split():
+            keyword = '%' + keyword + '%'
+            criteria.append(db.or_(Post.tags_name.ilike(keyword)))
+
+        q = reduce(db.and_, criteria)
+
+        return self.filter(q).distinct()

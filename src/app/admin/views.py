@@ -8,33 +8,33 @@ from flask import (
     current_app
 )
 from flask_login import current_user, login_required
-from app.catalog_manager.forms import CatalogItemForm
+from app.admin.forms import CatalogItemForm
 from app.extensions import login, db
 from app.decorators import admin_required, demo_admin_required
-from app.catalog_manager import catalog_manager
+from app.admin import admin
 from app.models import (
     CatalogItem,
     Category,
 )
 
 
-@catalog_manager.before_request
+@admin.before_request
 @login_required
 @demo_admin_required
 def require_login():
     pass
 
 
-@catalog_manager.route('/')
-@catalog_manager.route('/index')
+@admin.route('/')
+@admin.route('/index')
 def index():
     catalog_items = CatalogItem.query.all()
-    return render_template('catalog_manager/index.html',
+    return render_template('admin/index.html',
                            catalog_items=catalog_items,
                            title='Catalog Items')
 
 
-@catalog_manager.route('/new', methods=['GET', 'POST'])
+@admin.route('/new', methods=['GET', 'POST'])
 def new():
     categories = Category.query \
         .all()
@@ -48,17 +48,17 @@ def new():
             db.session.commit()
             flash('Catalog Items added!', 'success')
             print('hi')
-            return redirect(url_for('catalog_manager.index'))
+            return redirect(url_for('admin.index'))
         except:
             db.session.rollback()
             flash('Error adding catalog item.', 'danger')
 
-    return render_template('catalog_manager/new.html',
+    return render_template('admin/new.html',
                            form=form,
                            title='Catalog Items')
 
 
-@catalog_manager.route('/edit/<id>', methods=['GET', 'POST'])
+@admin.route('/edit/<id>', methods=['GET', 'POST'])
 def edit(id):
     catalog_item = CatalogItem.query \
         .filter_by(id=id) \
@@ -75,31 +75,31 @@ def edit(id):
             db.session.add(catalog_item)
             db.session.commit()
             flash('Catalog Item is updated!', 'success')
-            return redirect(url_for('catalog_manager.index'))
+            return redirect(url_for('admin.index'))
         except:
             db.session.rollback()
             flash('Error editing catalog item.', 'danger')
 
     cateogires = Category.query.all()
-    return render_template('catalog_manager/edit.html',
+    return render_template('admin/edit.html',
                            categories=categories,
                            catalog_item=catalog_item,
                            form=form,
                            title='Catalog Items')
 
 
-@catalog_manager.route('/details/<id>')
+@admin.route('/details/<id>')
 def details(id):
     catalog_item = CatalogItem.query \
         .filter_by(id=id) \
         .first_or_404()
 
-    return render_template('catalog_manager/details.html',
+    return render_template('admin/details.html',
                            catalog_item=catalog_item,
                            title='Catalog Items')
 
 
-# @catalog_manager.route('/delete/<id>', methods=['POST'])
+# @admin.route('/delete/<id>', methods=['POST'])
 # def delete(id):
 #     catalog_item = CatalogItem.query \
 #         .filter_by(id=id).first_or_404()
@@ -111,4 +111,4 @@ def details(id):
 #         db.session.rollback()
 #         flash('Error delete  catalog item.', 'danger')
 
-#     return redirect(url_for('catalog_manager.index'))
+#     return redirect(url_for('admin.index'))

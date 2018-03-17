@@ -57,6 +57,7 @@ def index(id):
 
     if g.search_form.validate():
         q = g.search_form.q.data,
+
         catalog_items_query = \
             CatalogItem.query.filter(func.lower(CatalogItem.name).contains(func.lower(q)) |
                                      func.lower(CatalogItem.description).contains(func.lower(q)) |

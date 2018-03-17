@@ -20,7 +20,7 @@ from app.api import api as api_bp
 from app.main import main as main_bp
 from app.cart import cart as cart_bp
 from app.catalog import catalog as catalog_bp
-from app.catalog_manager import catalog_manager as catalog_manager_bp
+from app.admin import admin as admin_bp
 from app.order import order as order_bp
 from flask_babel import Babel, lazy_gettext as _l
 
@@ -59,7 +59,7 @@ def register_blueprints(app):
     app.register_blueprint(cart_bp, url_prefix='/cart')
     app.register_blueprint(catalog_bp, url_prefix='/catalog')
     app.register_blueprint(order_bp, url_prefix='/order')
-    app.register_blueprint(catalog_manager_bp, url_prefix='/catalogmanager')
+    app.register_blueprint(admin_bp, url_prefix='/admin')
     return None
 
 

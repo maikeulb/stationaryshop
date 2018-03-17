@@ -10,8 +10,8 @@
 
       {% if current_user.role and current_user.is_demo_admin() %}
       <li class="nav-item"> 
-        <a href="{{ url_for('catalog_manager.index') }}"
-          class="nav-link">" {{_('Manage Catalog') }}</a>
+        <a href="{{ url_for('admin.index') }}"
+          class="nav-link"> {{_('Manage Catalog') }}</a>
       </li>
       {% endif %}
       {% include '_category_menu.html' %}
