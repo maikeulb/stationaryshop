@@ -9,6 +9,7 @@ from simplekv.memory.redisstore import RedisStore
 from config import Config
 from redis import StrictRedis
 import os
+from sqlalchemy_searchable import SearchQueryMixin
 
 bcrypt = Bcrypt()
 csrf_protect = CSRFProtect()
@@ -25,3 +26,4 @@ stripe_keys = {
     'publishable_key': os.environ['STRIPE_PUBLISHABLE_KEY'] or ''
 }
 mail = Mail()
+

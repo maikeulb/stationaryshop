@@ -57,11 +57,8 @@ def index(id):
 
     if g.search_form.validate():
         q = g.search_form.q.data,
-
-        catalog_items_query = \
-            CatalogItem.query.filter(func.lower(CatalogItem.name).contains(func.lower(q)) |
-                                     func.lower(CatalogItem.description).contains(func.lower(q)) |
-                                     CatalogItem.category.has(name=(func.lower(q))))
+        q = str(q).replace(" ", " or ")
+        catalog_items_query = CatalogItem.query.search(q)
 
     catalog_items = catalog_items_query.order_by(CatalogItem.name.desc())
     categories = Category.query.order_by(Category.name.desc())

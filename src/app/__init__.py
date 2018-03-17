@@ -23,6 +23,7 @@ from app.catalog import catalog as catalog_bp
 from app.admin import admin as admin_bp
 from app.order import order as order_bp
 from flask_babel import Babel, lazy_gettext as _l
+from sqlalchemy_searchable import make_searchable
 
 
 def create_app(config_class):
@@ -31,6 +32,7 @@ def create_app(config_class):
     register_blueprints(app)
     register_extensions(app)
     register_errorhandlers(app)
+
     return app
 
 

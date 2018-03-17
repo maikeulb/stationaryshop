@@ -15,5 +15,5 @@ class CatalogItemForm(FlaskForm):
     description = StringField('Description', validators=[DataRequired()])
     image_url = StringField('Image Upload', validators=[DataRequired()])
     price = DecimalField('Price', validators=[DataRequired()])
-    category_id = SelectField('Category', validators=[DataRequired()])
+    category_id = SelectField('Category', coerce=int)
     submit = SubmitField('Save')
