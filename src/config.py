@@ -30,7 +30,6 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     SESSION_TYPE = 'redis'
-    # SESSION_REDIS = redis.from_url(REDIS_URI)
 
     LANGUAGES = ['en', 'ja']
 
