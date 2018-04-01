@@ -17,13 +17,7 @@ class TestCatalog:
     def test_get_catalog_items(self, testapp):
         resp = _get_catalog_items(testapp)
         assert resp.status_code == 200
-        # assert resp.headers['Content-Type'] == 'application/json'
-        # assert resp.json['items'][0]['name'] == 'woolworth'
-        # assert resp.json['items'][1]['name'] == '1 wall street'
 
     def test_get_catalog_item(self, testapp):
         resp = _get_catalog_item(testapp, 1)
         assert resp.status_code == 200
-        # assert resp.headers['Content-Type'] == 'application/json'
-        # assert resp.json['items'][0]['name'] == 'woolworth'
-        # assert resp.json['items'][1]['name'] == '1 wall street'

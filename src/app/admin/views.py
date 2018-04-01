@@ -97,18 +97,3 @@ def details(id):
     return render_template('admin/details.html',
                            catalog_item=catalog_item,
                            title='Catalog Items')
-
-
-# @admin.route('/delete/<id>', methods=['POST'])
-# def delete(id):
-#     catalog_item = CatalogItem.query \
-#         .filter_by(id=id).first_or_404()
-#     try:
-#         db.session.delete(catalog_item)
-#         db.session.commit()
-#         flash('Delete successfully.', 'success')
-#     except:
-#         db.session.rollback()
-#         flash('Error delete  catalog item.', 'danger')
-
-#     return redirect(url_for('admin.index'))

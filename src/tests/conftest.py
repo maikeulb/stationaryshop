@@ -6,6 +6,7 @@ from webtest import TestApp
 from datetime import date
 from random import choice, shuffle, sample
 from app.models import Category, CatalogItem, Role, User, Permission
+from .factories import UserFactory
 
 
 @pytest.fixture
@@ -161,3 +162,11 @@ def db(app):
 
     _db.session.close()
     _db.drop_all()
+
+
+@pytest.fixture
+def user(db):
+    """A user for the tests."""
+    user = UserFactory(password='myprecious')
+    db.session.commit()
+    return user

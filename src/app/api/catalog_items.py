@@ -80,4 +80,4 @@ def delete_catalog_item(id):
     db.session.commit()
 
     response = jsonify({'data': 'success'})
-    return response
+    return response, 204

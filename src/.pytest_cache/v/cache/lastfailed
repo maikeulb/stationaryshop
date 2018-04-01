@@ -1,3 +1,6 @@
 {
-  "tests/test_catalog.py::TestCatalog::()": true
+  "tests/test_account.py::TestAccount::()::test_can_log_in": true,
+  "tests/test_api.py::TestApi::()::test_login_demo_user": true,
+  "tests/test_cart.py::TestCart::()::test_add_to_cart": true,
+  "tests/test_catalog.py::TestCatalog::()::test_404_landmark": true
 }
