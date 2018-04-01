@@ -30,30 +30,6 @@ def db(app):
     _db.app = app
     with app.app_context():
         _db.create_all()
-        _db.create_all()
-
-        # def seed_users():
-        # Role.insert_roles()
-
-        # demo = User(
-        #     username='demo',
-        #     password='P@ssw0rd!'
-        #     email=Config.DEMO_EMAIL,
-        #     role=Role.query.filter_by(permissions=Permission.GENERAL).first())
-        # demo_admin = User(
-        #     username='demo_admin',
-        #     password=Config.DEMO_ADMIN_PASSWORD,
-        #     email=Config.DEMO_ADMIN_EMAIL,
-        #     role=Role.query.filter_by(permissions=Permission.DEMO_ADMINISTER).first())
-        # admin = User(
-        #     username='admin',
-        #     password=Config.ADMIN_PASSWORD,
-        #     email=Config.ADMIN_EMAIL,
-        #     role=Role.query.filter_by(permissions=Permission.ADMINISTER).first())
-
-        # db.session.add(demo)
-        # db.session.add(demo_admin)
-        # db.session.add(admin)
 
         def seed_categories():
             Role.insert_roles()
@@ -153,7 +129,6 @@ def db(app):
             _db.session.add(correction_tape)
             _db.session.add(hole_puncher)
 
-        # seed_users()
         seed_categories()
         seed_catalog()
         _db.session.commit()
@@ -166,7 +141,6 @@ def db(app):
 
 @pytest.fixture
 def user(db):
-    """A user for the tests."""
     user = UserFactory(password='myprecious')
     db.session.commit()
     return user
