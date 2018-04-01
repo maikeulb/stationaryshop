@@ -1,0 +1,4 @@
+[
+  "tests/test_catalog.py::TestCatalog::()::test_get_catalog_items",
+  "tests/test_catalog.py::TestCatalog::()::test_get_catalog_item"
+]

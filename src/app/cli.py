@@ -7,7 +7,6 @@ from flask import current_app
 from flask.cli import with_appcontext
 from werkzeug.exceptions import MethodNotAllowed, NotFound
 from app.extensions import db
-# from sqlalchemy_searchable import make_searchable
 from app.models import Category, CatalogItem, Role, User, Permission
 from config import Config
 
@@ -21,9 +20,7 @@ def register(app):
     @click.command()
     def seed():
         print('Starting DB seed')
-        # db.drop_all()
-        # make_searchable(db.metadata)
-        # db.configure_mappers()
+
         db.create_all()
         seed_users()
         seed_categories()
@@ -247,11 +244,17 @@ def register(app):
         for row in rows:
             click.echo(str_template.format(*row[:column_length]))
 
-    @click.command()
+    @app.cli.command("test")
     def test():
         import pytest
         rv = pytest.main([TEST_PATH, '--verbose'])
         exit(rv)
+
+    # @click.command()
+    # def test():
+    #     import pytest
+    #     rv = pytest.main([TEST_PATH, '--verbose'])
+    #     exit(rv)
 
     @app.cli.group()
     def translate():
