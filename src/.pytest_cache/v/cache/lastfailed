@@ -2,5 +2,12 @@
   "tests/test_account.py::TestAccount::()::test_can_log_in": true,
   "tests/test_api.py::TestApi::()::test_login_demo_user": true,
   "tests/test_cart.py::TestCart::()::test_add_to_cart": true,
-  "tests/test_catalog.py::TestCatalog::()::test_404_landmark": true
+  "tests/test_catalog.py::TestCatalog::()::test_404_landmark": true,
+  "tests/test_forms.py::TestLoginForm": true,
+  "tests/test_forms.py::TestLoginForm::()": true,
+  "tests/test_forms.py::TestLoginForm::()::test_validate_inactive_user": true,
+  "tests/test_forms.py::TestRegistrationForm": true,
+  "tests/test_forms.py::TestRegistrationForm::()": true,
+  "tests/test_forms.py::TestSearchForm": true,
+  "tests/test_forms.py::TestSearchForm::()": true
 }

@@ -8,5 +8,12 @@
   "tests/test_cart.py::TestCart::()::test_get_anonymous_cart",
   "tests/test_catalog.py::TestCatalog::()::test_get_catalog_items",
   "tests/test_catalog.py::TestCatalog::()::test_get_catalog_item",
+  "tests/test_forms.py::TestRegistrationForm::()::test_validate_user_already_registered",
+  "tests/test_forms.py::TestRegistrationForm::()::test_validate_email_already_registered",
+  "tests/test_forms.py::TestRegistrationForm::()::test_validate_success",
+  "tests/test_forms.py::TestLoginForm::()::test_validate_success",
+  "tests/test_forms.py::TestLoginForm::()::test_validate_unknown_username",
+  "tests/test_forms.py::TestLoginForm::()::test_validate_invalid_password",
+  "tests/test_forms.py::TestSearchForm::()::test_validate_success",
   "tests/test_main.py::TestMain::()::test_get_main"
 ]
