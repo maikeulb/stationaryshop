@@ -62,4 +62,5 @@ class TestingConfig(Config):
     TESTING = True
     BCRYPT_LOG_ROUNDS = 4
     CSRF_ENABLED = False
+    LOGIN_DISABLED = True
     WTF_CSRF_ENABLED = False
