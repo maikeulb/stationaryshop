@@ -2,7 +2,6 @@ from flask import url_for
 from datetime import datetime
 import pytest
 
-
 @pytest.mark.usefixtures('db')
 class TestOrder:
 
