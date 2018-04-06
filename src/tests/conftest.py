@@ -2,78 +2,69 @@ import pytest
 from app import create_app
 from app.extensions import db as _db
 from webtest import TestApp
-from datetime import date
-from random import choice, shuffle, sample
-from app.models import Category, CatalogItem, Role, User, Permission
-from .factories import UserFactory
-from flask.testing import FlaskClient
-from flask import Response, url_for
-from werkzeug.utils import cached_property
-
-
-# class HtmlTestResponse(Response):
-#     @cached_property
-#     def _loc(self):
-#         return urlparse(self.location)
-
-#     @cached_property
-#     def scheme(self):
-#         return self._loc.scheme
-
-#     @cached_property
-#     def netloc(self):
-#         return self._loc.netloc
-
-#     @cached_property
-#     def path(self):
-#         return self._loc.path or '/'
-
-#     @cached_property
-#     def params(self):
-#         return self._loc.params
-
-#     @cached_property
-#     def query(self):
-#         return self._loc.query
-
-#     @cached_property
-#     def fragment(self):
-#         return self._loc.fragment
-
-#     @cached_property
-#     def html(self):
-#         return self.data.decode('utf-8')
-
-
-# class HtmlTestClient(FlaskClient):
-#     def login_user(self):
-#         return self.login_with_creds('demo', 'P@ssw0rd!')
-
-#     def login_admin(self):
-#         return self.login_with_creds('demo', 'P@ssw0rd!')
-
-#     def login_with_creds(self, username, password):
-#         return self.post(url_for('account.login'),
-#                          data=dict(username=username, password=password))
-
-#     def logout(self):
-#         self.get('account.logout')
+from app.models import (
+    Category,
+    User,
+    Permission
+)
+from ._factories import (
+    CatalogItemFactory,
+    CategoryFactory,
+    CartItemFactory,
+    CartFactory,
+    OrderFactory,
+    OrderDetailFactory,
+    UserFactory,
+)
 
 
 @pytest.fixture
 def user(db):
-    role = Role(name='Administrator',
-                permissions=2,
-                index='admin',
-                default=False)
-    user = User(username='demo',
-                email='demo@example.com',
-                role_id=1)
-    user.set_password('P@ssw0rd!')
-    db.session.add(role)
-    db.session.add(user)
+    user = UserFactory()
     db.session.commit()
     return user
+
+
+@pytest.fixture
+def category(db):
+    category = CategoryFactory()
+    db.session.commit()
+    return category
+
+
+@pytest.fixture
+def catalog_item(db, category):
+    catalog_item = CatalogItemFactory(category_id=category.id)
+    db.session.commit()
+    return catalog_item
+
+
+@pytest.fixture
+def cart_item(db, catalog_item):
+    catalog_item = CartItemFactory(catalog_item_id=catalog_item.id)
+    db.session.commit()
+    return catalog_item
+
+
+@pytest.fixture
+def order(db, order_detail):
+    order = OrderFactory(order_detail_id=order_detail.id)
+    db.session.commit()
+    return order
+
+
+@pytest.fixture
+def order_detail(db, category):
+    order_detail = OrderDetailFactory()
+    db.session.commit()
+    return order_detail
+
+
+@pytest.fixture
+def cart(db, category):
+    cart = CartFactory()
+    db.session.commit()
+    return cart
 
 
 @pytest.fixture
@@ -92,130 +83,13 @@ def testapp(app):
     return TestApp(app)
 
 
-# @pytest.fixture()
-# def client(app):
-#     app.test_client_class = HtmlTestClient
-#     app.response_class = HtmlTestResponse
-#     with app.test_client() as client:
-#         yield client
-
-
 @pytest.fixture
 def db(app):
     _db.app = app
     with app.app_context():
         _db.create_all()
 
-        def seed_categories():
-            Role.insert_roles()
-
-            notebooks = Category(
-                name='notebooks')
-            pens = Category(
-                name='pens and pencils')
-            desk = Category(
-                name='desk accessories')
-
-            _db.session.add(notebooks)
-            _db.session.add(pens)
-            _db.session.add(desk)
-
-        def seed_catalog():
-            paper_note = CatalogItem(
-                name='Paper Note',
-                description="120 sheets",
-                image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/9/4934761910017.jpg",
-                price=20,
-                category_id=1)
-
-            double_ring = CatalogItem(
-                name='Plantation Double Ring Note',
-                description="80 sheets",
-                image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/5/4547315264971.jpg",
-                price=2.5,
-                category_id=1)
-
-            paper_note_set = CatalogItem(
-                name='Planation Paper Note 5PCS/Set',
-                description="30 sheets/book",
-                image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/5/4548076316145_400_2.jpg",
-                price=3.5,
-                category_id=1)
-
-            recyle_paper = CatalogItem(
-                name='Recycle Paper Double Ring Note',
-                description="80 sheets",
-                image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/5/4548718218905_1260_1.jpg",
-                price=3,
-                category_id=1)
-
-            _db.session.add(paper_note)
-            _db.session.add(double_ring)
-            _db.session.add(paper_note_set)
-            _db.session.add(recyle_paper)
-
-            colored_pencils = CatalogItem(
-                name='12 Colored Pencils',
-                description="Material: Cedar",
-                image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/9/4934761512570_1260.jpg",
-                price=5,
-                category_id=2)
-
-            ballpoint_pens = CatalogItem(
-                name='Gel-Ink BallPoint Pen 6PCS/SET',
-                description="Pen Nib: 0.38mm",
-                image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/e9c3970ab036de70892d86c6d221abfe/4/5/4548718990009_400.jpg",
-                price=8,
-                category_id=2)
-
-            hexa_pen = CatalogItem(
-                name='10 Colors Hexa Pen Set Minia',
-                description="Material: Polyproplene",
-                image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/5/4548718963027.jpg",
-                price=5,
-                category_id=2)
-
-            _db.session.add(colored_pencils)
-            _db.session.add(ballpoint_pens)
-            _db.session.add(hexa_pen)
-
-            calculator = CatalogItem(
-                name='Calculator',
-                description="Color: Black",
-                image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/5/4548076151616_400.jpg",
-                price=25,
-                category_id=3)
-
-            correction_tape = CatalogItem(
-                name='Correction Tape',
-                description="Dimensions: 5mmx10cm",
-                image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/9/4934761155067_400.jpg",
-                price=8,
-                category_id=3)
-
-            hole_puncher = CatalogItem(
-                name='2 Hole Puncher',
-                description="Maximum Capacity:10c",
-                image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/5/4549337355521.jpg",
-                price=5.5,
-                category_id=3)
-
-            _db.session.add(calculator)
-            _db.session.add(correction_tape)
-            _db.session.add(hole_puncher)
-
-        seed_categories()
-        seed_catalog()
-        _db.session.commit()
-
     yield _db
 
     _db.session.close()
     _db.drop_all()
-
-
-@pytest.fixture
-def user(db):
-    user = UserFactory(password='myprecious')
-    db.session.commit()
-    return user

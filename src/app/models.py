@@ -160,6 +160,7 @@ class CartItem(db.Model):
 class CatalogItemQuery(BaseQuery, SearchQueryMixin):
     pass
 
+
 class CatalogItem(db.Model):
     __tablename__ = 'catalog_items'
     query_class = CatalogItemQuery

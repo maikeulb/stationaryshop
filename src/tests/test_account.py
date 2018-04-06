@@ -1,11 +1,10 @@
-from flask import url_for
-from datetime import datetime
 import pytest
-from app.models import User
+from flask import url_for
 
 
 @pytest.mark.usefixtures('db')
 class TestAccount:
+
     def test_get_register(self, user, testapp):
         res = testapp.get(url_for('account.register'))
         assert res.status_code == 200

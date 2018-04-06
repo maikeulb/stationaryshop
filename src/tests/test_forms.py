@@ -1,6 +1,3 @@
-from flask import url_for
-from datetime import datetime
-import pytest
 from app.account.forms import (
     LoginForm,
     RegistrationForm,

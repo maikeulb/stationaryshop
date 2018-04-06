@@ -1,6 +1,5 @@
-from flask import url_for
-from datetime import datetime
 import pytest
+from flask import url_for
 
 
 def _get_catalog_items(testapp, **kwargs):
