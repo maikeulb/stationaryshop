@@ -24,8 +24,8 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') or \
         'postgresql://postgres:P@ssw0rd!@172.17.0.2/stationaryshop'
 
-    REDIS_HOST = os.getenv('REDIS_HOST', '172.17.0.3')
-    REDIS_PORT = os.getenv('REDIS_PORT', 6379)
+    REDIS_HOST = os.environ.get('REDIS_HOST', '172.17.0.3')
+    REDIS_PORT = os.environ.get('REDIS_PORT', 6379)
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 

@@ -24,8 +24,8 @@ store = RedisStore(StrictRedis(host=Config.REDIS_HOST,
                                port=Config.REDIS_PORT,
                                db=0))
 stripe_keys = {
-    'secret_key': os.environ['STRIPE_SECRET_KEY'] or '',
-    'publishable_key': os.environ['STRIPE_PUBLISHABLE_KEY'] or ''
+    'secret_key': os.environ.get('STRIPE_SECRET_KEY'),
+    'publishable_key': os.environ.get('STRIPE_PUBLISHABLE_KEY')
 }
 stripe.api_key = stripe_keys['secret_key']
 mail = Mail()
