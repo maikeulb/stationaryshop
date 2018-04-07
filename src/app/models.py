@@ -146,7 +146,7 @@ class CartItem(db.Model):
     catalog_item_id = db.Column(db.Integer, db.ForeignKey('catalog_items.id',
                                                           ondelete='CASCADE'))
 
-    catalog_item = db.relationship(  # correct
+    catalog_item = db.relationship(
         'CatalogItem'
     )
 

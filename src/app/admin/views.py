@@ -40,21 +40,14 @@ def new():
     if form.validate_on_submit():
         catalog_item = CatalogItem()
         form.populate_obj(catalog_item)
-        try:
-            db.session.add(catalog_item)
-            db.session.commit()
-            flash('Catalog Items added!', 'success')
-            print('hi')
-            return redirect(url_for('admin.index'))
-        except:
-            db.session.rollback()
-            flash('Error adding catalog item.', 'danger')
+        db.session.add(catalog_item)
+        db.session.commit()
+        flash('Catalog Item is added!', 'success')
+        return redirect(url_for('admin.index'))
 
     return render_template('admin/new.html',
                            form=form,
                            title='Catalog Items')
-
-# feformat try except
 
 
 @admin.route('/edit/<id>', methods=['GET', 'POST'])
@@ -73,16 +66,6 @@ def edit(id):
         db.session.commit()
         flash('Catalog Item is updated!', 'success')
         return redirect(url_for('admin.index'))
-
-        # try:
-        #     form.populate_obj(catalog_item)
-        #     db.session.add(catalog_item)
-        #     db.session.commit()
-        #     flash('Catalog Item is updated!', 'success')
-        #     return redirect(url_for('admin.index'))
-        # except:
-        #     db.session.rollback()
-        #     flash('Error editing catalog item.', 'danger')
 
     cateogires = Category.query.all()
 
