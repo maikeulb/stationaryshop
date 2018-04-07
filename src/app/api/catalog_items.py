@@ -1,9 +1,7 @@
 from app.api import api
 from app.extensions import db
 from app.decorators import demo_admin_required, admin_required
-from app.models import (
-    CatalogItem,
-)
+from app.models import CatalogItem
 from flask import (
     jsonify,
     request,
