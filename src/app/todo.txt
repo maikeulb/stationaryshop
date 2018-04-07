@@ -1,2 +1,0 @@
-fix stripe --> bsaf
-is it better to pass all objects to flask extensions? check flamejam
