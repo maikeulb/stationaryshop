@@ -4,7 +4,7 @@
 
 <main class="site-content mt-4">
   {% if catalog_items %}
-    <h2 class="pb-2">{{ current_category }}</h2>
+    <h2 class="pb-2">{{ current_category | upper}}</h2>
     <div class="text-left" style="max-width:160px">
       <select class="price-sorting form-control" name="price-sorting">
         <option selected disabled>Default</option>

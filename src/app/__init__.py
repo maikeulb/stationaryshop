@@ -23,8 +23,6 @@ from flask import (
 from flask_babel import Babel, lazy_gettext as _l
 from flask_kvsession import KVSessionExtension
 
-# from sqlalchemy_searchable import make_searchable
-
 
 def create_app(config_class):
     app = Flask(__name__)
