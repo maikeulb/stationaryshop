@@ -1,14 +1,20 @@
 import os
+import click
+
 from glob import glob
 from subprocess import call
-
-import click
+from app.extensions import db
+from app.models import (
+    CatalogItem,
+    Category,
+    Permission,
+    Role,
+    User
+)
+from config import Config
 from flask import current_app
 from flask.cli import with_appcontext
 from werkzeug.exceptions import MethodNotAllowed, NotFound
-from app.extensions import db
-from app.models import Category, CatalogItem, Role, User, Permission
-from config import Config
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 PROJECT_ROOT = os.path.join(HERE, os.pardir)
@@ -250,21 +256,13 @@ def register(app):
         rv = pytest.main([TEST_PATH, '--verbose'])
         exit(rv)
 
-    # @click.command()
-    # def test():
-    #     import pytest
-    #     rv = pytest.main([TEST_PATH, '--verbose'])
-    #     exit(rv)
-
     @app.cli.group()
     def translate():
-        """Translation and localization commands."""
         pass
 
     @translate.command()
     @click.argument('lang')
     def init(lang):
-        """Initialize a new language."""
         if os.system('pybabel extract -F babel.cfg -k _l -o messages.pot .'):
             raise RuntimeError('extract command failed')
         if os.system(
@@ -274,7 +272,6 @@ def register(app):
 
     @translate.command()
     def update():
-        """Update all languages."""
         if os.system('pybabel extract -F babel.cfg -k _l -o messages.pot .'):
             raise RuntimeError('extract command failed')
         if os.system('pybabel update -i messages.pot -d app/translations'):
@@ -283,6 +280,5 @@ def register(app):
 
     @translate.command()
     def compile():
-        """Compile all languages."""
         if os.system('pybabel compile -d app/translations'):
             raise RuntimeError('compile command failed')

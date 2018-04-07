@@ -6,7 +6,6 @@ from wtforms import (
     SubmitField
 )
 from wtforms.validators import (
-    ValidationError,
     DataRequired,
     Email,
     EqualTo
@@ -40,11 +39,13 @@ class LoginForm(FlaskForm):
 
         return True
 
+
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
-    confirm = PasswordField('Verify Password', validators=[DataRequired(), EqualTo('password')])
+    confirm = PasswordField('Verify Password', validators=[
+                            DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
 
     def __init__(self, *args, **kwargs):

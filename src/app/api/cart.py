@@ -1,27 +1,17 @@
-import sys
-from datetime import datetime
-from flask import (
-    render_template,
-    flash,
-    g,
-    jsonify,
-    session,
-    redirect,
-    url_for,
-    request,
-    current_app
-)
-from flask_login import current_user, login_required
-from app.extensions import db
+import uuid
+
 from app.api import api
+from app.extensions import db
 from app.models import (
     Cart,
-    Category,
     CartItem,
     CatalogItem,
 )
-import json
-import uuid
+from flask import (
+    g,
+    jsonify,
+    session,
+)
 
 
 @api.before_app_request
@@ -48,13 +38,13 @@ def add_to_cart(id):
     if selected_catalog_item is not None:
 
         cart_item = CartItem.query \
-        .filter_by(catalog_item_id=id, cart_id=g.cart_id) \
-        .first()
+            .filter_by(catalog_item_id=id, cart_id=g.cart_id) \
+            .first()
 
         if cart_item is None:
             cart_item = CartItem(cart_id=g.cart_id,
-                                catalog_item=selected_catalog_item,
-                                amount=1)
+                                 catalog_item=selected_catalog_item,
+                                 amount=1)
             db.session.add(cart_item)
         else:
             cart_item.amount += 1

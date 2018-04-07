@@ -1,21 +1,18 @@
-import sys
-from datetime import datetime
-from flask import (
-    render_template,
-    flash, redirect,
-    url_for,
-    request,
-    current_app
-)
-from flask_login import current_user, login_required
-from app.admin.forms import CatalogItemForm
-from app.extensions import login, db
-from app.decorators import admin_required, demo_admin_required
 from app.admin import admin
+from app.admin.forms import CatalogItemForm
+from app.decorators import demo_admin_required
+from app.extensions import db
 from app.models import (
     CatalogItem,
     Category,
 )
+from flask import (
+    flash,
+    redirect,
+    render_template,
+    url_for
+)
+from flask_login import login_required
 
 
 @admin.before_request
@@ -57,6 +54,8 @@ def new():
                            form=form,
                            title='Catalog Items')
 
+# feformat try except
+
 
 @admin.route('/edit/<id>', methods=['GET', 'POST'])
 def edit(id):
@@ -70,17 +69,23 @@ def edit(id):
         (m.id, m.name) for m in categories]
     if form.validate_on_submit():
         form.populate_obj(catalog_item)
-        try:
-            form.populate_obj(catalog_item)
-            db.session.add(catalog_item)
-            db.session.commit()
-            flash('Catalog Item is updated!', 'success')
-            return redirect(url_for('admin.index'))
-        except:
-            db.session.rollback()
-            flash('Error editing catalog item.', 'danger')
+        db.session.add(catalog_item)
+        db.session.commit()
+        flash('Catalog Item is updated!', 'success')
+        return redirect(url_for('admin.index'))
+
+        # try:
+        #     form.populate_obj(catalog_item)
+        #     db.session.add(catalog_item)
+        #     db.session.commit()
+        #     flash('Catalog Item is updated!', 'success')
+        #     return redirect(url_for('admin.index'))
+        # except:
+        #     db.session.rollback()
+        #     flash('Error editing catalog item.', 'danger')
 
     cateogires = Category.query.all()
+
     return render_template('admin/edit.html',
                            categories=categories,
                            catalog_item=catalog_item,

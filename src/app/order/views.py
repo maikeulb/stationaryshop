@@ -1,27 +1,23 @@
-import sys
-from datetime import datetime
-from flask import (
-    render_template,
-    g,
-    redirect,
-    session,
-    url_for,
-    request,
-    current_app
-)
-from flask_login import current_user, login_required
-from app.extensions import db, mail
-from app.order import order
-from app.models import (
-    Cart,
-    Category,
-    CatalogItem,
-    Order,
-)
-from flask_mail import Message
 import uuid
 import stripe
+from app.extensions import db, csrf_protect
+from app.models import (
+    Cart,
+    CartItem,
+    Category,
+)
+from app.order import order
 from app.tasks import send_email
+from flask import (
+    current_app,
+    g,
+    redirect,
+    render_template,
+    request,
+    session,
+    url_for
+)
+from flask_login import current_user, login_required
 
 
 @order.before_app_request
@@ -55,6 +51,7 @@ def complete():
         .order_by(Category.name.desc())
     cart_items = g.cart.cart_items
     cart_quantity = sum([item.amount for item in cart_items])
+
     body = render_template(
         'email/order_confirmation.html', user=current_user)
     app = current_app._get_current_object()
@@ -69,21 +66,33 @@ def complete():
                            categories=categories)
 
 
+@csrf_protect.exempt
 @order.route('/charge', methods=['POST'])
 @login_required
 def charge():
-    amount = 500
-
+    categories = Category.query \
+        .order_by(Category.name.desc())
+    cart_items = CartItem.query \
+        .filter_by(cart_id=g.cart_id) \
+        .all()
+    cart_quantity = sum([item.amount for item in cart_items])
+    cart_item_prices = [
+        cart_item.catalog_item.price for cart_item in cart_items]
+    cart_item_amounts = [cart_item.amount for cart_item in cart_items]
+    cart_total = sum((a * p for a, p in zip(cart_item_prices,
+                                            cart_item_amounts)))
     customer = stripe.Customer.create(
         email='customer@example.com',
         source=request.form['stripeToken']
     )
-
     charge = stripe.Charge.create(
         customer=customer.id,
-        amount=amount,
+        amount=cart_total * 100,
         currency='usd',
         description='Flask Charge'
     )
 
-    return render_template('charge.html', amount=amount)
+    return render_template('order/complete.html',
+                           title='Order Complete',
+                           cart_quantity=cart_quantity,
+                           categories=categories)

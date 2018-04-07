@@ -1,27 +1,18 @@
-import sys
-from datetime import datetime
-from flask import (
-    render_template,
-    flash,
-    g,
-    session,
-    redirect,
-    url_for,
-    request,
-    current_app
-)
-from flask_login import current_user, login_required
-from app.extensions import db
+import uuid
+
 from app.catalog import catalog
 from app.catalog.forms import SearchForm
+from app.extensions import db
 from app.models import (
     Cart,
-    Category,
-    CartItem,
     CatalogItem,
+    Category,
 )
-import uuid
-from sqlalchemy import func
+from flask import (
+    g,
+    render_template,
+    session,
+)
 
 
 @catalog.before_app_request
@@ -54,12 +45,10 @@ def index(id):
         current_category = Category.query \
             .filter_by(id=id) \
             .first_or_404().name
-
     if g.search_form.validate():
         q = g.search_form.q.data,
         q = str(q).replace(" ", " or ")
         catalog_items_query = CatalogItem.query.search(q)
-
     catalog_items = catalog_items_query.order_by(CatalogItem.name.desc())
     categories = Category.query.order_by(Category.name.desc())
     cart_items = g.cart.cart_items

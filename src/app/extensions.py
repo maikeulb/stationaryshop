@@ -1,3 +1,5 @@
+import os
+
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_migrate import Migrate
@@ -8,8 +10,8 @@ from flask_session import Session
 from simplekv.memory.redisstore import RedisStore
 from config import Config
 from redis import StrictRedis
-import os
 from sqlalchemy_searchable import SearchQueryMixin
+import stripe
 
 bcrypt = Bcrypt()
 csrf_protect = CSRFProtect()
@@ -25,5 +27,5 @@ stripe_keys = {
     'secret_key': os.environ['STRIPE_SECRET_KEY'] or '',
     'publishable_key': os.environ['STRIPE_PUBLISHABLE_KEY'] or ''
 }
+stripe.api_key = stripe_keys['secret_key']
 mail = Mail()
-

@@ -1,25 +1,16 @@
-import sys
-from datetime import datetime
-from flask import (
-    render_template,
-    flash,
-    g,
-    session,
-    redirect,
-    url_for,
-    request,
-    current_app
-)
-from flask_login import current_user, login_required
+import uuid
+
 from app.extensions import db
 from app.main import main
 from app.models import (
     Cart,
     Category,
-    CartItem,
-    CatalogItem,
 )
-import uuid
+from flask import (
+    g,
+    render_template,
+    session,
+)
 
 
 @main.before_app_request

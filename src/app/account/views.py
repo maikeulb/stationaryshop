@@ -1,10 +1,9 @@
-import sys
+import uuid
 from flask import (
     render_template,
     flash,
     g,
     session,
-    jsonify,
     redirect,
     url_for,
     request
@@ -13,18 +12,15 @@ from werkzeug.urls import url_parse
 from flask_login import (
     login_user,
     logout_user,
-    current_user,
-    login_required
+    current_user
 )
-from werkzeug.urls import url_parse
 from app.account import account
 from app.account.forms import (
     LoginForm,
     RegistrationForm,
 )
-from app.models import User, Cart, Category
-from app.extensions import login, db
-import uuid
+from app.models import Cart, Category, User
+from app.extensions import db, login
 
 
 @account.before_app_request
@@ -44,12 +40,9 @@ def before_request():
 
 @account.route('/login', methods=['GET', 'POST'])
 def login():
-
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
-
     form = LoginForm(request.form)
-
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         remember_me = form.remember_me.data
@@ -61,9 +54,7 @@ def login():
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('main.index')
         return redirect(next_page)
-
     categories = Category.query.order_by(Category.name.desc())
-
     cart_items = g.cart.cart_items
     cart_quantity = sum([item.amount for item in cart_items])
 
@@ -77,6 +68,7 @@ def login():
 @account.route('/logout')
 def logout():
     logout_user()
+
     return redirect(url_for('main.index'))
 
 

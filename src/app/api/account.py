@@ -1,8 +1,6 @@
 from app.api import api
 from app.models import User
-
 from flask import jsonify, request
-
 from flask_login import login_user
 
 

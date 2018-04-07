@@ -1,28 +1,13 @@
-import sys
-from datetime import datetime
-from sqlalchemy import func
-from flask import (
-    render_template,
-    flash,
-    g,
-    jsonify,
-    session,
-    redirect,
-    url_for,
-    request,
-    current_app
-)
-from flask_login import current_user, login_required
-from app.extensions import db
 from app.api import api
+from app.extensions import db
 from app.models import (
-    Cart,
-    Category,
-    CartItem,
     CatalogItem,
 )
-import json
-import uuid
+from flask import (
+    jsonify,
+    request,
+)
+from sqlalchemy import func
 
 
 @api.route('/catalogitems', defaults={'query': None})

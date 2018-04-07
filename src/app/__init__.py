@@ -1,29 +1,29 @@
-import config
-import os
-from flask_kvsession import KVSessionExtension
-from logging.handlers import RotatingFileHandler
-from flask import(
-    Flask,
-    render_template,
-    request,
-    current_app)
 from app.account import account as account_bp
-from app.extensions import(
+from app.admin import admin as admin_bp
+from app.api import api as api_bp
+from app.cart import cart as cart_bp
+from app.catalog import catalog as catalog_bp
+from app.extensions import (
     bcrypt,
     csrf_protect,
     db,
     login,
-    store,
     mail,
-    migrate)
-from app.api import api as api_bp
+    migrate,
+    store,
+)
 from app.main import main as main_bp
-from app.cart import cart as cart_bp
-from app.catalog import catalog as catalog_bp
-from app.admin import admin as admin_bp
 from app.order import order as order_bp
+from flask import (
+    Flask,
+    current_app,
+    render_template,
+    request
+)
 from flask_babel import Babel, lazy_gettext as _l
-from sqlalchemy_searchable import make_searchable
+from flask_kvsession import KVSessionExtension
+
+# from sqlalchemy_searchable import make_searchable
 
 
 def create_app(config_class):
@@ -32,7 +32,6 @@ def create_app(config_class):
     register_blueprints(app)
     register_extensions(app)
     register_errorhandlers(app)
-
     return app
 
 

@@ -1,27 +1,20 @@
-import sys
-from datetime import datetime
-from flask import (
-    render_template,
-    flash,
-    g,
-    session,
-    redirect,
-    url_for,
-    request,
-    current_app
-)
-from flask_login import current_user, login_required
-from app.extensions import db, stripe_keys
+import uuid
 from app.cart import cart
+from app.extensions import db, stripe_keys
 from app.models import (
     Cart,
-    Category,
     CartItem,
     CatalogItem,
+    Category,
 )
-import json
-import uuid
-import stripe
+from flask import (
+    g,
+    redirect,
+    request,
+    render_template,
+    session,
+    url_for,
+)
 
 
 @cart.before_app_request
@@ -46,16 +39,13 @@ def index():
         .filter_by(cart_id=g.cart_id) \
         .all()
     g.cart.cart_items = cart_items
-
     cart_item_prices = [
         cart_item.catalog_item.price for cart_item in cart_items]
     cart_item_amounts = [cart_item.amount for cart_item in cart_items]
     cart_total = sum((a * p for a, p in zip(cart_item_prices,
                                             cart_item_amounts)))
-
     db.session.add(g.cart)
     db.session.commit()
-
     categories = Category.query \
         .order_by(Category.name.desc())
     cart_items = g.cart.cart_items
@@ -73,7 +63,6 @@ def add_to_cart(catalog_item_id):
     selected_catalog_item = CatalogItem.query \
         .filter_by(id=catalog_item_id) \
         .first_or_404()
-
     if selected_catalog_item is not None:
         cart_item = CartItem.query \
             .filter_by(catalog_item_id=catalog_item_id, cart_id=g.cart_id) \
@@ -86,7 +75,6 @@ def add_to_cart(catalog_item_id):
             db.session.add(cart_item)
         else:
             cart_item.amount += 1
-
         db.session.commit()
 
     return redirect(url_for('cart.index'))
@@ -97,18 +85,15 @@ def remove_from_cart(catalog_item_id):
     selected_catalog_item = CatalogItem.query \
         .filter_by(id=catalog_item_id) \
         .first_or_404()
-
     if selected_catalog_item is not None:
         cart_item = CartItem.query \
             .filter_by(catalog_item_id=catalog_item_id, cart_id=g.cart_id)\
             .first_or_404()
-
         if cart_item:
             if cart_item.amount > 1:
                 cart_item.amount -= 1
             else:
                 db.session.delete(cart_item)
-
         db.session.commit()
 
     return redirect(url_for('cart.index'))

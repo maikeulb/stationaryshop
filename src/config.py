@@ -44,8 +44,8 @@ class Config(object):
     DEBUG = False
     TESTING = False
 
-    STRIPE_SECRET_KEY = os.environ.get('SECRET_KEY') or ''
-    STRIPE_PUBLISHABLE_KEY = os.environ.get('PUBLISHABLE_KEY') or ''
+    STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY') or ''
+    STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY') or ''
 
 
 class DevelopmentConfig(Config):

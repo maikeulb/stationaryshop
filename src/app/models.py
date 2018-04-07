@@ -1,13 +1,7 @@
-from app.extensions import bcrypt, login, db
 from datetime import datetime
-from time import time
-from flask import current_app
-from flask_sqlalchemy import SQLAlchemy, BaseQuery
-from flask_login import UserMixin, AnonymousUserMixin
-import sys
-import jwt
-import json
-from hashlib import md5
+from app.extensions import bcrypt, db, login
+from flask_login import AnonymousUserMixin, UserMixin
+from flask_sqlalchemy import BaseQuery
 from sqlalchemy_searchable import SearchQueryMixin, make_searchable
 from sqlalchemy_utils.types import TSVectorType
 

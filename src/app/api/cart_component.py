@@ -1,27 +1,15 @@
-import sys
-from datetime import datetime
+import uuid
+
+from app.api import api
+from app.extensions import db
+from app.models import (
+    Cart
+)
 from flask import (
-    render_template,
-    flash,
     g,
     jsonify,
-    session,
-    redirect,
-    url_for,
-    request,
-    current_app
+    session
 )
-from flask_login import current_user, login_required
-from app.extensions import db
-from app.api import api
-from app.models import (
-    Cart,
-    Category,
-    CartItem,
-    CatalogItem,
-)
-import json
-import uuid
 
 
 @api.before_app_request
@@ -43,4 +31,4 @@ def before_request():
 def get_cart_quantity():
     cart_items = g.cart.cart_items
     cart_quantity = sum([item.amount for item in cart_items])
-    return jsonify({'quantity': cart_quantity })
+    return jsonify({'quantity': cart_quantity})
