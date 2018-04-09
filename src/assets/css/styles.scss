@@ -1,0 +1,22 @@
+.bg-light {
+        background-color: #FFFFFF !important;
+}
+
+.site {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+}
+
+.site-content {
+        flex: 1;
+}
+
+.fa-shopping-cart {
+        color: black;
+}
+
+.jumbotron {
+        background-image: url("https://www.muji.com.hk/upload/images/new_product_department/20160720232524_118.jpg");
+        background-size: cover;
+}
