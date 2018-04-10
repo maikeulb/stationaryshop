@@ -108,3 +108,4 @@ venv.bak/
 node_modules/
 .envrc
 .ignore
+.pytest_cache/
