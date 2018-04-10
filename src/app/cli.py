@@ -11,6 +11,7 @@ from app.models import (
     Role,
     User
 )
+import config
 from config import Config
 from flask import current_app
 from flask.cli import with_appcontext
@@ -77,31 +78,39 @@ def register(app):
 
     def seed_catalog():
         print('Adding catalog')
+        if config.DevelopmentConfig:
+            baseurl = 'http://localhost:5000/static/'
+        else:
+            baseurl = 'http://localhost:5000/'
+
         paper_note = CatalogItem(
             name='Paper Note',
             description="120 sheets",
-            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/9/4934761910017.jpg",
+            image_url="{}images/products/paper_note.jpg".format(baseurl),
             price=20,
             category_id=1)
 
         double_ring = CatalogItem(
             name='Plantation Double Ring Note',
             description="80 sheets",
-            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/5/4547315264971.jpg",
+            image_url="{}images/products/plantation_double_ring_note.jpg".format(
+                baseurl),
             price=2.5,
             category_id=1)
 
         paper_note_set = CatalogItem(
             name='Planation Paper Note 5PCS/Set',
             description="30 sheets/book",
-            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/5/4548076316145_400_2.jpg",
+            image_url="{}images/products/plantation_paper_note_set.jpg".format(
+                baseurl),
             price=3.5,
             category_id=1)
 
         recyle_paper = CatalogItem(
             name='Recycle Paper Double Ring Note',
             description="80 sheets",
-            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/5/4548718218905_1260_1.jpg",
+            image_url="{}images/products/recycle_paper_double_ring_note.jpg".format(
+                baseurl),
             price=3,
             category_id=1)
 
@@ -113,21 +122,23 @@ def register(app):
         colored_pencils = CatalogItem(
             name='12 Colored Pencils',
             description="Material: Cedar",
-            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/9/4934761512570_1260.jpg",
+            image_url="{}images/products/colored_pencils.jpg".format(baseurl),
             price=5,
             category_id=2)
 
         ballpoint_pens = CatalogItem(
             name='Gel-Ink BallPoint Pen 6PCS/SET',
             description="Pen Nib: 0.38mm",
-            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/e9c3970ab036de70892d86c6d221abfe/4/5/4548718990009_400.jpg",
+            image_url="{}images/products/ballpoint_pen_set.jpg".format(
+                baseurl),
             price=8,
             category_id=2)
 
         hexa_pen = CatalogItem(
             name='10 Colors Hexa Pen Set Minia',
             description="Material: Polyproplene",
-            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/5/4548718963027.jpg",
+            image_url="{}images/products/hexa_pen_set_minia.jpg".format(
+                baseurl),
             price=5,
             category_id=2)
 
@@ -138,21 +149,21 @@ def register(app):
         calculator = CatalogItem(
             name='Calculator',
             description="Color: Black",
-            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/5/4548076151616_400.jpg",
+            image_url="{}images/products/calculator.jpg".format(baseurl),
             price=25,
             category_id=3)
 
         correction_tape = CatalogItem(
             name='Correction Tape',
             description="Dimensions: 5mmx10cm",
-            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/9/4934761155067_400.jpg",
+            image_url="{}images/products/correction_tape.jpg".format(baseurl),
             price=8,
             category_id=3)
 
         hole_puncher = CatalogItem(
             name='2 Hole Puncher',
             description="Maximum Capacity:10c",
-            image_url="http://www.muji.us/store/pub/media/catalog/product/cache/1/image/700x560/e9c3970ab036de70892d86c6d221abfe/4/5/4549337355521.jpg",
+            image_url="{}images/products/hole_puncher.jpg".format(baseurl),
             price=5.5,
             category_id=3)
 
