@@ -16,7 +16,12 @@
         color: black;
 }
 
-.jumbotron {
+.dev {
         background-image: url("https://www.muji.com.hk/upload/images/new_product_department/20160720232524_118.jpg");
+        background-size: cover;
+}
+
+.prod {
+        background-image: url("/static/images/banner.jpg");
         background-size: cover;
 }
