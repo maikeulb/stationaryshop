@@ -102,9 +102,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-static/css
-static/js
-static/favicon.ico
+/src/app/static/css/
+/src/app/static/js/
+/src/app/static/favicon.ico
 node_modules/
 .envrc
 .ignore
