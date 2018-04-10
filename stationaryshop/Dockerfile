@@ -13,6 +13,7 @@ RUN pip3 install gunicorn
 RUN pip3 install -r requirements.txt
 
 RUN chmod +x entrypoint.sh
+RUN chmod +x wait-for-it.sh
 
 ENV FLASK_APP=stationaryshop.py
 ENV FLASK_APP_CONFIG=config.ProductionConfig
