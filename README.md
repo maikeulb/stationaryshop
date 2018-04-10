@@ -76,4 +76,6 @@ Dockerfile
 Modularize javascript and configure webpack  
 Prune requirements.txt  
 Add more unit tests  
+Add File uploads for admin feature (seeded products are served from file
+system, but not uploaded ones)  
 Figure out how to send HTML emails.

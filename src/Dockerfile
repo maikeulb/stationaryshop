@@ -15,7 +15,7 @@ RUN pip3 install -r requirements.txt
 RUN chmod +x entrypoint.sh
 
 ENV FLASK_APP=stationaryshop.py
-ENV FLASK_APP_CONFIG=config.DevelopmentConfig
+ENV FLASK_APP_CONFIG=config.ProductionConfig
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 

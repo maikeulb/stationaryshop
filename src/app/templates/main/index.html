@@ -2,7 +2,7 @@
 
 {% block app_content %}
   <main class="container mt-4">
-    <div class="jumbotron">
+      <div class="jumbotron">
       <h1> {{_('StationaryShop') }}</h1>
       {% if current_user.is_anonymous %}
       <p><a href="{{ url_for('account.register') }}" class="btn
