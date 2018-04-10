@@ -48,7 +48,9 @@ Run
 ---
 If you have docker installed,
 ```
-TODO
+docker-compose build
+docker-compose up
+Go to http://localhost:5000
 ```
 
 Alternatively, create a database named 'stationaryshop' and spin up a Redis
