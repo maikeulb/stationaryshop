@@ -49,7 +49,7 @@ Run
 If you have docker installed,
 ```
 docker-compose build
-docker-compose up
+docker-compose up --project-name stationaryshop
 Go to http://localhost:5000
 ```
 
