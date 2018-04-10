@@ -26,11 +26,13 @@ def register(app):
     @click.command()
     def seed():
         print('Starting DB seed')
-
+        db.drop_all()
         db.create_all()
+
         seed_users()
         seed_categories()
         seed_catalog()
+
         db.session.commit()
         print('DB seed complete')
 

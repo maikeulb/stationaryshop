@@ -37,20 +37,20 @@ class Config(object):
 
     POSTS_PER_PAGE = 10
 
-    DEBUG_TB_INTERCEPT_REDIRECTS = False
+    STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY') or ''
+    STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY') or ''
+
     DEVELOPMENT = False
     TESTING = False
     PRODUCTION = False
     DEBUG = False
     TESTING = False
 
-    STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY') or ''
-    STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY') or ''
-
 
 class DevelopmentConfig(Config):
     DEBUG = True
     DEVELOPMENT = True
+    DEBUG_TB_ENABLED = True
 
 
 class ProductionConfig(Config):
