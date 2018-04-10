@@ -2,9 +2,9 @@
 
 E-commerce application where users may browse the catalog, manage their
 shopping cart, and submit orders (dummy or through stripe). Admin users may
-manage the catalog. Features include distributed session caching (with Redis),
+manage the catalog. Features include a distributed session store (with Redis),
 localization (via Babel), full-text search (with
-PostgreSQL), asynchronous emails (via threads).
+PostgreSQL), and asynchronous emails (via threads).
 
 Technology
 ----------
@@ -46,26 +46,26 @@ Admin users may manage the catalog (admin interface powered by DataTables).
 
 Run
 ---
-If you have docker installed,
+With docker:
 ```
 docker-compose build
-docker-compose up --project-name stationaryshop
+docker-compose up
 Go to http://localhost:5000
 ```
 
 Alternatively, create a database named 'stationaryshop' and spin up a Redis
 server. Open `config.py` and point the database and Redis URI's to your
-servers. You may optionally open up `./app/__init__.py` to change and uncomment out
+servers. You may optionally open up `./app/__init__.py` to uncomment
 `return ja` (be sure to comment out the other return statement) to view the
 website partially translated in Japanese. 
 
 After configuring the settings, set the `FLASK_APP` env variable to
 stationaryshop.py, and install the javascript (e.g `npm install`) and python
 dependencies (e.g. `pip install -r requirements.txt`). Be sure to install the
-python dependencies using `requirements.txt` located in `./src/`, not
-`./src/requirements/` (I'm working on pruning the dev/prod/test dependencies).
+python dependencies using `requirements.txt` located in `./stationaryshop/`, not
+`./stationaryshop/requirements/` (I'm working on pruning the dev/prod/test dependencies).
 
-`cd` into `./src` (if you are not already) and run the following:
+`cd` into `./stationaryshop` (if you are not already); then run:
 ```
 flask db upgrade
 flask seed-db
