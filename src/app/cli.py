@@ -27,7 +27,7 @@ def register(app):
     @click.command()
     def seed():
         print('Starting DB seed')
-        db.drop_all()
+        # db.drop_all()
         db.create_all()
 
         seed_users()
