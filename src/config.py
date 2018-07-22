@@ -3,6 +3,7 @@ import redis
 
 
 class Config(object):
+
     MAIL_SERVER = os.environ.get('MAIL_SERVER')
     MAIL_DEFAULT_SENDER = os.environ.get('MAIL_DEFAULT_SENDER')
     MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
