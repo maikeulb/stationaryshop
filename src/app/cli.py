@@ -81,36 +81,40 @@ def register(app):
         if config.DevelopmentConfig:
             baseurl = 'http://localhost:5000/static/'
         else:
-            baseurl = 'http://localhost:5000/'
+            baseurl = '/static/'
 
         paper_note = CatalogItem(
             name='Paper Note',
             description="120 sheets",
-            image_url="{}images/products/paper_note.jpg".format(baseurl),
+            image_url="/static/images/products/paper_note.jpg",
+            # image_url="{}images/products/paper_note.jpg".format(baseurl),
             price=20,
             category_id=1)
 
         double_ring = CatalogItem(
             name='Plantation Double Ring Note',
             description="80 sheets",
-            image_url="{}images/products/plantation_double_ring_note.jpg".format(
-                baseurl),
+            image_url="/static/images/products/plantation_double_ring_note.jpg",
+            # image_url="{}images/products/plantation_double_ring_note.jpg".format(
+            #    baseurl),
             price=2.5,
             category_id=1)
 
         paper_note_set = CatalogItem(
             name='Planation Paper Note 5PCS/Set',
             description="30 sheets/book",
-            image_url="{}images/products/plantation_paper_note_set.jpg".format(
-                baseurl),
+            image_url="/static/images/products/plantation_paper_note_set.jpg",
+            # image_url="{}images/products/plantation_paper_note_set.jpg".format(
+            # baseurl),
             price=3.5,
             category_id=1)
 
         recyle_paper = CatalogItem(
             name='Recycle Paper Double Ring Note',
             description="80 sheets",
-            image_url="{}images/products/recycle_paper_double_ring_note.jpg".format(
-                baseurl),
+            image_url="/static/images/products/recycle_paper_double_ring_note.jpg",
+            # image_url="{}images/products/recycle_paper_double_ring_note.jpg".format(
+            # baseurl),
             price=3,
             category_id=1)
 
@@ -122,23 +126,26 @@ def register(app):
         colored_pencils = CatalogItem(
             name='12 Colored Pencils',
             description="Material: Cedar",
-            image_url="{}images/products/colored_pencils.jpg".format(baseurl),
+            image_url="/static/images/products/colored_pencils.jpg",
+            # image_url="{}images/products/colored_pencils.jpg".format(baseurl),
             price=5,
             category_id=2)
 
         ballpoint_pens = CatalogItem(
             name='Gel-Ink BallPoint Pen 6PCS/SET',
             description="Pen Nib: 0.38mm",
-            image_url="{}images/products/ballpoint_pen_set.jpg".format(
-                baseurl),
+            image_url="/static/images/products/ballpoint_pen_set.jpg",
+            # image_url="{}images/products/ballpoint_pen_set.jpg".format(
+            # baseurl),
             price=8,
             category_id=2)
 
         hexa_pen = CatalogItem(
             name='10 Colors Hexa Pen Set Minia',
             description="Material: Polyproplene",
-            image_url="{}images/products/hexa_pen_set_minia.jpg".format(
-                baseurl),
+            image_url="/static/images/products/hexa_pen_set_minia.jpg",
+            # image_url="{}images/products/hexa_pen_set_minia.jpg".format(
+            # baseurl),
             price=5,
             category_id=2)
 
@@ -149,21 +156,24 @@ def register(app):
         calculator = CatalogItem(
             name='Calculator',
             description="Color: Black",
-            image_url="{}images/products/calculator.jpg".format(baseurl),
+            image_url="/static/images/products/calculator.jpg",
+            # image_url="{}images/products/calculator.jpg".format(baseurl),
             price=25,
             category_id=3)
 
         correction_tape = CatalogItem(
             name='Correction Tape',
             description="Dimensions: 5mmx10cm",
-            image_url="{}images/products/correction_tape.jpg".format(baseurl),
+            image_url="/static/images/products/correction_tape.jpg",
+            # image_url="{}images/products/correction_tape.jpg".format(baseurl),
             price=8,
             category_id=3)
 
         hole_puncher = CatalogItem(
             name='2 Hole Puncher',
             description="Maximum Capacity:10c",
-            image_url="{}images/products/hole_puncher.jpg".format(baseurl),
+            image_url="/static/images/products/hole_puncher.jpg",
+            # image_url="{}images/products/hole_puncher.jpg".format(baseurl),
             price=5.5,
             category_id=3)
 
