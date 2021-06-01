@@ -43,7 +43,7 @@ SQLAlchemy==1.2.0
 SQLAlchemy-Searchable==1.0.3
 SQLAlchemy-Utils==0.33.0
 stripe==1.79.1
-urllib3==1.22
+urllib3==1.26.5
 validators==0.12.1
 visitor==0.1.3
 Werkzeug==0.13
